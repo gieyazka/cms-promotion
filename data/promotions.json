@@ -1,0 +1,124 @@
+[
+  {
+    "title_th": "ปปปป",
+    "title_en": "xxxx",
+    "dateConfig": {
+      "type": "range",
+      "startDate": "2026-05-10",
+      "endDate": "2026-05-10"
+    },
+    "sections": [
+      {
+        "id": "1778398854675",
+        "type": "highlight_summary",
+        "th": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "ดฟหกฟก"
+                  }
+                ]
+              }
+            ]
+          },
+          "ctaLabel": "ดูรายละเอียด"
+        },
+        "en": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "asadad"
+                  }
+                ]
+              }
+            ]
+          },
+          "ctaLabel": "View Details"
+        },
+        "ctaLink": "https://"
+      }
+    ],
+    "createdAt": "2026-05-10T07:54:36.742Z",
+    "status": "draft",
+    "id": "1778399676809"
+  },
+  {
+    "title_th": "ฟหกฟกฟหกฟหก",
+    "title_en": "sadasdasdas",
+    "dateConfig": {
+      "type": "range",
+      "startDate": "2026-05-10",
+      "endDate": "2026-05-10"
+    },
+    "sections": [
+      {
+        "id": "1778400604460",
+        "type": "highlight_summary",
+        "th": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "หฟกฟหกฟหกฟหกหฟก"
+                  }
+                ]
+              }
+            ]
+          },
+          "ctaLabel": "ดูรายละเอียด"
+        },
+        "en": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "dsadsad"
+                  }
+                ]
+              }
+            ]
+          },
+          "ctaLabel": "View Details"
+        },
+        "ctaLink": "https://"
+      }
+    ],
+    "createdAt": "2026-05-10T08:10:12.408Z",
+    "status": "draft",
+    "id": "1778400612421"
+  }
+]

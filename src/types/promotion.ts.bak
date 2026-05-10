@@ -1,0 +1,9 @@
+import { JSONContent } from '@tiptap/react';
+
+export interface Promotion {
+  id: string;
+  title: string;
+  content: JSONContent;
+  createdAt: string;
+  status: 'draft' | 'active';
+}

@@ -1,0 +1,94 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import TiptapEditor from '@/components/TiptapEditor';
+import { Save, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+
+import { JSONContent } from '@tiptap/react';
+
+export default function NewPromotion() {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState<JSONContent | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const router = useRouter();
+
+  const handleSave = async () => {
+    if (!title) {
+      alert('Please enter a title');
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const response = await fetch('/api/promotions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          createdAt: new Date().toISOString(),
+          status: 'draft',
+        }),
+      });
+
+      if (response.ok) {
+        router.push('/promotions');
+      } else {
+        alert('Failed to save promotion');
+      }
+    } catch (error) {
+      console.error('Error saving promotion:', error);
+      alert('Error saving promotion');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div className="p-8 max-w-5xl mx-auto">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center space-x-4">
+          <Link href="/promotions" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <ArrowLeft size={24} />
+          </Link>
+          <h1 className="text-3xl font-bold">New Promotion</h1>
+        </div>
+        <button
+          onClick={handleSave}
+          disabled={isSaving}
+          className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300"
+        >
+          <Save size={20} />
+          <span>{isSaving ? 'Saving...' : 'Save Promotion'}</span>
+        </button>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Promotion Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter promotion title..."
+            className="w-full px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Content
+          </label>
+          <TiptapEditor content={content} onChange={setContent} />
+        </div>
+      </div>
+    </div>
+  );
+}
