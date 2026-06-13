@@ -9,6 +9,11 @@ export interface LocalizedContent {
   ctaLabel?: string;
 }
 
+export interface BlockContent {
+  locale: string;
+  data: JSONContent;
+}
+
 export interface PromotionSection {
   id: string;
   type: SectionType;
@@ -17,6 +22,8 @@ export interface PromotionSection {
   en: LocalizedContent;
   // Shared fields
   ctaLink?: string;
+  sort_order: number;
+  translations: BlockContent[];
 }
 
 export interface DateConfig {
@@ -30,7 +37,7 @@ export interface Promotion {
   // Localized main title
   title_th: string;
   title_en: string;
-  
+
   dateConfig?: DateConfig;
   sections: PromotionSection[];
   createdAt: string;

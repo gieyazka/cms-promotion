@@ -7,8 +7,8 @@ import { Link } from '@tiptap/extension-link';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyle } from '@tiptap/extension-text-style';
 import { Color } from '@tiptap/extension-color';
-import { 
-  Bold, Italic, List, ListOrdered, Heading1, Heading2, 
+import {
+  Bold, Italic, List, ListOrdered, Heading1, Heading2,
   Image as ImageIcon, Link as LinkIcon, Undo, Redo,
   AlignCenter, AlignLeft, AlignRight, Palette,
   Link2Off, Eraser, Upload, Globe, Smartphone, Eye

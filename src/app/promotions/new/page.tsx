@@ -3,49 +3,59 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TiptapEditor from '@/components/TiptapEditor';
-import { 
-  Save, ArrowLeft, Plus, Trash2, GripVertical, Star, Link as LinkIcon, 
-  Info, MousePointer2, Calendar, ArrowRight, ChevronUp, ChevronDown, Layout, Languages
+import {
+  Save, ArrowLeft, Plus, Trash2, GripVertical, Star, Link as LinkIcon,
+  Info, MousePointer2, Calendar, ArrowRight, ChevronUp, ChevronDown, Layout, Languages,
+  Copy,
+  Upload
 } from 'lucide-react';
 import Link from 'next/link';
 import { PromotionSection, SectionType, DateConfig, DateConfigType } from '@/types/promotion';
 import { useToast } from '@/components/ui/Toast';
+import { Modal } from '@/components/ui/Modal';
 
 export default function NewPromotion() {
   const router = useRouter();
   const { showToast } = useToast();
   const [lang, setLang] = useState<'th' | 'en'>('th');
-  
+
   const [title_th, setTitleTh] = useState('');
   const [title_en, setTitleEn] = useState('');
-  
+  const [detail_th, setDetailTh] = useState('');
+  const [detail_en, setDetailEn] = useState('');
+  const [brokerId, setBrokerId] = useState('hf-markets')
+
   const [dateConfig, setDateConfig] = useState<DateConfig>({
     type: 'range',
     startDate: new Date().toISOString().split('T')[0],
     endDate: new Date().toISOString().split('T')[0],
   });
-  
+
   const [sections, setSections] = useState<PromotionSection[]>([
-    { 
-      id: Date.now().toString(), 
-      type: 'highlight_summary', 
+    {
+      id: Date.now().toString(),
+      type: 'highlight_summary',
       th: { title: '', content: null, ctaLabel: 'ดูรายละเอียด' },
       en: { title: '', content: null, ctaLabel: 'View Details' },
-      ctaLink: 'https://'
+      ctaLink: 'https://',
+      translations: [],
+      sort_order: 0,
     }
   ]);
-  
+
   const [isSaving, setIsSaving] = useState(false);
 
   const addSection = (type: SectionType = 'standard') => {
     setSections([
       ...sections,
-      { 
-        id: Date.now().toString(), 
-        type, 
+      {
+        id: Date.now().toString(),
+        type,
         th: { title: '', content: null, ctaLabel: 'ปุ่มกด' },
         en: { title: '', content: null, ctaLabel: 'Click Here' },
-        ctaLink: 'https://'
+        ctaLink: 'https://',
+        translations: [{ locale: 'th', data: {} }, { locale: 'en', data: {} }],
+        sort_order: sections.length,
       }
     ]);
     showToast(`Added new ${type} section`, 'info');
@@ -67,17 +77,41 @@ export default function NewPromotion() {
   const updateSection = (id: string, updates: any) => {
     setSections(sections.map(s => {
       if (s.id !== id) return s;
-      
+
       // If updating localized fields
       if (updates.th || updates.en) {
         return { ...s, ...updates };
       }
-      
+
       // If updating field in current language
-      const currentLangData = s[lang];
-      return { 
-        ...s, 
-        [lang]: { ...currentLangData, ...updates }
+      // const currentLangData = s[lang];
+      if (!s.translations.find(t => t.locale === lang)) {
+        s.translations.push({ locale: lang, data: updates });
+      } else {
+        console.log("else");
+        s.translations.map((content) => {
+          if (content.locale === lang) {
+            console.log(`content local ${lang}`, content);
+            console.log(`content local ${lang}`, updates);
+            content.data = {
+              ...content.data,
+              ...updates
+            }
+            // return {
+            //   ...content,
+            //   data: {
+            //     ...content.data,
+            //     ...updates,
+            //   }
+            // }
+          }
+          return content;
+        });
+      }
+
+      return {
+        ...s,
+        // [lang]: { ...currentLangData, ...updates }
       };
     }));
   };
@@ -120,8 +154,93 @@ export default function NewPromotion() {
     }
   };
 
+  const parseToAPI = () => {
+    return {
+      "broker_id": brokerId,
+      "date_start": dateConfig.startDate,
+      "date_end": dateConfig.endDate,
+      "tags": [
+        "string"
+      ],
+      "translations": [
+        {
+          "locale": "th",
+          "title": title_th,
+          "detail": detail_th,
+          "banner_image_url": "string"
+        }, {
+          "locale": "en",
+          "title": title_en,
+          "detail": detail_en,
+          "banner_image_url": "string"
+        }
+      ],
+      "blocks": sections,
+      // "blocks": [
+      //   {
+      //     "type": "string",
+      //     "sort_order": 0,
+      //     "translations": [
+      //       {
+      //         "locale": "string",
+      //         "data": {
+      //           "additionalProp1": {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // ]
+    }
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const response = await fetch('/api/upload', { method: 'POST', body: formData });
+        const data = await response.json();
+        if (data.url) {
+          // editor?.chain().focus().setImage({ src: data.url }).run();
+          // setIsImageModalOpen(false);
+          showToast('Image uploaded successfully', 'success');
+        }
+      } catch (error) {
+        showToast('Upload failed', 'error');
+      }
+    }
+  };
+
   return (
     <div className="p-8 max-w-5xl mx-auto">
+      {/* Image Modal */}
+      <Modal isOpen={false} onClose={() => { }} title="Insert Image">
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-bold text-gray-500 uppercase mb-2">Upload from Computer</label>
+            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <Upload className="text-gray-400 mb-2" />
+              <span className="text-sm text-gray-500">Click to choose a file</span>
+              <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+            </label>
+          </div>
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-gray-200 dark:border-gray-800"></span></div>
+            <div className="relative flex justify-center text-xs uppercase"><span className="bg-white dark:bg-gray-900 px-2 text-gray-500 font-bold">Or use URL</span></div>
+          </div>
+          {/* <div className="space-y-3">
+            <input
+              type="text"
+              placeholder="https://image-url.com/pic.jpg"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button onClick={insertImageUrl} className="w-full bg-gray-900 dark:bg-white dark:text-gray-900 text-white py-2 rounded-lg font-bold">Insert URL</button>
+          </div> */}
+        </div>
+      </Modal>
       {/* Top Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-4">
@@ -130,24 +249,24 @@ export default function NewPromotion() {
           </Link>
           <h1 className="text-3xl font-bold">New Multilingual Promotion</h1>
         </div>
-        
+
         <div className="flex items-center space-x-4">
           {/* Language Switcher */}
           <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
-            <button 
+            <button
               onClick={() => setLang('th')}
               className={`px-4 py-2 rounded-lg text-sm font-black transition-all ${lang === 'th' ? 'bg-white dark:bg-gray-700 shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
             >
               ไทย (TH)
             </button>
-            <button 
+            <button
               onClick={() => setLang('en')}
               className={`px-4 py-2 rounded-lg text-sm font-black transition-all ${lang === 'en' ? 'bg-white dark:bg-gray-700 shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
             >
               ENG (EN)
             </button>
           </div>
-          
+
           <button
             onClick={handleSave}
             disabled={isSaving}
@@ -174,6 +293,14 @@ export default function NewPromotion() {
             placeholder={`Enter promotion title in ${lang === 'th' ? 'Thai' : 'English'}...`}
             className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-xl font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
           />
+          <label className="mt-4 block text-sm font-medium text-gray-400 mb-2 uppercase tracking-tighter">Promotion detail</label>
+          <input
+            type="text"
+            value={lang === 'th' ? detail_th : detail_en}
+            onChange={(e) => lang === 'th' ? setDetailTh(e.target.value) : setDetailEn(e.target.value)}
+            placeholder={`Enter promotion detail in ${lang === 'th' ? 'Thai' : 'English'}...`}
+            className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-xl font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+          />
         </div>
 
         {/* Shared Date Config */}
@@ -185,7 +312,7 @@ export default function NewPromotion() {
           <div className="flex flex-wrap gap-6 items-end">
             <div className="flex-1 min-w-[200px]">
               <label className="block text-[10px] font-bold text-gray-400 uppercase mb-2">Display Format</label>
-              <select 
+              <select
                 value={dateConfig.type}
                 onChange={(e) => setDateConfig({ ...dateConfig, type: e.target.value as DateConfigType })}
                 className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 font-bold"
@@ -224,13 +351,12 @@ export default function NewPromotion() {
         {/* Sections List */}
         <div className="space-y-6">
           {sections.map((section, index) => (
-            <div 
-              key={section.id} 
-              className={`relative bg-white dark:bg-gray-900 rounded-3xl border-2 transition-all ${
-                section.type === 'special' ? 'border-amber-200 dark:border-amber-900/50 shadow-md' :
+            <div
+              key={section.id}
+              className={`relative bg-white dark:bg-gray-900 rounded-3xl border-2 transition-all ${section.type === 'special' ? 'border-amber-200 dark:border-amber-900/50 shadow-md' :
                 section.type === 'highlight_summary' ? 'border-blue-200 dark:border-blue-900/50 shadow-sm' :
-                'border-gray-100 dark:border-gray-800 shadow-sm'
-              }`}
+                  'border-gray-100 dark:border-gray-800 shadow-sm'
+                }`}
             >
               {/* Section Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-50 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-800/30 rounded-t-[22px]">
@@ -246,7 +372,7 @@ export default function NewPromotion() {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <select 
+                  <select
                     value={section.type}
                     onChange={(e) => updateSharedSectionField(section.id, { type: e.target.value as SectionType })}
                     className="text-[10px] bg-transparent font-bold text-gray-400 uppercase outline-none"
@@ -263,18 +389,18 @@ export default function NewPromotion() {
               <div className="p-8 space-y-6">
                 <input
                   type="text"
-                  value={section[lang].title || ''}
+                  // value={section[lang].title || ''}
+                  value={section.translations.find((t) => t.locale === lang)?.data.title || ''}
                   onChange={(e) => updateSection(section.id, { title: e.target.value })}
                   placeholder={`Section title in ${lang.toUpperCase()}...`}
-                  className={`w-full px-0 bg-transparent border-none text-xl font-bold outline-none placeholder:text-gray-300 ${
-                    section.type === 'highlight_summary' ? 'text-blue-600' : 'text-gray-800 dark:text-gray-100'
-                  }`}
+                  className={`w-full px-0 bg-transparent border-none text-xl font-bold outline-none placeholder:text-gray-300 ${section.type === 'highlight_summary' ? 'text-blue-600' : 'text-gray-800 dark:text-gray-100'
+                    }`}
                 />
-                
-                <TiptapEditor 
+
+                <TiptapEditor
                   key={`${section.id}-${lang}`} // Re-mount editor when language changes for this section
-                  content={section[lang].content} 
-                  onChange={(newContent) => updateSection(section.id, { content: newContent })} 
+                  content={section[lang].content}
+                  onChange={(newContent) => updateSection(section.id, { content: newContent })}
                 />
 
                 {/* Optional CTA inside Section */}
@@ -285,7 +411,8 @@ export default function NewPromotion() {
                         <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Button Text ({lang.toUpperCase()})</label>
                         <input
                           type="text"
-                          value={section[lang].ctaLabel || ''}
+                          // value={section[lang].ctaLabel || ''}
+                          value={section.translations.find((t) => t.locale === lang)?.data.ctaLabel || ''}
                           onChange={(e) => updateSection(section.id, { ctaLabel: e.target.value })}
                           className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -328,7 +455,35 @@ export default function NewPromotion() {
               <div className="text-xs text-blue-500 font-black uppercase tracking-widest group-open:hidden">Show JSON</div>
               <div className="text-xs text-red-500 font-black uppercase tracking-widest hidden group-open:block">Hide JSON</div>
             </summary>
-            <div className="mt-4 p-6 bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
+            <div className="mt-4 p-6 bg-gray-900 rounded-xl overflow-hidden shadow-2xl relative">
+              <div className='text-yellow-400 text-xs font-semibold absolute top-2 left-2'>
+                New!
+              </div>
+              <div
+                onClick={() => {
+                  navigator.clipboard.writeText(JSON.stringify(parseToAPI(), null, 2));
+                }}
+                className='absolute top-4 right-12 bg-white/0 cursor-pointer hover:bg-white/20 p-2 rounded-md'>
+                <Copy size={12} />
+              </div>
+              <pre className="text-[11px] text-green-400 font-mono overflow-auto max-h-[500px] leading-relaxed">
+                {JSON.stringify(parseToAPI(), null, 2)}
+              </pre>
+            </div>
+            <div className="mt-4 p-6 bg-gray-900 rounded-xl overflow-hidden shadow-2xl relative">
+              <div
+                onClick={() => {
+                  navigator.clipboard.writeText(JSON.stringify({
+                    title_th,
+                    title_en,
+                    dateConfig,
+                    sections,
+                    createdAt: new Date().toISOString(),
+                  }, null, 2));
+                }}
+                className='absolute top-4 right-4 bg-white/0 cursor-pointer hover:bg-white/20 p-2 rounded-md'>
+                <Copy size={12} />
+              </div>
               <pre className="text-[11px] text-green-400 font-mono overflow-auto max-h-[500px] leading-relaxed">
                 {JSON.stringify({
                   title_th,

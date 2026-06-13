@@ -120,5 +120,208 @@
     "createdAt": "2026-05-10T08:10:12.408Z",
     "status": "draft",
     "id": "1778400612421"
+  },
+  {
+    "title_th": "Test",
+    "title_en": "test en",
+    "dateConfig": {
+      "type": "range",
+      "startDate": "2026-06-09",
+      "endDate": "2026-06-09"
+    },
+    "sections": [
+      {
+        "id": "1780990845040",
+        "type": "highlight_summary",
+        "th": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "textAlign": null
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "dfefsfe "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "textAlign": null
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "sfe oef s"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "textAlign": null
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {
+                          "textAlign": null
+                        },
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "fe sef"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "link",
+                        "attrs": {
+                          "href": "https://google.com",
+                          "target": "_blank",
+                          "rel": "noopener noreferrer nofollow",
+                          "class": "text-blue-600 underline cursor-pointer",
+                          "title": null
+                        }
+                      }
+                    ],
+                    "text": "ดูรายละเอียด"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                }
+              }
+            ]
+          },
+          "ctaLabel": "ดูรายละเอียด"
+        },
+        "en": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "test en"
+                  }
+                ]
+              }
+            ]
+          },
+          "ctaLabel": "View Details"
+        },
+        "ctaLink": "https://google.com"
+      },
+      {
+        "id": "1780990965631",
+        "type": "highlight_summary",
+        "th": {
+          "title": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": "center"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "asd"
+                  }
+                ]
+              },
+              {
+                "type": "image",
+                "attrs": {
+                  "src": "/uploads/1780990973440-banner.png",
+                  "alt": null,
+                  "title": null,
+                  "width": null,
+                  "height": null
+                }
+              },
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "textAlign": "center"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "asd"
+                  }
+                ]
+              }
+            ]
+          },
+          "ctaLabel": "ปุ่มกด"
+        },
+        "en": {
+          "title": "",
+          "content": null,
+          "ctaLabel": "Click Here"
+        },
+        "ctaLink": "https://"
+      }
+    ],
+    "createdAt": "2026-06-09T07:43:36.840Z",
+    "status": "draft",
+    "id": "1780991016880"
   }
 ]
