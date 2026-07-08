@@ -3,8 +3,8 @@
 import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import TiptapEditor from '@/components/TiptapEditor';
-import { 
-  Save, ArrowLeft, Plus, Trash2, GripVertical, Star, Link as LinkIcon, 
+import {
+  Save, ArrowLeft, Plus, Trash2, GripVertical, Star, Link as LinkIcon,
   Info, MousePointer2, Calendar, ArrowRight, ChevronUp, ChevronDown, Edit, X, Trash, Layout, Languages, Eye, ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
@@ -15,7 +15,7 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
   const { id } = use(params);
   const router = useRouter();
   const { showToast } = useToast();
-  
+
   const [promotion, setPromotion] = useState<Promotion | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -99,12 +99,14 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
   const addSection = (type: SectionType = 'standard') => {
     setEditSections([
       ...editSections,
-      { 
-        id: Date.now().toString(), 
-        type, 
+      {
+        id: Date.now().toString(),
+        type,
         th: { title: '', content: null, ctaLabel: 'ปุ่มกด' },
         en: { title: '', content: null, ctaLabel: 'Button' },
-        ctaLink: 'https://'
+        ctaLink: 'https://',
+        sort_order: 0,
+        translations: []
       }
     ]);
   };
@@ -157,17 +159,17 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
             )}
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-3">
           {/* Global Language Toggle */}
           <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl mr-2">
-            <button 
+            <button
               onClick={() => setLang('th')}
               className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${lang === 'th' ? 'bg-white dark:bg-gray-700 shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
             >
               TH
             </button>
-            <button 
+            <button
               onClick={() => setLang('en')}
               className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${lang === 'en' ? 'bg-white dark:bg-gray-700 shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
             >
@@ -177,14 +179,14 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
 
           {!isEditing ? (
             <>
-              <button 
+              <button
                 onClick={() => setIsEditing(true)}
                 className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 font-bold"
               >
                 <Edit size={18} />
                 <span>Edit All</span>
               </button>
-              <button 
+              <button
                 onClick={handleDelete}
                 className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
               >
@@ -193,14 +195,14 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
             </>
           ) : (
             <>
-              <button 
+              <button
                 onClick={() => setIsEditing(false)}
                 className="flex items-center space-x-2 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl hover:bg-gray-300 font-bold transition-all"
               >
                 <X size={18} />
                 <span>Cancel</span>
               </button>
-              <button 
+              <button
                 onClick={handleSave}
                 disabled={isSaving}
                 className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 font-bold transition-all shadow-lg shadow-green-500/20 disabled:bg-green-300"
@@ -233,10 +235,9 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
 
             <div className="space-y-6">
               {editSections.map((section, index) => (
-                <div key={section.id} className={`bg-white dark:bg-gray-900 rounded-3xl border-2 p-1 ${
-                  section.type === 'special' ? 'border-amber-200' : 
-                  section.type === 'highlight_summary' ? 'border-blue-200' : 'border-gray-100 dark:border-gray-800'
-                }`}>
+                <div key={section.id} className={`bg-white dark:bg-gray-900 rounded-3xl border-2 p-1 ${section.type === 'special' ? 'border-amber-200' :
+                    section.type === 'highlight_summary' ? 'border-blue-200' : 'border-gray-100 dark:border-gray-800'
+                  }`}>
                   <div className="flex items-center justify-between p-4 bg-gray-50/50 dark:bg-gray-800/50 rounded-t-[22px]">
                     <div className="flex items-center space-x-2">
                       <div className="flex flex-col">
@@ -246,7 +247,7 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
                       <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{section.type}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <select 
+                      <select
                         value={section.type}
                         onChange={(e) => updateSharedSectionField(section.id, { type: e.target.value as SectionType })}
                         className="text-[10px] bg-transparent font-bold text-gray-400 uppercase outline-none"
@@ -266,28 +267,28 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
                       placeholder="Section title..."
                       className="w-full bg-transparent border-none text-xl font-bold outline-none dark:text-white"
                     />
-                    <TiptapEditor 
+                    <TiptapEditor
                       key={`${section.id}-${lang}`}
-                      content={section[lang].content} 
-                      onChange={(c) => updateSection(section.id, { content: c })} 
+                      content={section[lang].content}
+                      onChange={(c) => updateSection(section.id, { content: c })}
                     />
-                    
+
                     <div className="pt-6 border-t border-gray-50 dark:border-gray-800 mt-2">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Button Text ({lang.toUpperCase()})</label>
-                          <input 
-                            value={section[lang].ctaLabel || ''} 
+                          <input
+                            value={section[lang].ctaLabel || ''}
                             onChange={(e) => updateSection(section.id, { ctaLabel: e.target.value })}
-                            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500" 
+                            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Link (Shared)</label>
-                          <input 
-                            value={section.ctaLink || ''} 
+                          <input
+                            value={section.ctaLink || ''}
                             onChange={(e) => updateSharedSectionField(section.id, { ctaLink: e.target.value })}
-                            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" 
+                            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                       </div>
@@ -296,7 +297,7 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
                 </div>
               ))}
             </div>
-            
+
             <button onClick={() => addSection('standard')} className="w-full py-6 border-2 border-dashed border-gray-100 dark:border-gray-800 rounded-3xl text-gray-300 font-black uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">+ Add New Section</button>
           </>
         ) : (
@@ -306,43 +307,41 @@ export default function PromotionDetail({ params }: { params: Promise<{ id: stri
               {promotion.dateConfig && (
                 <div className="flex items-center bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-3 py-1.5 rounded-xl font-bold border border-blue-100 dark:border-blue-800 text-sm">
                   <Calendar size={16} className="mr-2" />
-                  {promotion.dateConfig.type === 'range' ? `${promotion.dateConfig.startDate} - ${promotion.dateConfig.endDate}` : 
-                   promotion.dateConfig.type === 'onwards' ? `${promotion.dateConfig.startDate} Onwards` : 
-                   promotion.dateConfig.startDate}
+                  {promotion.dateConfig.type === 'range' ? `${promotion.dateConfig.startDate} - ${promotion.dateConfig.endDate}` :
+                    promotion.dateConfig.type === 'onwards' ? `${promotion.dateConfig.startDate} Onwards` :
+                      promotion.dateConfig.startDate}
                 </div>
               )}
             </div>
 
             <div className="space-y-10">
               {promotion.sections?.map((section) => (
-                <div key={section.id} className={`overflow-hidden rounded-3xl border p-8 ${
-                  section.type === 'special' ? 'bg-amber-50 dark:bg-amber-900/10 border-amber-200' :
-                  section.type === 'highlight_summary' ? 'bg-blue-50 dark:bg-blue-900/10 border-blue-200' :
-                  'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800 shadow-sm'
-                }`}>
+                <div key={section.id} className={`overflow-hidden rounded-3xl border p-8 ${section.type === 'special' ? 'bg-amber-50 dark:bg-amber-900/10 border-amber-200' :
+                    section.type === 'highlight_summary' ? 'bg-blue-50 dark:bg-blue-900/10 border-blue-200' :
+                      'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800 shadow-sm'
+                  }`}>
                   {section[lang].title && (
                     <div className="flex items-center space-x-2 mb-6">
                       {section.type === 'highlight_summary' && <Info size={20} className="text-blue-500" />}
                       <h2 className="text-2xl font-black dark:text-white">{section[lang].title}</h2>
                     </div>
                   )}
-                <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <TiptapEditor 
+                  <div className="prose prose-lg dark:prose-invert max-w-none">
+                    <TiptapEditor
                       key={`${section.id}-${lang}-view`}
-                      content={section[lang].content} 
-                      onChange={() => {}} 
+                      content={section[lang].content}
+                      onChange={() => { }}
                     />
                   </div>
                   {section[lang].ctaLabel && (
                     <div className="mt-8 flex justify-center">
-                      <a 
-                        href={section.ctaLink} 
-                        target="_blank" 
-                        className={`inline-flex items-center space-x-3 px-10 py-3 rounded-full text-lg font-black transition-all shadow-lg hover:-translate-y-1 ${
-                          section.type === 'special' ? 'bg-amber-600 text-white shadow-amber-500/20' :
-                          section.type === 'highlight_summary' ? 'bg-blue-600 text-white shadow-blue-500/20' :
-                          'bg-gray-900 dark:bg-gray-100 dark:text-gray-900 text-white'
-                        }`}
+                      <a
+                        href={section.ctaLink}
+                        target="_blank"
+                        className={`inline-flex items-center space-x-3 px-10 py-3 rounded-full text-lg font-black transition-all shadow-lg hover:-translate-y-1 ${section.type === 'special' ? 'bg-amber-600 text-white shadow-amber-500/20' :
+                            section.type === 'highlight_summary' ? 'bg-blue-600 text-white shadow-blue-500/20' :
+                              'bg-gray-900 dark:bg-gray-100 dark:text-gray-900 text-white'
+                          }`}
                       >
                         <span>{section[lang].ctaLabel}</span>
                         <ExternalLink size={18} />

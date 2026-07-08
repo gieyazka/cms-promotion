@@ -1,0 +1,6 @@
+services:
+  earnex-web:
+    image: sawanonapps/cms-promotion
+    container_name: cms-promotion
+    ports:
+      - 4051:3000
