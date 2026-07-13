@@ -20,6 +20,13 @@ export const metadata: Metadata = {
 import Sidebar from "@/components/Sidebar";
 import { ToastProvider } from "@/components/ui/Toast";
 
+// Runs before first paint so the page never flashes light before snapping to dark (or
+// vice versa). Reads the persisted theme, resolves 'system' via matchMedia, and sets the
+// `dark` class directly on <html> — the same class src/lib/theme.ts applies after
+// hydration. Kept dependency-free and wrapped in try/catch: localStorage can throw in
+// private/incognito mode, and a thrown error here would block the whole page render.
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('cms-theme');var d=t==='dark'||((t!=='light')&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,6 +37,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="flex h-full bg-gray-50 dark:bg-[#0a0a0a] text-gray-900 dark:text-gray-100">
         <ToastProvider>
           <Sidebar />

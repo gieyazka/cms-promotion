@@ -1,0 +1,816 @@
+[
+  {
+    "id": "1783500000001",
+    "slug": "why-gold-safest-investment",
+    "status": "published",
+    "category": "financial-history",
+    "tags": [
+      "ทองคำ",
+      "safe haven"
+    ],
+    "owners": [
+      "thongkham",
+      "content-team"
+    ],
+    "cover": "",
+    "pubDate": "2026-07-11",
+    "views": 2431,
+    "createdAt": "2026-07-11T03:00:00.000Z",
+    "updated": "2026-07-11T12:00:00.000Z",
+    "title": {
+      "th": "ทำไมทองคำถึงเป็นการลงทุนที่ปลอดภัยที่สุดในยุคนี้?",
+      "en": "Why Is Gold the Safest Investment of This Era?"
+    },
+    "metaTitle": {
+      "th": "ทำไมทองคำถึงปลอดภัยที่สุด | Earnex",
+      "en": "Why Gold Is the Safest | Earnex"
+    },
+    "metaDesc": {
+      "th": "เจาะลึกเหตุผลที่ทองคำเป็นสินทรัพย์ปลอดภัยในทุกวิกฤต พร้อมวิธีเทรดรับ Rebate",
+      "en": "The reasons gold stays a safe haven through every crisis, plus how to trade it for rebates"
+    },
+    "blocks": [
+      {
+        "id": "bseed001",
+        "type": "intro",
+        "text": {
+          "th": "มีคำถามหนึ่งที่นักลงทุนผ่านวิกฤตมาแล้วชอบถามกันคือ ถ้าย้อนเวลาได้ อยากทำอะไรต่างจากเดิม และคำตอบที่ได้ยินบ่อยที่สุดคือ รู้งี้ซื้อทองให้มากกว่านี้ ในคอนเทนต์นี้ Earnex ขอพาย้อนดู 3 วิกฤตจริง ว่าตอนโลกสั่นคลอน ทองคำทำตัวอย่างไร",
+          "en": "There's a question investors who lived through a crisis love to ask each other: if you could turn back time, what would you do differently? The answer heard most often is, \"I wish I had bought more gold.\" In this piece, Earnex revisits 3 real crises to see how gold performed when the world was shaking."
+        }
+      },
+      {
+        "id": "bseed002",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "ตอนโลกสั่นคลอน ทองคำทำได้ยังไง ย้อน 3 วิกฤตจริง",
+          "en": "How Gold Behaved in 3 Real Crises"
+        }
+      },
+      {
+        "id": "bseed003",
+        "type": "paragraph",
+        "text": {
+          "th": "เมื่อเกิดวิกฤตการเงินครั้งใหญ่ นักลงทุนมักหนีเข้าสู่สินทรัพย์ปลอดภัย และ **ทองคำ** คือคำตอบอันดับต้น ๆ เสมอมา ในคอนเทนต์นี้ Earnex จะพาคุณย้อนดู 3 เหตุการณ์จริงที่ราคาทองคำสวนทางตลาดหุ้น",
+          "en": "When a major financial crisis hits, investors flee to safe-haven assets — and **gold** is always among the first choices. In this piece, Earnex revisits 3 real events where gold moved against the stock market."
+        }
+      },
+      {
+        "id": "bseed004",
+        "type": "image",
+        "url": "",
+        "caption": {
+          "th": "ทองคำแท่งท่ามกลางความผันผวนของตลาดโลก",
+          "en": "Gold bars amid global market volatility"
+        }
+      },
+      {
+        "id": "bseed005",
+        "type": "heading",
+        "level": 3,
+        "text": {
+          "th": "วิกฤตการเงินปี 2008",
+          "en": "The 2008 Financial Crisis"
+        }
+      },
+      {
+        "id": "bseed006",
+        "type": "paragraph",
+        "text": {
+          "th": "Lehman Brothers ล้มละลาย ดัชนี S&P 500 ร่วงกว่า 37 เปอร์เซ็นต์ แต่ราคาทองคำกลับปรับตัว *เพิ่มขึ้น* สวนทางแรงเทขายในสินทรัพย์เสี่ยง",
+          "en": "Lehman Brothers collapsed and the S&P 500 index plunged more than 37 percent, yet gold prices *rose*, moving against the wave of selling in risk assets."
+        }
+      },
+      {
+        "id": "bseed007",
+        "type": "highlight",
+        "variant": "info",
+        "title": {
+          "th": "คำตอบ",
+          "en": "The Answer"
+        },
+        "items": [
+          {
+            "text": {
+              "th": "รีเบตทองคำคือเงินคืนบางส่วนจากต้นทุนการเทรด เช่น ค่าสเปรดหรือค่าคอมมิชชัน",
+              "en": "A gold rebate is part of your trading cost — the spread or the commission — paid back to you"
+            }
+          },
+          {
+            "text": {
+              "th": "คำนวณจากปริมาณการเทรดตามเงื่อนไขของแต่ละโบรกเกอร์",
+              "en": "It is calculated from your trading volume, on each broker's own terms"
+            }
+          },
+          {
+            "text": {
+              "th": "ได้รับเงินคืน**ไม่ว่าผลการเทรดจะกำไรหรือขาดทุน**",
+              "en": "You get it back **whether the trade wins or loses**"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bseed008",
+        "type": "comparisonTable",
+        "columns": [
+          {
+            "th": "สินทรัพย์",
+            "en": "Asset"
+          },
+          {
+            "th": "ความผันผวน",
+            "en": "Volatility"
+          },
+          {
+            "th": "สภาพคล่อง",
+            "en": "Liquidity"
+          },
+          {
+            "th": "ป้องกันเงินเฟ้อ",
+            "en": "Inflation hedge"
+          }
+        ],
+        "rows": [
+          [
+            {
+              "th": "ทองคำ",
+              "en": "Gold"
+            },
+            {
+              "th": "ปานกลาง",
+              "en": "Medium"
+            },
+            {
+              "th": "สูงมาก",
+              "en": "Very high"
+            },
+            {
+              "th": "ดีเยี่ยม",
+              "en": "Excellent"
+            }
+          ],
+          [
+            {
+              "th": "หุ้น",
+              "en": "Equities"
+            },
+            {
+              "th": "สูง",
+              "en": "High"
+            },
+            {
+              "th": "สูง",
+              "en": "High"
+            },
+            {
+              "th": "ปานกลาง",
+              "en": "Medium"
+            }
+          ],
+          [
+            {
+              "th": "เงินสด",
+              "en": "Cash"
+            },
+            {
+              "th": "ต่ำ",
+              "en": "Low"
+            },
+            {
+              "th": "สูงมาก",
+              "en": "Very high"
+            },
+            {
+              "th": "แย่",
+              "en": "Poor"
+            }
+          ],
+          [
+            {
+              "th": "พันธบัตร",
+              "en": "Bonds"
+            },
+            {
+              "th": "ต่ำ",
+              "en": "Low"
+            },
+            {
+              "th": "ปานกลาง",
+              "en": "Medium"
+            },
+            {
+              "th": "ปานกลาง",
+              "en": "Medium"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bseed009",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "ลงทุนหรือเทรดทองคำได้ทางไหนบ้าง",
+          "en": "Where Can You Invest or Trade Gold?"
+        }
+      },
+      {
+        "id": "bseed010",
+        "type": "paragraph",
+        "text": {
+          "th": "ปัจจุบันมีหลายช่องทาง ตั้งแต่ซื้อทองคำแท่ง กองทุน ETF ไปจนถึงการเทรด CFD ผ่านโบรกเกอร์ ซึ่งได้รับ [Rebate](#) คืนทุกล็อตที่เทรดกับ Earnex",
+          "en": "There are several ways to do this today — from buying physical gold bars and ETFs to trading CFDs through a broker, which earns you a [Rebate](#) back on every lot you trade with Earnex."
+        }
+      },
+      {
+        "id": "bseed011",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage Your Trading Costs Systematically with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "HandCoins",
+            "content": {
+              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด ไม่ว่าจะกำไรหรือขาดทุน",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade, win or lose"
+            }
+          },
+          {
+            "icon": "BarChart3",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมและสถิติการเทรดแบบเรียลไทม์ผ่านโบรกเกอร์อย่าง [Exness](#) และ [HFM](#) ในแอปเดียว",
+              "en": "Track your accumulated rebates and trading stats in real time across brokers like [Exness](#) and [HFM](#), all in one app"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bseed012",
+        "type": "rebateSteps"
+      },
+      {
+        "id": "bseed013",
+        "type": "cta",
+        "url": "#",
+        "variant": "sky",
+        "text": {
+          "th": "สมัครรับ Rebate",
+          "en": "Open an account and start earning rebates"
+        },
+        "caption": {
+          "th": "การเทรด Forex CFD และทองคำมีความเสี่ยง ศึกษา [เงื่อนไขและความเสี่ยง](#) ก่อนตัดสินใจ",
+          "en": "Trading Forex, CFDs and gold carries risk. Read the [terms and risks](#) before deciding."
+        }
+      },
+      {
+        "id": "bseed014",
+        "type": "faq",
+        "items": [
+          {
+            "q": {
+              "th": "ทองคำเหมาะกับนักลงทุนมือใหม่ไหม?",
+              "en": "Is gold suitable for beginner investors?"
+            },
+            "a": {
+              "th": "เหมาะ เพราะเป็นสินทรัพย์ที่เข้าใจง่ายและมีสภาพคล่องสูง แนะนำให้แบ่งสัดส่วนตามความเสี่ยงที่รับได้",
+              "en": "Yes — it is an easy-to-understand, highly liquid asset. We recommend allocating a portion based on the risk you can tolerate."
+            }
+          },
+          {
+            "q": {
+              "th": "เทรดทองคำกับ Earnex ได้ Rebate เท่าไร?",
+              "en": "How much rebate do I get trading gold with Earnex?"
+            },
+            "a": {
+              "th": "ขึ้นอยู่กับโบรกเกอร์และประเภทบัญชี โดยเฉลี่ยคืนสูงสุดถึง 100% ของค่าคอมมิชชัน",
+              "en": "It depends on the broker and account type — on average, up to 100% of the commission is returned."
+            }
+          },
+          {
+            "q": {
+              "th": "ต้องมีเงินขั้นต่ำเท่าไรถึงเริ่มได้?",
+              "en": "What's the minimum amount needed to get started?"
+            },
+            "a": {
+              "th": "ขึ้นกับเงื่อนไขของแต่ละโบรกเกอร์ บางรายเริ่มต้นเพียง $20",
+              "en": "It depends on each broker's terms — some let you start with as little as $20."
+            }
+          }
+        ]
+      },
+      {
+        "id": "bseed015",
+        "type": "keyTakeaways",
+        "items": [
+          {
+            "text": {
+              "th": "ทองคำเป็นสินทรัพย์ปลอดภัยที่พิสูจน์แล้วในวิกฤตปี 2008, 2020",
+              "en": "Gold proved itself a safe haven in the 2008 and 2020 crises"
+            }
+          },
+          {
+            "text": {
+              "th": "สภาพคล่องสูงและกระจายความเสี่ยงได้ดี",
+              "en": "High liquidity and strong diversification"
+            }
+          },
+          {
+            "text": {
+              "th": "เทรดทองคำผ่าน Earnex รับ Rebate คืนทุกล็อต",
+              "en": "Trade gold via Earnex and earn rebates on every lot"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bseed016",
+        "type": "sources",
+        "items": [
+          {
+            "url": "#",
+            "text": {
+              "th": "World Gold Council — Gold Demand Trends 2025",
+              "en": "World Gold Council — Gold Demand Trends 2025"
+            }
+          },
+          {
+            "url": "#",
+            "text": {
+              "th": "CBS News — Market reaction to 2008 crisis",
+              "en": "CBS News — Market reaction to 2008 crisis"
+            }
+          },
+          {
+            "url": "#",
+            "text": {
+              "th": "J.P. Morgan Research — Gold outlook 2026",
+              "en": "J.P. Morgan Research — Gold outlook 2026"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bseed017",
+        "type": "related",
+        "mode": "auto",
+        "ids": []
+      }
+    ]
+  },
+  {
+    "id": "1783500000002",
+    "slug": "rebate-5-steps",
+    "status": "published",
+    "category": "cost-rebate",
+    "tags": [
+      "rebate",
+      "cashback"
+    ],
+    "owners": [
+      "thongkham"
+    ],
+    "cover": "",
+    "pubDate": "2026-07-07",
+    "views": 5210,
+    "createdAt": "2026-07-07T03:00:00.000Z",
+    "updated": "2026-07-13T07:00:00.000Z",
+    "title": {
+      "th": "5 ขั้นตอนรับเงินคืน (Rebate) ง่าย ๆ กับ Earnex",
+      "en": "5 Easy Steps to Get Your Rebate (Cashback) with Earnex"
+    },
+    "metaTitle": {
+      "th": "5 ขั้นตอนรับ Rebate | Earnex",
+      "en": "5 Steps to Rebate | Earnex"
+    },
+    "metaDesc": {
+      "th": "สอนวิธีรับเงินคืนจากการเทรดแบบละเอียด",
+      "en": "A detailed guide on how to get cashback from your trades"
+    },
+    "blocks": [
+      {
+        "id": "bseed018",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "Rebate คืออะไร ทำไมนักเทรดถึงควรรู้",
+          "en": "What Is a Rebate, and Why Should Traders Care?"
+        }
+      },
+      {
+        "id": "bseed019",
+        "type": "paragraph",
+        "text": {
+          "th": "Rebate คือ **เงินคืน** จากค่าคอมมิชชันหรือสเปรดในทุกการเทรด ยิ่งเทรดมาก ยิ่งได้คืนมาก",
+          "en": "A rebate is **cash back** on the commission or spread from every trade — the more you trade, the more you get back."
+        }
+      },
+      {
+        "id": "bseed020",
+        "type": "steps",
+        "title": {
+          "th": "5 ขั้นตอนรับเงินคืน",
+          "en": "5 Steps to Claim Your Cashback"
+        },
+        "steps": [
+          {
+            "title": {
+              "th": "สมัคร",
+              "en": "Sign up"
+            },
+            "desc": {
+              "th": "ฟรี",
+              "en": "It's free"
+            }
+          },
+          {
+            "title": {
+              "th": "ผูกบัญชี",
+              "en": "Link your account"
+            },
+            "desc": {
+              "th": "กับโบรกเกอร์",
+              "en": "To your broker"
+            }
+          },
+          {
+            "title": {
+              "th": "ยืนยันตัวตน",
+              "en": "Verify identity"
+            },
+            "desc": {
+              "th": "KYC",
+              "en": "KYC"
+            }
+          },
+          {
+            "title": {
+              "th": "เทรด",
+              "en": "Trade"
+            },
+            "desc": {
+              "th": "สะสมล็อต",
+              "en": "Accumulate lots"
+            }
+          },
+          {
+            "title": {
+              "th": "ถอนเงิน",
+              "en": "Withdraw"
+            },
+            "desc": {
+              "th": "เข้าบัญชี",
+              "en": "To your account"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bseed021",
+        "type": "cta",
+        "url": "#",
+        "variant": "sky",
+        "text": {
+          "th": "เริ่มรับ Rebate เลย",
+          "en": "Start Earning Rebates Now"
+        },
+        "caption": {
+          "th": "",
+          "en": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "1783500000003",
+    "slug": "compare-forex-brokers-2026",
+    "status": "draft",
+    "category": "cost-rebate",
+    "tags": [
+      "broker"
+    ],
+    "owners": [
+      "pimchanok"
+    ],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-07-13T11:00:00.000Z",
+    "updated": "2026-07-13T11:00:00.000Z",
+    "title": {
+      "th": "เปรียบเทียบโบรกเกอร์ Forex ยอดนิยมปี 2026 ฉบับอัปเดตล่าสุด",
+      "en": "Comparing Popular Forex Brokers in 2026: The Latest Update"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bseed022",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "เกณฑ์ในการเลือกโบรกเกอร์",
+          "en": "Criteria for Choosing a Broker"
+        }
+      },
+      {
+        "id": "bseed023",
+        "type": "paragraph",
+        "text": {
+          "th": "พิจารณาจากการกำกับดูแล ค่าสเปรด และความเร็วในการถอนเงิน",
+          "en": "Consider regulation, spreads, and withdrawal speed."
+        }
+      },
+      {
+        "id": "bseed024",
+        "type": "comparisonTable",
+        "columns": [
+          {
+            "th": "โบรกเกอร์",
+            "en": "Broker"
+          },
+          {
+            "th": "สเปรด EUR/USD",
+            "en": "EUR/USD Spread"
+          },
+          {
+            "th": "กำกับดูแล",
+            "en": "Regulation"
+          }
+        ],
+        "rows": [
+          [
+            {
+              "th": "Pepperstone",
+              "en": "Pepperstone"
+            },
+            {
+              "th": "0.1",
+              "en": "0.1"
+            },
+            {
+              "th": "ASIC, FCA",
+              "en": "ASIC, FCA"
+            }
+          ],
+          [
+            {
+              "th": "Exness",
+              "en": "Exness"
+            },
+            {
+              "th": "0.3",
+              "en": "0.3"
+            },
+            {
+              "th": "CySEC",
+              "en": "CySEC"
+            }
+          ],
+          [
+            {
+              "th": "XM",
+              "en": "XM"
+            },
+            {
+              "th": "0.6",
+              "en": "0.6"
+            },
+            {
+              "th": "ASIC",
+              "en": "ASIC"
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1783500000004",
+    "slug": "candlestick-basics",
+    "status": "draft",
+    "category": "trading-tips",
+    "tags": [
+      "เทคนิค"
+    ],
+    "owners": [
+      "thanakorn"
+    ],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-07-13T00:00:00.000Z",
+    "updated": "2026-07-13T00:00:00.000Z",
+    "title": {
+      "th": "พื้นฐานการอ่านกราฟแท่งเทียน (Candlestick) สำหรับนักเทรดมือใหม่ที่เพิ่งเริ่มต้นในตลาด Forex",
+      "en": "Candlestick Chart Basics for Forex Traders Who Are Just Getting Started"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": []
+  },
+  {
+    "id": "1783500000005",
+    "slug": "tradingview-subscription",
+    "status": "published",
+    "category": "trading-tips",
+    "tags": [
+      "tools"
+    ],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "",
+    "pubDate": "2026-07-04",
+    "views": 1897,
+    "createdAt": "2026-07-04T03:00:00.000Z",
+    "updated": "2026-07-04T12:00:00.000Z",
+    "title": {
+      "th": "TradingView Subscription คืออะไร ใช้ยังไงให้คุ้ม",
+      "en": "What Is a TradingView Subscription, and How Do You Get the Most Out of It?"
+    },
+    "metaTitle": {
+      "th": "TradingView คืออะไร",
+      "en": "What Is TradingView?"
+    },
+    "metaDesc": {
+      "th": "รีวิวแพ็กเกจ",
+      "en": "A review of the subscription packages"
+    },
+    "blocks": [
+      {
+        "id": "bseed025",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "แพ็กเกจของ TradingView",
+          "en": "TradingView Subscription Packages"
+        }
+      },
+      {
+        "id": "bseed026",
+        "type": "paragraph",
+        "text": {
+          "th": "มีทั้ง Essential, Plus และ Premium เลือกตามการใช้งาน",
+          "en": "There are Essential, Plus, and Premium tiers — choose based on your usage."
+        }
+      }
+    ]
+  },
+  {
+    "id": "1783500000006",
+    "slug": "gold-market-q1-2025",
+    "status": "archived",
+    "category": "financial-history",
+    "tags": [
+      "news",
+      "ทองคำ"
+    ],
+    "owners": [
+      "thongkham"
+    ],
+    "cover": "",
+    "pubDate": "2026-04-14",
+    "views": 903,
+    "createdAt": "2026-04-14T03:00:00.000Z",
+    "updated": "2026-04-24T12:00:00.000Z",
+    "title": {
+      "th": "สรุปภาวะตลาดทองคำ ไตรมาส 1 ปี 2025",
+      "en": "Gold Market Recap: Q1 2025"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bseed027",
+        "type": "paragraph",
+        "text": {
+          "th": "ราคาทองคำไตรมาสแรกปรับตัวขึ้นจากความไม่แน่นอนของนโยบายการเงิน",
+          "en": "Gold prices rose in the first quarter amid uncertainty around monetary policy."
+        }
+      }
+    ]
+  },
+  {
+    "id": "1783500000007",
+    "slug": "open-pepperstone-account",
+    "status": "archived",
+    "category": "cost-rebate",
+    "tags": [
+      "broker",
+      "guide"
+    ],
+    "owners": [
+      "pimchanok"
+    ],
+    "cover": "",
+    "pubDate": "2026-03-15",
+    "views": 3402,
+    "createdAt": "2026-03-15T03:00:00.000Z",
+    "updated": "2026-03-25T12:00:00.000Z",
+    "title": {
+      "th": "วิธีเปิดบัญชีเทรดกับ Pepperstone แบบละเอียดทีละขั้นตอน",
+      "en": "How to Open a Pepperstone Trading Account: A Step-by-Step Guide"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bseed028",
+        "type": "paragraph",
+        "text": {
+          "th": "ขั้นตอนการเปิดบัญชีใช้เวลาไม่ถึง 10 นาที",
+          "en": "Opening an account takes less than 10 minutes."
+        }
+      }
+    ]
+  },
+  {
+    "id": "1783500000008",
+    "slug": "test-old-draft",
+    "status": "trash",
+    "category": "trading-tips",
+    "tags": [],
+    "owners": [
+      "thanakorn"
+    ],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-06-03T12:00:00.000Z",
+    "updated": "2026-06-03T12:00:00.000Z",
+    "title": {
+      "th": "ทดสอบบทความ (ร่างเก่า ไม่ใช้แล้ว)",
+      "en": "Test Article (Old Draft, No Longer Used)"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": []
+  },
+  {
+    "id": "1783500000009",
+    "slug": "promo-q4-2024",
+    "status": "trash",
+    "category": "financial-history",
+    "tags": [
+      "promo"
+    ],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "",
+    "pubDate": "2025-12-25",
+    "views": 120,
+    "createdAt": "2025-12-25T03:00:00.000Z",
+    "updated": "2026-02-13T12:00:00.000Z",
+    "title": {
+      "th": "โปรโมชันเก่า Q4 2024 (หมดอายุ)",
+      "en": "Old Q4 2024 Promotion (Expired)"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": []
+  }
+]

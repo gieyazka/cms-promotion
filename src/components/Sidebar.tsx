@@ -1,34 +1,114 @@
-import Link from 'next/link';
-import { LayoutDashboard, FileText, Settings, PlusCircle } from 'lucide-react';
+'use client';
 
-const Sidebar = () => {
+import { useSyncExternalStore } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  LayoutDashboard, FileText, Settings, PlusCircle, BookOpen,
+  PanelLeftClose, PanelLeftOpen,
+} from 'lucide-react';
+
+const COLLAPSED_KEY = 'sidebar-collapsed';
+
+/**
+ * The collapsed preference lives in localStorage, which the server cannot see. Reading it
+ * during render would make the server and client produce different trees, which React 19
+ * treats as a hydration error. useSyncExternalStore renders the server snapshot (expanded)
+ * through hydration and then swaps to the stored value.
+ */
+const collapsedStore = {
+  listeners: new Set<() => void>(),
+  subscribe(listener: () => void) {
+    collapsedStore.listeners.add(listener);
+    return () => {
+      collapsedStore.listeners.delete(listener);
+    };
+  },
+  getSnapshot() {
+    return window.localStorage.getItem(COLLAPSED_KEY) === '1';
+  },
+  getServerSnapshot() {
+    return false;
+  },
+  toggle() {
+    const next = !collapsedStore.getSnapshot();
+    window.localStorage.setItem(COLLAPSED_KEY, next ? '1' : '0');
+    collapsedStore.listeners.forEach((listener) => listener());
+  },
+};
+
+const NAV = [
+  { href: '/', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/promotions/new', label: 'New Promotion', icon: PlusCircle, exact: true },
+  { href: '/promotions', label: 'All Promotions', icon: FileText, exact: false },
+  { href: '/knowledge-base', label: 'Knowledge Base', icon: BookOpen, exact: false },
+];
+
+export default function Sidebar() {
+  const collapsed = useSyncExternalStore(
+    collapsedStore.subscribe,
+    collapsedStore.getSnapshot,
+    collapsedStore.getServerSnapshot,
+  );
+  const pathname = usePathname();
+
+  const isActive = (href: string, exact: boolean) =>
+    exact ? pathname === href : pathname === href || pathname.startsWith(href + '/');
+
   return (
-    <div className="w-64 bg-gray-900 text-white h-screen flex flex-col">
-      <div className="p-6 text-xl font-bold border-b border-gray-800">
-        CMS Promotion
+    <div
+      className={`${collapsed ? 'w-16' : 'w-64'} flex-none bg-gray-900 text-white h-screen flex flex-col transition-[width] duration-200`}
+    >
+      <div className={`flex items-center h-16 border-b border-gray-800 ${collapsed ? 'justify-center' : 'justify-between px-4'}`}>
+        {!collapsed && <span className="text-lg font-bold truncate">CMS Promotion</span>}
+        <button
+          type="button"
+          onClick={collapsedStore.toggle}
+          title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          className="flex h-9 w-9 flex-none items-center justify-center rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+        >
+          {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+        </button>
       </div>
-      <nav className="flex-1 p-4 space-y-2">
-        <Link href="/" className="flex items-center space-x-3 p-2 rounded hover:bg-gray-800 transition-colors">
-          <LayoutDashboard size={20} />
-          <span>Dashboard</span>
-        </Link>
-        <Link href="/promotions/new" className="flex items-center space-x-3 p-2 rounded hover:bg-gray-800 transition-colors">
-          <PlusCircle size={20} />
-          <span>New Promotion</span>
-        </Link>
-        <Link href="/promotions" className="flex items-center space-x-3 p-2 rounded hover:bg-gray-800 transition-colors">
-          <FileText size={20} />
-          <span>All Promotions</span>
-        </Link>
+
+      <nav className="flex-1 p-2 space-y-1">
+        {NAV.map(({ href, label, icon: Icon, exact }) => (
+          <NavLink key={href} href={href} label={label} collapsed={collapsed} active={isActive(href, exact)}>
+            <Icon size={20} />
+          </NavLink>
+        ))}
       </nav>
-      <div className="p-4 border-t border-gray-800">
-        <Link href="/settings" className="flex items-center space-x-3 p-2 rounded hover:bg-gray-800 transition-colors">
+
+      <div className="p-2 border-t border-gray-800">
+        <NavLink href="/settings" label="Settings" collapsed={collapsed} active={isActive('/settings', false)}>
           <Settings size={20} />
-          <span>Settings</span>
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
-};
+}
 
-export default Sidebar;
+function NavLink({
+  href, label, collapsed, active, children,
+}: {
+  href: string;
+  label: string;
+  collapsed: boolean;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      // The title is the only affordance left once the label is hidden, so it stays on always.
+      title={label}
+      className={`flex items-center gap-3 rounded-lg p-2.5 transition-colors ${
+        collapsed ? 'justify-center' : ''
+      } ${active ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`}
+    >
+      <span className="flex-none">{children}</span>
+      {!collapsed && <span className="truncate text-sm font-medium">{label}</span>}
+    </Link>
+  );
+}

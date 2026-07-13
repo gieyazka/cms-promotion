@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"npx tsc --noEmit && echo \\\"tsc: clean\\\"; npx eslint src/components src/app && echo \\\"eslint: clean (or pre-existing only)\\\"\",\"timeout\":180000,\"description\":\"Typecheck and lint after sideba...",
+  "error": "Exit code 1\ntsc: clean\n\n/Users/sirky/Project/Cms-promotion/src/app/promotions/[id]/page.tsx\n    7:20   warning  'Plus' is defined but never used            @typescript-eslint/no-unused-vars\n    7:34   warning  'GripVertical' is defined but never used    @typescript-eslint/no-unused-vars\n    7:48   warning  'Star' is defined but never used            @typescript-eslint/no-unused-vars\n    7:62   warning  'LinkIcon' is defined but never used        @typescript-eslint/no-unused-vars\n    8:9    warni...",
+  "timestamp": "2026-07-13T05:18:47.410Z",
+  "retry_count": 1
+}
