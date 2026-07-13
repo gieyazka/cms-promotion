@@ -42,7 +42,7 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "cd /Users/sirky/Project/Cms-promotion; npx tsc --noEmit && echo \"tsc: clean\"; npx eslint src/components/kb && echo \"eslint: clean\"; npm run build 2>&1 | grep -E \"Compiled|Type error\" | head -3",
+    "buildCommand": "cd /Users/sirky/Project/Cms-promotion; npm run build 2>&1 | grep -E \"Compiled|Type error\" | head -2; rm -f /tmp/md-check.mjs /tmp/md-compiled.mjs /tmp/md-out.txt; echo \"temp files removed\"",
     "testCommand": null,
     "lintCommand": "npm run lint",
     "devCommand": "npm run dev",
@@ -193,6 +193,12 @@
       "type": "file"
     },
     {
+      "path": "src/components/kb/RichTextArea.tsx",
+      "accessCount": 11,
+      "lastAccessed": 1783956499833,
+      "type": "file"
+    },
+    {
       "path": "src/lib/articles-store.ts",
       "accessCount": 7,
       "lastAccessed": 1783951079889,
@@ -202,12 +208,6 @@
       "path": "src/components/Sidebar.tsx",
       "accessCount": 6,
       "lastAccessed": 1783954297421,
-      "type": "file"
-    },
-    {
-      "path": "src/components/kb/RichTextArea.tsx",
-      "accessCount": 6,
-      "lastAccessed": 1783955147227,
       "type": "file"
     },
     {
@@ -223,15 +223,15 @@
       "type": "file"
     },
     {
-      "path": "src/app/globals.css",
-      "accessCount": 4,
-      "lastAccessed": 1783954311409,
+      "path": "src/lib/md.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1783956460670,
       "type": "file"
     },
     {
-      "path": "src/lib/md.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1783917468849,
+      "path": "src/app/globals.css",
+      "accessCount": 4,
+      "lastAccessed": 1783954311409,
       "type": "file"
     },
     {

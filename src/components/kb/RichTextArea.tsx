@@ -1,9 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import { Bold, Italic, Link2, Palette } from 'lucide-react';
+import { Bold, Italic, Link2, List, ListOrdered, Palette } from 'lucide-react';
 import { TextColor } from '@/types/article';
 import { TEXT_COLORS } from '@/lib/text-colors';
+import { BULLET_LINE, ORDERED_LINE } from '@/lib/md';
 
 interface RichTextAreaProps {
   value: string;
@@ -39,12 +40,53 @@ function wrapSelection(
   });
 }
 
+/**
+ * Toggles a list marker on every line the selection touches (or the caret's own line).
+ * Already-marked lines are unmarked, so the button works both ways; ordered lists are
+ * renumbered from 1, since `md.tsx` renders them as an <ol> and ignores the written digits.
+ */
+function toggleList(
+  textarea: HTMLTextAreaElement | null,
+  value: string,
+  onChange: (value: string) => void,
+  ordered: boolean
+) {
+  const start = textarea?.selectionStart ?? value.length;
+  const end = textarea?.selectionEnd ?? value.length;
+
+  const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+  const lineEndIdx = value.indexOf('\n', end);
+  const lineEnd = lineEndIdx === -1 ? value.length : lineEndIdx;
+
+  const marker = ordered ? ORDERED_LINE : BULLET_LINE;
+  const lines = value.slice(lineStart, lineEnd).split('\n');
+  const allMarked = lines.every((l) => !l.trim() || marker.test(l));
+
+  const next = lines
+    .map((line, i) => {
+      if (!line.trim()) return line;
+      const bare = line.replace(BULLET_LINE, '').replace(ORDERED_LINE, '');
+      if (allMarked) return bare;
+      return ordered ? `${i + 1}. ${bare}` : `- ${bare}`;
+    })
+    .join('\n');
+
+  const nextValue = value.slice(0, lineStart) + next + value.slice(lineEnd);
+  onChange(nextValue);
+  requestAnimationFrame(() => {
+    textarea?.focus();
+    textarea?.setSelectionRange(lineStart, lineStart + next.length);
+  });
+}
+
 export default function RichTextArea({ value, onChange, placeholder, rows = 3, color, onColorChange }: RichTextAreaProps) {
   const taRef = useRef<HTMLTextAreaElement>(null);
 
   const bold = () => wrapSelection(taRef.current, value, onChange, '**', '**', 'bold text');
   const italic = () => wrapSelection(taRef.current, value, onChange, '*', '*', 'italic text');
   const link = () => wrapSelection(taRef.current, value, onChange, '[', '](https://)', 'link text');
+  const bullets = () => toggleList(taRef.current, value, onChange, false);
+  const numbers = () => toggleList(taRef.current, value, onChange, true);
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -64,6 +106,22 @@ export default function RichTextArea({ value, onChange, placeholder, rows = 3, c
           className="w-7 h-7 flex items-center justify-center rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors"
         >
           <Italic size={13} />
+        </button>
+        <button
+          type="button"
+          onClick={bullets}
+          title="Bulleted list"
+          className="w-7 h-7 flex items-center justify-center rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors"
+        >
+          <List size={13} />
+        </button>
+        <button
+          type="button"
+          onClick={numbers}
+          title="Numbered list"
+          className="w-7 h-7 flex items-center justify-center rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors"
+        >
+          <ListOrdered size={13} />
         </button>
         <button
           type="button"
