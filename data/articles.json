@@ -362,7 +362,8 @@
         "mode": "auto",
         "ids": []
       }
-    ]
+    ],
+    "showNew": true
   },
   {
     "id": "1783500000002",
@@ -373,14 +374,12 @@
       "rebate",
       "cashback"
     ],
-    "owners": [
-      "thongkham"
-    ],
+    "owners": [],
     "cover": "",
     "pubDate": "2026-07-07",
     "views": 5210,
     "createdAt": "2026-07-07T03:00:00.000Z",
-    "updated": "2026-07-13T07:00:00.000Z",
+    "updated": "2026-07-23T14:53:10.824Z",
     "title": {
       "th": "5 ขั้นตอนรับเงินคืน (Rebate) ง่าย ๆ กับ Earnex",
       "en": "5 Easy Steps to Get Your Rebate (Cashback) with Earnex"
@@ -484,14 +483,25 @@
           "th": "",
           "en": ""
         }
+      },
+      {
+        "id": "byj1km97bm8",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "หัวข้อใหม่",
+          "en": "New heading"
+        }
       }
-    ]
+    ],
+    "syncedAt": "2026-07-23T14:53:10.819Z",
+    "backendId": "2a0c7b77-ed1f-4134-bced-d8c2f62c69e0"
   },
   {
     "id": "1783500000003",
     "slug": "compare-forex-brokers-2026",
     "status": "draft",
-    "category": "cost-rebate",
+    "category": "financial-history",
     "tags": [
       "broker"
     ],
@@ -502,7 +512,7 @@
     "pubDate": "",
     "views": 0,
     "createdAt": "2026-07-13T11:00:00.000Z",
-    "updated": "2026-07-13T11:00:00.000Z",
+    "updated": "2026-07-23T15:14:01.717Z",
     "title": {
       "th": "เปรียบเทียบโบรกเกอร์ Forex ยอดนิยมปี 2026 ฉบับอัปเดตล่าสุด",
       "en": "Comparing Popular Forex Brokers in 2026: The Latest Update"
@@ -595,11 +605,13 @@
           ]
         ]
       }
-    ]
+    ],
+    "syncedAt": "2026-07-23T15:14:01.711Z",
+    "backendId": "6102ea87-c682-4f27-ab8c-b74b200763c5"
   },
   {
     "id": "1783500000004",
-    "slug": "candlestick-basics",
+    "slug": "candlestick-basic",
     "status": "draft",
     "category": "trading-tips",
     "tags": [
@@ -609,12 +621,12 @@
       "thanakorn"
     ],
     "cover": "",
-    "pubDate": "",
+    "pubDate": "2026-07-23",
     "views": 0,
     "createdAt": "2026-07-13T00:00:00.000Z",
-    "updated": "2026-07-13T00:00:00.000Z",
+    "updated": "2026-07-23T14:42:10.990Z",
     "title": {
-      "th": "พื้นฐานการอ่านกราฟแท่งเทียน (Candlestick) สำหรับนักเทรดมือใหม่ที่เพิ่งเริ่มต้นในตลาด Forex",
+      "th": "(test) พื้นฐานการอ่านกราฟแท่งเทียน (Candlestick) สำหรับนักเทรดมือใหม่ที่เพิ่งเริ่มต้นในตลาด Forex",
       "en": "Candlestick Chart Basics for Forex Traders Who Are Just Getting Started"
     },
     "metaTitle": {
@@ -812,5 +824,43 @@
       "en": ""
     },
     "blocks": []
+  },
+  {
+    "id": "1784782751527",
+    "slug": "",
+    "status": "trash",
+    "showNew": true,
+    "category": "",
+    "tags": [],
+    "owners": [],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-07-23T04:59:11.527Z",
+    "updated": "2026-07-23T05:14:23.625Z",
+    "title": {
+      "th": "",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bsd775kt3zo",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "syncedAt": "2026-07-23T04:59:11.527Z",
+    "backendId": "cd24970a-3e32-4e75-b653-2f1c627dce64"
   }
 ]

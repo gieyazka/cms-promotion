@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { readArticles, writeArticles } from '@/lib/articles-store';
+import { actorFrom, articleLabel, recordAudit } from '@/lib/audit-log';
 import { Article } from '@/types/article';
 
 export async function GET() {
@@ -29,6 +30,15 @@ export async function POST(req: NextRequest) {
 
     articles.push(article);
     await writeArticles(articles);
+
+    await recordAudit({
+      at: now,
+      actor: actorFrom(req),
+      action: 'create',
+      articleId: article.id,
+      title: articleLabel(article),
+      changes: [{ field: 'status', to: article.status }],
+    });
 
     return NextResponse.json(article, { status: 201 });
   } catch {

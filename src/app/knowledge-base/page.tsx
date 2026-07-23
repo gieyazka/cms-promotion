@@ -22,6 +22,7 @@ import {
 
 import { Article, ArticleStatus, CATEGORIES, OWNERS } from '@/types/article';
 import { readTime, slugify, uid } from '@/lib/blocks';
+import { actorHeaders, jsonWriteHeaders } from '@/lib/actor';
 import { useToast } from '@/components/ui/Toast';
 import { Modal } from '@/components/ui/Modal';
 import { StatusChip } from '@/components/kb/StatusChip';
@@ -135,7 +136,7 @@ export default function KnowledgeBaseList() {
         ids.map((id) =>
           fetch(`/api/articles/${id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: jsonWriteHeaders(),
             body: JSON.stringify({ status }),
           })
         )
@@ -151,7 +152,9 @@ export default function KnowledgeBaseList() {
 
   async function purgeArticles(ids: string[]) {
     try {
-      const results = await Promise.all(ids.map((id) => fetch(`/api/articles/${id}`, { method: 'DELETE' })));
+      const results = await Promise.all(
+        ids.map((id) => fetch(`/api/articles/${id}`, { method: 'DELETE', headers: actorHeaders() })),
+      );
       if (results.some((r) => !r.ok)) throw new Error('request failed');
       setArticles((prev) => prev.filter((a) => !ids.includes(a.id)));
       setSelected((prev) => prev.filter((id) => !ids.includes(id)));
@@ -170,7 +173,7 @@ export default function KnowledgeBaseList() {
     try {
       const res = await fetch('/api/articles', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: jsonWriteHeaders(),
         body: JSON.stringify({
           ...article,
           title: { th: titleTh, en: titleEn },

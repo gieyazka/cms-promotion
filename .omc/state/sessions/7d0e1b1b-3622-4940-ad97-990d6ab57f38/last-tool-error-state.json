@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__claude-in-chrome__navigate",
+  "tool_input_preview": "{\"url\":\"http://localhost:3000/knowledge-base/1783500000001\",\"tabId\":2020182025}",
+  "error": "Navigation was blocked by a \"Leave site?\" dialog — the page at http://localhost:3000/knowledge-base/1783500000001 has unsaved changes. The page is still open and unchanged. Either address the unsaved state first, or retry with force: true to discard it and navigate anyway.",
+  "timestamp": "2026-07-23T07:04:58.945Z",
+  "retry_count": 1
+}

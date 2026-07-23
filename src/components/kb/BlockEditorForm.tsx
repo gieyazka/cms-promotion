@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Plus, Trash2, ChevronUp, ChevronDown, Upload, Lock, Search, X } from 'lucide-react';
+import { Plus, Trash2, ChevronUp, ChevronDown, Lock, Search, X } from 'lucide-react';
 import { Article, ArticleBlock, CtaVariant, LText, Locale, RichItem, TextColor, emptyLText } from '@/types/article';
 import { Promotion } from '@/types/promotion';
 import { DEFAULT_ICON } from '@/lib/icons';
-import { useToast } from '@/components/ui/Toast';
 import IconPicker from './IconPicker';
+import ImagePicker from './ImagePicker';
 import RichTextArea from './RichTextArea';
 
 // ---------------------------------------------------------------------------
@@ -464,46 +464,9 @@ function RelatedIdPicker<T extends { id: string }>({
 }
 
 function ImageField({ url, onChange }: { url: string; onChange: (url: string) => void }) {
-  const [uploading, setUploading] = useState(false);
-  const { showToast } = useToast();
-
-  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    try {
-      const fd = new FormData();
-      fd.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (data?.url) {
-        onChange(data.url);
-      } else {
-        showToast('Upload failed', 'error');
-      }
-    } catch {
-      showToast('Upload failed', 'error');
-    } finally {
-      setUploading(false);
-      e.target.value = '';
-    }
-  }
-
   return (
     <div className="flex flex-col gap-2">
-      {url && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={url}
-          alt=""
-          className="w-full max-h-48 object-cover rounded-xl border border-gray-100 dark:border-gray-800"
-        />
-      )}
-      <label className="flex items-center justify-center gap-2 h-11 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 text-sm font-semibold text-blue-600 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-        <Upload size={16} />
-        {uploading ? 'Uploading...' : 'Upload image'}
-        <input type="file" accept="image/*" className="hidden" onChange={handleFile} disabled={uploading} />
-      </label>
+      <ImagePicker value={url} onChange={onChange} />
       <TextInput value={url} onChange={onChange} placeholder="or paste an image URL" mono />
     </div>
   );

@@ -279,6 +279,22 @@ export interface Article {
   createdAt: string;
   /** ISO timestamp of the last edit. */
   updated: string;
+  /**
+   * ISO timestamp of the last successful push to the Earnex backend. Written by the editor's
+   * Save button, the only thing that pushes; the blur autosave never touches it. Bookkeeping
+   * only — `backendId`, not this, decides whether the next push creates or updates.
+   */
+  syncedAt?: string;
+  /**
+   * The backend's uuid for this article's record — the article's identity on the server. Set
+   * from the create response and reused as the path id of `PATCH /knowledge_base/update/{id}`,
+   * so every later Save edits that one record instead of adding another.
+   *
+   * Absent means "no record to address": either never pushed, or pushed back when the create
+   * response carried no id. Either way the next Save creates and captures an id, so an article
+   * can end up with a stale orphan record on the server. Fix by hand if it matters.
+   */
+  backendId?: string;
   title: LText;
   metaTitle: LText;
   metaDesc: LText;

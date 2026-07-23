@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__claude-in-chrome__find",
+  "tool_input_preview": "{\"query\":\"history / clock icon button in the top header\",\"tabId\":2020182369}",
+  "error": "There is no history/clock icon button in the top header of this accessibility tree. The top header (banner element at ref_21) contains links and buttons for knowledge base navigation, edit, preview, save, publish functions, and language selection, but no history or clock icon button is present.",
+  "timestamp": "2026-07-23T14:56:01.281Z",
+  "retry_count": 1
+}

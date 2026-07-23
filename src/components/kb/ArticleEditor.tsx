@@ -1,11 +1,11 @@
 'use client';
 
-import { createElement, useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { createElement, useCallback, useEffect, useRef, useState, useSyncExternalStore, type FocusEvent as ReactFocusEvent } from 'react';
 import Link from 'next/link';
 import {
   ArrowLeft, Save, UploadCloud, Eye, Pencil, ChevronUp, ChevronDown, Copy, Trash2,
-  Plus, X, Upload, GripVertical, Monitor, Tablet, Smartphone, Search, Clock, FileText,
-  CheckCircle2, Loader2, PanelRightClose, PanelRightOpen, Languages, Braces, Activity,
+  Plus, X, GripVertical, Monitor, Tablet, Smartphone, Search, Clock, FileText,
+  CheckCircle2, Loader2, PanelRightClose, PanelRightOpen, Languages, Braces, Activity, History,
 } from 'lucide-react';
 
 import {
@@ -13,10 +13,14 @@ import {
 } from '@/types/article';
 import { newBlock, BLOCK_META, BLOCK_MENU, slugify, wordCount, readTime, uid } from '@/lib/blocks';
 import { toApiPayload } from '@/lib/article-api-format';
+import { syncKnowledgeBase } from '@/lib/kb-api';
+import { jsonWriteHeaders } from '@/lib/actor';
 import { getIcon } from '@/lib/icons';
 import { useToast } from '@/components/ui/Toast';
 import BlockEditorForm from '@/components/kb/BlockEditorForm';
+import ImagePicker from '@/components/kb/ImagePicker';
 import ArticlePreview from '@/components/kb/ArticlePreview';
+import { ArticleHistoryModal } from '@/components/kb/ArticleHistoryModal';
 import { StatusChip } from '@/components/kb/StatusChip';
 
 type ViewMode = 'edit' | 'preview';
@@ -191,7 +195,9 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
   const [seoOpen, setSeoOpen] = useState(false);
-  const [coverUploading, setCoverUploading] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  /** A header action (Save / Publish) is running. Deliberately NOT the same as `saving`. */
+  const [actionPending, setActionPending] = useState(false);
   const [tagInput, setTagInput] = useState('');
   const previewCollapsed = useSyncExternalStore(
     previewCollapsedStore.subscribe,
@@ -205,6 +211,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
   const articleRef = useRef(article);
   const articleIdRef = useRef(articleId);
   const dirtyRef = useRef(dirty);
+  // In-flight guard for onBlur/close autosave: a brand-new (id-less) article would
+  // otherwise POST twice on two quick blurs and create a duplicate. Set synchronously
+  // in saveArticle so blur handlers see it before the next event fires.
+  const savingRef = useRef(false);
 
   useEffect(() => {
     articleRef.current = article;
@@ -229,6 +239,34 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
     return () => window.removeEventListener('beforeunload', handler);
   }, []);
 
+  // Best-effort save when the tab is hidden/closed. Runs during page teardown, so it
+  // cannot go through saveArticle (its setState / response handling would never run).
+  // keepalive lets the request outlive the page. Note: keepalive bodies are capped at
+  // ~64KB by the browser, so a very large article's close-time flush may be dropped —
+  // the normal onBlur save (no such cap) covers the common path and beforeunload warns.
+  // sendBeacon can't be used here: it only POSTs, but updates need PUT.
+  useEffect(() => {
+    const flushSave = () => {
+      if (!dirtyRef.current || savingRef.current) return;
+      const id = articleIdRef.current;
+      fetch(id ? `/api/articles/${id}` : '/api/articles', {
+        method: id ? 'PUT' : 'POST',
+        headers: jsonWriteHeaders(),
+        body: JSON.stringify(articleRef.current),
+        keepalive: true,
+      }).catch(() => {});
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flushSave();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('pagehide', flushSave);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', flushSave);
+    };
+  }, []);
+
   // "Saved" is a transient confirmation, not a persistent status — it clears itself,
   // or gets pre-empted the moment `dirty` flips back to true (see the bar's render).
   useEffect(() => {
@@ -239,14 +277,24 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
 
   const t = useCallback((th: string, en: string) => (locale === 'th' ? th : en), [locale]);
 
-  const saveArticle = useCallback(async (articleToSave: Article, toastMsg?: string) => {
+  /**
+   * Writes the article to `data/articles.json`. `push` additionally sends it to the Earnex
+   * backend — creating the record the first time, PATCHing the same one after that — and only
+   * the Save button passes it: the blur autosave and the tab-close flush stay local so a push
+   * is always a deliberate press, not a side effect of focus leaving the edit column.
+   */
+  const performSave = useCallback(async (
+    articleToSave: Article,
+    { toastMsg, push = false }: { toastMsg?: string; push?: boolean } = {},
+  ) => {
+    savingRef.current = true;
     setSaving(true);
     try {
       let saved: Article;
       if (!articleIdRef.current) {
         const res = await fetch('/api/articles', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: jsonWriteHeaders(),
           body: JSON.stringify(articleToSave),
         });
         if (!res.ok) throw new Error('save failed');
@@ -256,7 +304,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
       } else {
         const res = await fetch(`/api/articles/${articleIdRef.current}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: jsonWriteHeaders(),
           body: JSON.stringify(articleToSave),
         });
         if (!res.ok) throw new Error('save failed');
@@ -265,15 +313,72 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
       setArticle(saved);
       setDirty(false);
       setJustSaved(true);
-      showToast(toastMsg ?? t('บันทึกแล้ว', 'Saved'), 'success');
+      // ONE toast per user action, at the end of it. A plain local save says nothing here:
+      // the header already shows the amber "unsaved" dot and the green "saved" tick, so a
+      // toast only repeats it — and since reaching for the Save button blurs the edit column,
+      // the blur autosave would otherwise toast right before the button's own two.
+      if (toastMsg) showToast(toastMsg, 'success');
+      // The backend is a second, independent destination: a failure there must not undo or
+      // mask the local save, so it reports on its own and never rethrows. `syncedAt` /
+      // `backendId` are bookkeeping — the latest push and the record it produced.
+      if (push) {
+        try {
+          const { backendId, created } = await syncKnowledgeBase(saved);
+          const marked: Article = { ...saved, syncedAt: new Date().toISOString(), ...(backendId ? { backendId } : {}) };
+          const markRes = await fetch(`/api/articles/${marked.id}`, {
+            method: 'PUT',
+            headers: jsonWriteHeaders(),
+            body: JSON.stringify(marked),
+          });
+          saved = markRes.ok ? await markRes.json() : marked;
+          setArticle(saved);
+          // Covers the local save too — it is the only toast the Save button produces.
+          showToast(
+            created
+              ? t('บันทึกและส่งขึ้นเซิร์ฟเวอร์แล้ว', 'Saved and sent to the server')
+              : t('บันทึกและอัปเดตบนเซิร์ฟเวอร์แล้ว', 'Saved and updated on the server'),
+            'success'
+          );
+        } catch (err) {
+          const detail = err instanceof Error ? err.message : String(err);
+          showToast(
+            t(`บันทึกในเครื่องแล้ว แต่ส่งขึ้นเซิร์ฟเวอร์ไม่สำเร็จ: ${detail}`,
+              `Saved locally, but the server push failed: ${detail}`),
+            'error'
+          );
+        }
+      }
       return saved;
     } catch {
       showToast(t('บันทึกไม่สำเร็จ กรุณาลองใหม่', 'Failed to save, please try again'), 'error');
       return null;
     } finally {
+      savingRef.current = false;
       setSaving(false);
     }
   }, [showToast, t]);
+
+  /**
+   * Saves run one at a time, queued rather than rejected.
+   *
+   * Reaching for the Save button IS the blur that triggers the autosave, so the two always
+   * arrive together: the autosave starts, and a fraction of a second later the click lands.
+   * Disabling the button while a save is in flight — which is what `disabled={saving}` used to
+   * do — meant that click hit a disabled button and was swallowed, so the press did nothing at
+   * all and the article never reached the server. Queueing instead lets the click wait its turn
+   * and keeps the two saves off each other's whole-file write to `data/articles.json`.
+   */
+  const saveQueueRef = useRef<Promise<unknown>>(Promise.resolve());
+  const saveArticle = useCallback((
+    articleToSave: Article,
+    options: { toastMsg?: string; push?: boolean } = {},
+  ) => {
+    const run = saveQueueRef.current.then(() => performSave(articleToSave, options));
+    // The queue must survive a failed save, so it chains on a swallowed copy; `run` itself
+    // still carries the real result to the caller.
+    saveQueueRef.current = run.catch(() => undefined);
+    return run;
+  }, [performSave]);
 
   // Marks the article dirty only — saving is a deliberate action from here on
   // (the Save button, or Publish/Unpublish), never a side effect of typing.
@@ -320,23 +425,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
 
   const toggleCollapsed = (id: string) => setCollapsed((prev) => ({ ...prev, [id]: !prev[id] }));
 
-  // ---- cover upload ----
-  const handleCoverUpload = async (file: File) => {
-    setCoverUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      if (!res.ok) throw new Error('upload failed');
-      const data: { url: string } = await res.json();
-      updateArticle({ cover: data.url });
-      showToast(t('อัปโหลดรูปสำเร็จ', 'Image uploaded'), 'success');
-    } catch {
-      showToast(t('อัปโหลดรูปไม่สำเร็จ', 'Upload failed'), 'error');
-    } finally {
-      setCoverUploading(false);
-    }
-  };
+  // Choosing a cover lives in ImagePicker — it owns both the file input and the gallery.
 
   // ---- tags ----
   const addTag = () => {
@@ -350,28 +439,55 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
   };
 
   // ---- save / publish ----
+  // The one deliberate "publish this payload" gesture in the editor, so the one that pushes.
+  // `actionPending` guards only against a second press of these buttons — never against the
+  // autosave, which would swallow the first press (see the note on `saveArticle`).
   const handleSaveClick = async () => {
-    await saveArticle(articleRef.current);
+    setActionPending(true);
+    try {
+      await saveArticle(articleRef.current, { push: true });
+    } finally {
+      setActionPending(false);
+    }
   };
 
+  // Option 2 autosave: only when focus actually leaves the whole edit column, not on
+  // every internal field-to-field blur. React's onBlur is delegated focusout, so it
+  // bubbles from every input inside; contains() filters out internal focus moves.
+  // relatedTarget === null means focus went somewhere non-focusable / another window
+  // or tab — treat that as leaving. Guards skip clean state and in-flight saves.
+  const handleColumnBlur = useCallback((e: ReactFocusEvent<HTMLDivElement>) => {
+    if (e.relatedTarget && e.currentTarget.contains(e.relatedTarget as Node)) return;
+    if (!dirtyRef.current || savingRef.current) return;
+    void saveArticle(articleRef.current);
+  }, [saveArticle]);
+
   const handlePublishClick = async () => {
-    if (article.status === 'published') {
-      const next: Article = { ...article, status: 'draft' as ArticleStatus };
-      setArticle(next);
-      await saveArticle(next, t('ยกเลิกการเผยแพร่แล้ว', 'Unpublished'));
-      return;
-    }
-    if (!article.title.th.trim() && !article.title.en.trim()) {
+    // Unpublishing never needs a title; only going the other way does.
+    if (article.status !== 'published' && !article.title.th.trim() && !article.title.en.trim()) {
       showToast(t('กรุณาใส่ชื่อบทความก่อนเผยแพร่', 'Please add a title before publishing'), 'error');
       return;
     }
-    const next: Article = {
-      ...article,
-      status: 'published',
-      pubDate: article.pubDate || new Date().toISOString().slice(0, 10),
-    };
+    const next: Article = article.status === 'published'
+      ? { ...article, status: 'draft' as ArticleStatus }
+      : {
+          ...article,
+          status: 'published',
+          pubDate: article.pubDate || new Date().toISOString().slice(0, 10),
+        };
     setArticle(next);
-    await saveArticle(next, t('เผยแพร่บทความเรียบร้อย', 'Published successfully'));
+    setActionPending(true);
+    try {
+      // Publish/Unpublish only move `status`, which the backend payload does not even carry —
+      // they stay local; sending is the Save button's job.
+      await saveArticle(next, {
+        toastMsg: next.status === 'published'
+          ? t('เผยแพร่บทความเรียบร้อย', 'Published successfully')
+          : t('ยกเลิกการเผยแพร่แล้ว', 'Unpublished'),
+      });
+    } finally {
+      setActionPending(false);
+    }
   };
 
   // ---- language toggle ----
@@ -616,49 +732,11 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           </div>
         </Field>
         <Field label={t('รูปหน้าปก (Cover)', 'Cover image')}>
-          {article.cover ? (
-            <div className="relative h-32 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={article.cover} alt="Cover" className="h-full w-full object-cover" />
-              <button
-                type="button"
-                onClick={() => updateArticle({ cover: '' })}
-                className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-lg bg-black/50 text-white hover:bg-black/70"
-              >
-                <X size={14} />
-              </button>
-            </div>
-          ) : (
-            <label
-              className={`flex h-28 flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed cursor-pointer transition-colors ${
-                coverUploading
-                  ? 'border-blue-300 bg-blue-50 dark:bg-blue-900/10'
-                  : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 hover:bg-blue-50/50 dark:hover:bg-blue-900/10'
-              }`}
-            >
-              {coverUploading ? (
-                <Loader2 size={20} className="animate-spin text-blue-500" />
-              ) : (
-                <>
-                  <Upload size={20} className="text-blue-500" />
-                  <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">
-                    {t('คลิกเพื่ออัปโหลดรูปหน้าปก', 'Click to upload cover image')}
-                  </span>
-                </>
-              )}
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                disabled={coverUploading}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleCoverUpload(file);
-                  e.target.value = '';
-                }}
-              />
-            </label>
-          )}
+          <ImagePicker
+            value={article.cover}
+            onChange={(cover) => updateArticle({ cover })}
+            previewClassName="h-32 w-full object-cover"
+          />
         </Field>
         {article.cover && (
           <div className="flex flex-col gap-1.5">
@@ -1068,10 +1146,29 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
               <Eye size={13} /> {t('ตัวอย่าง', 'Preview')}
             </button>
           </div>
+          {/* Only once the article exists: history is keyed by id, and an unsaved new article
+              has no id and therefore nothing logged against it yet. */}
+          {articleId ? (
+            <button
+              type="button"
+              onClick={() => setHistoryOpen(true)}
+              title={t('ประวัติการแก้ไขบทความนี้', 'This article’s edit history')}
+              className="flex h-10 w-10 flex-none items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
+            >
+              <History size={18} />
+            </button>
+          ) : null}
+          {/* Gated on neither `dirty` nor `saving`: the blur autosave fires the moment focus
+              leaves the edit column — which is exactly the act of reaching for this button — so
+              either gate would grey the button out a frame before the click landed, and the
+              press would be swallowed. Local persistence is the autosave's job; this button's
+              job is sending the article to the server, and that is worth doing whether or not
+              the local copy changed since. */}
           <button
             type="button"
             onClick={handleSaveClick}
-            disabled={saving || (!dirty && !isNew)}
+            disabled={actionPending}
+            title={t('บันทึกและส่งขึ้นเซิร์ฟเวอร์', 'Save and send to the server')}
             className="flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
@@ -1080,7 +1177,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           <button
             type="button"
             onClick={handlePublishClick}
-            disabled={saving}
+            disabled={actionPending}
             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50"
           >
             <UploadCloud size={16} />
@@ -1093,7 +1190,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         <div className="flex flex-col lg:flex-row lg:items-start gap-6">
           {/* Edit column: full width below lg (when that's the active mobile view),
               always visible and flexing to fill remaining space at lg+. */}
-          <div className={`w-full lg:flex-1 lg:min-w-0 flex-col gap-6 ${view === 'preview' ? 'hidden lg:flex' : 'flex'}`}>
+          <div
+            onBlur={handleColumnBlur}
+            className={`w-full lg:flex-1 lg:min-w-0 flex-col gap-6 ${view === 'preview' ? 'hidden lg:flex' : 'flex'}`}
+          >
             {renderLangBar()}
             {renderMetaPanel()}
             <div>
@@ -1149,6 +1249,12 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           )}
         </div>
       </div>
+
+      {/* Mounted only while open, so each opening refetches — the history is stale the moment
+          the Save button writes another entry. */}
+      {historyOpen && articleId ? (
+        <ArticleHistoryModal articleId={articleId} onClose={() => setHistoryOpen(false)} />
+      ) : null}
     </div>
   );
 }

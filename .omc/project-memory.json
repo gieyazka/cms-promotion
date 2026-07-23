@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1783913115082,
+  "lastScanned": 1784774613327,
   "projectRoot": "/Users/sirky/Project/Cms-promotion",
   "techStack": {
     "languages": [
@@ -42,7 +42,7 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "cd /Users/sirky/Project/Cms-promotion; npm run build 2>&1 | grep -E \"Compiled|Type error\" | head -2; rm -f /tmp/md-check.mjs /tmp/md-compiled.mjs /tmp/md-out.txt; echo \"temp files removed\"",
+    "buildCommand": "npx tsc --noEmit 2>&1 | tail -6; npx eslint src/components/kb/ArticleEditor.tsx 2>&1 | tail -8; echo \"checks done\"",
     "testCommand": null,
     "lintCommand": "npm run lint",
     "devCommand": "npm run dev",
@@ -76,9 +76,10 @@
     "data": {
       "path": "data",
       "purpose": "Data files",
-      "fileCount": 1,
-      "lastAccessed": 1783913115045,
+      "fileCount": 2,
+      "lastAccessed": 1784774613300,
       "keyFiles": [
+        "articles.json",
         "promotions.json"
       ]
     },
@@ -86,7 +87,7 @@
       "path": "public",
       "purpose": "Public files",
       "fileCount": 5,
-      "lastAccessed": 1783913115046,
+      "lastAccessed": 1784774613303,
       "keyFiles": [
         "file.svg",
         "globe.svg",
@@ -99,14 +100,14 @@
       "path": "src",
       "purpose": "Source code",
       "fileCount": 1,
-      "lastAccessed": 1783913115071,
+      "lastAccessed": 1784774613310,
       "keyFiles": []
     },
     "src/app": {
       "path": "src/app",
       "purpose": "Application code",
       "fileCount": 4,
-      "lastAccessed": 1783913115074,
+      "lastAccessed": 1784774613312,
       "keyFiles": [
         "favicon.ico",
         "globals.css",
@@ -117,7 +118,7 @@
       "path": "src/components",
       "purpose": "UI components",
       "fileCount": 2,
-      "lastAccessed": 1783913115074,
+      "lastAccessed": 1784774613315,
       "keyFiles": [
         "Sidebar.tsx",
         "TiptapEditor.tsx"
@@ -126,18 +127,21 @@
     "src/lib": {
       "path": "src/lib",
       "purpose": "Library code",
-      "fileCount": 1,
-      "lastAccessed": 1783913115074,
+      "fileCount": 8,
+      "lastAccessed": 1784774613316,
       "keyFiles": [
-        "minio.ts"
+        "article-api-format.ts",
+        "articles-store.ts",
+        "blocks.ts"
       ]
     },
     "src/types": {
       "path": "src/types",
       "purpose": "Type definitions",
-      "fileCount": 2,
-      "lastAccessed": 1783913115074,
+      "fileCount": 3,
+      "lastAccessed": 1784774613317,
       "keyFiles": [
+        "article.ts",
         "promotion.ts",
         "promotion.ts.bak"
       ]
@@ -146,206 +150,140 @@
   "hotPaths": [
     {
       "path": "src/components/kb/ArticleEditor.tsx",
-      "accessCount": 75,
-      "lastAccessed": 1783955874973,
-      "type": "file"
-    },
-    {
-      "path": "src/components/kb/ArticlePreview.tsx",
-      "accessCount": 40,
-      "lastAccessed": 1783955915718,
-      "type": "file"
-    },
-    {
-      "path": "src/components/kb/BlockEditorForm.tsx",
-      "accessCount": 33,
-      "lastAccessed": 1783955141490,
-      "type": "file"
-    },
-    {
-      "path": "src/types/article.ts",
-      "accessCount": 29,
-      "lastAccessed": 1783953124395,
-      "type": "file"
-    },
-    {
-      "path": "src/components/kb/BlockView.tsx",
-      "accessCount": 25,
-      "lastAccessed": 1783951043487,
-      "type": "file"
-    },
-    {
-      "path": "AGENTS.md",
-      "accessCount": 23,
-      "lastAccessed": 1783952135811,
-      "type": "file"
-    },
-    {
-      "path": "src/lib/blocks.ts",
-      "accessCount": 15,
-      "lastAccessed": 1783953130418,
-      "type": "file"
-    },
-    {
-      "path": "data/articles.json",
-      "accessCount": 13,
-      "lastAccessed": 1783954681243,
-      "type": "file"
-    },
-    {
-      "path": "src/components/kb/RichTextArea.tsx",
-      "accessCount": 11,
-      "lastAccessed": 1783956499833,
-      "type": "file"
-    },
-    {
-      "path": "src/lib/articles-store.ts",
-      "accessCount": 7,
-      "lastAccessed": 1783951079889,
+      "accessCount": 57,
+      "lastAccessed": 1784819276005,
       "type": "file"
     },
     {
       "path": "src/components/Sidebar.tsx",
+      "accessCount": 14,
+      "lastAccessed": 1784793769320,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/kb-api.ts",
+      "accessCount": 9,
+      "lastAccessed": 1784811416297,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/audit-log.ts",
+      "accessCount": 8,
+      "lastAccessed": 1784818354361,
+      "type": "file"
+    },
+    {
+      "path": "src/app/activity/page.tsx",
+      "accessCount": 7,
+      "lastAccessed": 1784818403757,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/article-api-format.ts",
       "accessCount": 6,
-      "lastAccessed": 1783954297421,
+      "lastAccessed": 1784811278705,
       "type": "file"
     },
     {
-      "path": "src/components/kb/IconPicker.tsx",
-      "accessCount": 5,
-      "lastAccessed": 1783918207477,
+      "path": "src/types/article.ts",
+      "accessCount": 6,
+      "lastAccessed": 1784811446219,
       "type": "file"
     },
     {
-      "path": "src/lib/icons.ts",
-      "accessCount": 5,
-      "lastAccessed": 1783953130116,
-      "type": "file"
-    },
-    {
-      "path": "src/lib/md.tsx",
-      "accessCount": 5,
-      "lastAccessed": 1783956460670,
-      "type": "file"
-    },
-    {
-      "path": "src/app/globals.css",
+      "path": "src/components/kb/BlockEditorForm.tsx",
       "accessCount": 4,
-      "lastAccessed": 1783954311409,
-      "type": "file"
-    },
-    {
-      "path": "src/components/ui/Modal.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1783917543519,
-      "type": "file"
-    },
-    {
-      "path": "src/components/ui/Toast.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1783917554541,
-      "type": "file"
-    },
-    {
-      "path": "src/app/api/articles/route.ts",
-      "accessCount": 3,
-      "lastAccessed": 1783917623327,
+      "lastAccessed": 1784786911361,
       "type": "file"
     },
     {
       "path": "src/app/api/articles/[id]/route.ts",
       "accessCount": 3,
-      "lastAccessed": 1783917631956,
+      "lastAccessed": 1784793646872,
       "type": "file"
     },
     {
-      "path": "src/components/kb/TableOfContents.tsx",
+      "path": "src/components/ui/Modal.tsx",
       "accessCount": 3,
-      "lastAccessed": 1783918060278,
+      "lastAccessed": 1784818286774,
       "type": "file"
     },
     {
-      "path": "src/app/knowledge-base/[id]/page.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1783918221600,
+      "path": "src/app/api/articles/route.ts",
+      "accessCount": 2,
+      "lastAccessed": 1784793620387,
       "type": "file"
     },
     {
-      "path": "src/app/page.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1783954300630,
+      "path": "src/app/api/audit-log/route.ts",
+      "accessCount": 2,
+      "lastAccessed": 1784818361556,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/admin-auth.ts",
+      "accessCount": 1,
+      "lastAccessed": 1784780946376,
+      "type": "file"
+    },
+    {
+      "path": "src/app/login/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1784780975193,
       "type": "file"
     },
     {
       "path": "src/app/layout.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1783954330577,
+      "accessCount": 1,
+      "lastAccessed": 1784781824597,
       "type": "file"
     },
     {
-      "path": "src/app/promotions/new/page.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1783917580133,
+      "path": "src/lib/blocks.ts",
+      "accessCount": 1,
+      "lastAccessed": 1784782424226,
       "type": "file"
     },
     {
-      "path": "src/lib/text-colors.ts",
-      "accessCount": 2,
-      "lastAccessed": 1783949878677,
+      "path": "src/lib/minio.ts",
+      "accessCount": 1,
+      "lastAccessed": 1784786723185,
+      "type": "file"
+    },
+    {
+      "path": "src/app/api/media/route.ts",
+      "accessCount": 1,
+      "lastAccessed": 1784786735962,
+      "type": "file"
+    },
+    {
+      "path": "src/components/kb/ImagePicker.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1784786790253,
+      "type": "file"
+    },
+    {
+      "path": "src/lib/actor.ts",
+      "accessCount": 1,
+      "lastAccessed": 1784793656344,
       "type": "file"
     },
     {
       "path": "src/app/knowledge-base/page.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1783954333786,
+      "accessCount": 1,
+      "lastAccessed": 1784793713207,
       "type": "file"
     },
     {
-      "path": "src/app/promotions/page.tsx",
+      "path": "src/components/kb/AuditEntryCard.tsx",
       "accessCount": 1,
-      "lastAccessed": 1783917475631,
+      "lastAccessed": 1784818339959,
       "type": "file"
     },
     {
-      "path": "src/app/api/upload/route.ts",
+      "path": "src/components/kb/ArticleHistoryModal.tsx",
       "accessCount": 1,
-      "lastAccessed": 1783917623276,
-      "type": "file"
-    },
-    {
-      "path": "src/components/kb/StatusChip.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1783917675897,
-      "type": "file"
-    },
-    {
-      "path": "src/app/knowledge-base/new/page.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1783918066113,
-      "type": "file"
-    },
-    {
-      "path": "eslint.config.mjs",
-      "accessCount": 1,
-      "lastAccessed": 1783918409999,
-      "type": "file"
-    },
-    {
-      "path": "src/lib/theme.ts",
-      "accessCount": 1,
-      "lastAccessed": 1783954321611,
-      "type": "file"
-    },
-    {
-      "path": "src/app/settings/page.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1783954343023,
-      "type": "file"
-    },
-    {
-      "path": "src/lib/article-api-format.ts",
-      "accessCount": 1,
-      "lastAccessed": 1783955516592,
+      "lastAccessed": 1784818377882,
       "type": "file"
     }
   ],

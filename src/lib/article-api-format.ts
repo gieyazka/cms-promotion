@@ -1,15 +1,23 @@
 import { Article, ArticleBlock, LText, Locale } from '@/types/article';
+import { readTime } from '@/lib/blocks';
 
 /**
- * Renders an Article in the backend-facing shape the promotions module previews
- * (`parseToAPI` in app/promotions/new/page.tsx): a flat record plus `translations: [{locale, …}]`,
- * and blocks as `{ type, sort_order, translations: [{ locale, data }] }`.
+ * Renders an Article as `KnowledgeBaseCreateInput` — the exact body of
+ * `POST {KB_API_BASE}/knowledge_base/create` on the Earnex backend (see `kb-api.ts`).
+ * The envelope is the same shape the promotions module previews via `parseToAPI`, minus
+ * the promotion-only fields:
+ *   - post_date        → article.pubDate (the backend's only date; there is no date_end)
+ *   - read_time        → readTime(article) in minutes, computed from the Thai body
+ *   - detail           → article.metaDesc[locale] (the nearest one-line text an article has)
+ *   - banner_image_url → article.cover
+ *   - blocks           → `{ type, sort_order, translations: [{ locale, data }] }`
  *
  * This is a VIEW of the article, not how it is stored. The KB stores structure once and
  * bilingual text at the leaves (`LText`); this format instead duplicates the whole block —
  * structure and all — once per locale. Converting is therefore lossy in one direction: two
  * locales can express different structures here, which the KB type system forbids on purpose.
- * Nothing reads this back. `PUT /api/articles/[id]` still takes the raw `Article`.
+ * Nothing reads this back. `data/articles.json` and `PUT /api/articles/[id]` still hold and
+ * take the raw `Article`.
  */
 
 const LOCALES: Locale[] = ['th', 'en'];
@@ -42,25 +50,26 @@ function blockToApi(block: ArticleBlock, index: number) {
   };
 }
 
+/**
+ * A draft has no `pubDate` yet (`newArticle()` starts it as `''`; publishing fills it in), but
+ * the backend column is a MySQL DATE — an empty string there fails the insert with
+ * `1292 Incorrect date value: ''`. Fall back to the day the article was created so the payload
+ * always carries a real `YYYY-MM-DD`; publishing later overwrites it with the chosen date.
+ */
+function postDate(article: Article): string {
+  return (article.pubDate || article.createdAt || article.updated || '').slice(0, 10);
+}
+
 export function toApiPayload(article: Article) {
   return {
-    slug: article.slug,
-    status: article.status,
-    category: article.category,
+    post_date: postDate(article),
     tags: article.tags,
-    owners: article.owners,
-    cover_image_url: article.cover,
-    cover_overlay: article.coverOverlay === true,
-    hero_badge: article.heroBadge,
-    hero_title_color: article.heroTitleColor ?? 'light',
-    show_new: article.showNew !== false,
-    pub_date: article.pubDate,
-    views: article.views,
+    read_time: readTime(article),
     translations: LOCALES.map((locale) => ({
       locale,
       title: article.title[locale],
-      meta_title: article.metaTitle[locale],
-      meta_desc: article.metaDesc[locale],
+      detail: article.metaDesc[locale],
+      banner_image_url: article.cover || null,
     })),
     blocks: article.blocks.map(blockToApi),
   };
