@@ -65,6 +65,8 @@ export function toApiPayload(article: Article) {
     post_date: postDate(article),
     tags: article.tags,
     read_time: readTime(article),
+    seo_path: article.seo_path,
+    category: article.category,
     translations: LOCALES.map((locale) => ({
       locale,
       title: article.title[locale],

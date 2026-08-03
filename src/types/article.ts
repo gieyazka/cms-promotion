@@ -230,7 +230,7 @@ export type ArticleBlock =
 
 export interface Article {
   id: string;
-  slug: string;
+  seo_path: string;
   status: ArticleStatus;
   /**
    * The green "NEW" pill shown on the article itself (independent of `status`).
@@ -302,9 +302,9 @@ export interface Article {
 }
 
 export const CATEGORIES: { value: string; label: LText }[] = [
-  { value: 'trading-tips', label: { th: 'เคล็ดลับการเทรด', en: 'Trading Tips' } },
-  { value: 'financial-history', label: { th: 'ประวัติการเงิน', en: 'Financial History' } },
-  { value: 'cost-rebate', label: { th: 'ต้นทุนและรีเบท', en: 'Cost & Rebate' } },
+  { value: 'trading_tips', label: { th: 'เคล็ดลับการเทรด', en: 'Trading Tips' } },
+  { value: 'financial_history', label: { th: 'ประวัติการเงิน', en: 'Financial History' } },
+  { value: 'cost_rebate', label: { th: 'ต้นทุนและรีเบท', en: 'Cost & Rebate' } },
 ];
 
 export const OWNERS: { value: string; label: LText }[] = [

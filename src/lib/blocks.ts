@@ -156,7 +156,7 @@ export function newArticle(): Article {
   const now = new Date().toISOString();
   return {
     id: '',
-    slug: '',
+    seo_path: '',
     status: 'draft',
     showNew: true,
     category: '',

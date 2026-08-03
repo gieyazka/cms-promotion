@@ -862,5 +862,543 @@
     ],
     "syncedAt": "2026-07-23T04:59:11.527Z",
     "backendId": "cd24970a-3e32-4e75-b653-2f1c627dce64"
+  },
+  {
+    "id": "1785239407071",
+    "slug": "test-test",
+    "status": "published",
+    "showNew": true,
+    "category": "trading-tips",
+    "tags": [],
+    "owners": [],
+    "cover": "http://61.47.10.155:8012/knowledge_base/image/gold-safe-haven-asset.png",
+    "pubDate": "2026-07-29",
+    "views": 0,
+    "createdAt": "2026-07-28T11:50:07.071Z",
+    "updated": "2026-07-28T11:52:40.585Z",
+    "title": {
+      "th": "ทดสอบ",
+      "en": "test"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bendehl8c0j",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      },
+      {
+        "id": "bs7gbj4q96l",
+        "type": "paragraph",
+        "text": {
+          "th": "พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://) ได้",
+          "en": "Type here. **Bold**, *italic* and [links](https://) are supported."
+        }
+      },
+      {
+        "id": "bpoet870nwt",
+        "type": "paragraph",
+        "text": {
+          "th": "พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://) ได้",
+          "en": "Type here. **Bold**, *italic* and [links](https://) are supported."
+        }
+      }
+    ],
+    "coverOverlay": false,
+    "syncedAt": "2026-07-28T11:51:29.609Z",
+    "backendId": "66c613a7-adf4-463a-b88e-7139237a5fa6"
+  },
+  {
+    "id": "1785240538726",
+    "slug": "",
+    "status": "trash",
+    "showNew": true,
+    "category": "",
+    "tags": [],
+    "owners": [],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-07-28T12:08:58.726Z",
+    "updated": "2026-08-03T07:51:01.631Z",
+    "title": {
+      "th": "",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "ba0a2id1zzp",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      },
+      {
+        "id": "buht6nq99ye",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage your trading costs with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "HandCoins",
+            "content": {
+              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
+            }
+          },
+          {
+            "icon": "BarChart3",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
+              "en": "Track your accumulated rebates in real time, in one app"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1785742825975",
+    "slug": "george-soros-black-wednesday-earnex-seo",
+    "status": "trash",
+    "showNew": true,
+    "category": "financial-history",
+    "tags": [],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/george-soros-black-wednesday-pound.png",
+    "pubDate": "2026-07-28",
+    "views": 0,
+    "createdAt": "2026-08-03T07:40:25.975Z",
+    "updated": "2026-08-03T07:50:56.156Z",
+    "title": {
+      "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ ชายผู้ทำให้แบงก์ชาติอังกฤษถังแตก และบทเรียนเทรดที่รายย่อยใช้ได้จริง",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bongydfpxvk",
+        "type": "intro",
+        "text": {
+          "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ คือหนึ่งในเหตุการณ์ที่ถูกพูดถึงมากที่สุดในประวัติศาสตร์การเทรดค่าเงิน เพราะชายคนเดียวกับกองทุนของเขา เดิมพันสวนกับธนาคารกลางทั้งประเทศในวันเดียว แล้วทำกำไรกว่าพันล้านปอนด์ เรื่องนี้เกิดขึ้นจริงเมื่อปี 1992 และยังถูกบันทึกไว้ในตำราการเงินโลกมาจนถึงวันนี้ บทความนี้จะเล่าว่ามันเกิดขึ้นได้อย่างไร และมีบทเรียนอะไรที่เทรดเดอร์รายย่อยเอาไปใช้ได้จริง",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      },
+      {
+        "id": "bu1php0581z",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ เกิดอะไรขึ้น",
+          "en": "New heading"
+        }
+      },
+      {
+        "id": "b9dy6bvcc3q",
+        "type": "paragraph",
+        "text": {
+          "th": "ย้อนกลับไปปี 1992 ตอนนั้นอังกฤษผูกค่าเงินปอนด์ไว้ในระบบของยุโรปที่ชื่อ ERM แปลว่ารัฐบาลต้องคอยประคองไม่ให้ปอนด์อ่อนหลุดกรอบที่ตกลงกันไว้ ปัญหาคือเศรษฐกิจจริงตอนนั้นไม่ได้สวยอย่างที่ราคาบอก เงินเฟ้อสูงราวสามเท่าของเยอรมนี และดอกเบี้ยก็สูง การฝืนตรึงค่าเงินให้แข็งเกินพื้นฐาน มันเหมือนการเอามือกดลูกบอลไว้ใต้น้ำ ยิ่งกดแรง แรงที่ดันกลับก็ยิ่งมาก",
+          "en": "Type here. **Bold**, *italic* and [links](https://) are supported."
+        }
+      },
+      {
+        "id": "bhjhquu8o88",
+        "type": "rebateSteps"
+      },
+      {
+        "id": "b6kvfzeoxcs",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage your trading costs with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "HandCoins",
+            "content": {
+              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
+            }
+          },
+          {
+            "icon": "Scale",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
+              "en": "Track your accumulated rebates in real time, in one app"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1785743096919",
+    "slug": "george-soros-black-wednesday-earnex-seo",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial-history",
+    "tags": [],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/george-soros-black-wednesday-pound.png",
+    "pubDate": "2026-07-28",
+    "views": 0,
+    "createdAt": "2026-08-03T07:44:56.919Z",
+    "updated": "2026-08-03T07:46:41.944Z",
+    "title": {
+      "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ ชายผู้ทำให้แบงก์ชาติอังกฤษถังแตก และบทเรียนเทรดที่รายย่อยใช้ได้จริง",
+      "en": "George Soros and Black Wednesday: The Man Who Broke the Bank of England and the Trading Lessons You Can Use"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bu5vvekurun",
+        "type": "intro",
+        "text": {
+          "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ คือหนึ่งในเหตุการณ์ที่ถูกพูดถึงมากที่สุดในประวัติศาสตร์การเทรดค่าเงิน เพราะชายคนเดียวกับกองทุนของเขา เดิมพันสวนกับธนาคารกลางทั้งประเทศในวันเดียว แล้วทำกำไรกว่าพันล้านปอนด์ เรื่องนี้เกิดขึ้นจริงเมื่อปี 1992 และยังถูกบันทึกไว้ในตำราการเงินโลกมาจนถึงวันนี้ บทความนี้จะเล่าว่ามันเกิดขึ้นได้อย่างไร และมีบทเรียนอะไรที่เทรดเดอร์รายย่อยเอาไปใช้ได้จริง",
+          "en": "George Soros breaking the British pound is one of the most talked-about events in the history of currency trading, because one man and his fund bet against an entire central bank in a single day and walked away with more than a billion pounds. It happened in 1992 and is still written into financial textbooks today. This article explains how it happened and what lessons a retail trader can actually use."
+        }
+      },
+      {
+        "id": "b1lmagfcptq",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ เกิดอะไรขึ้นในวัน Black Wednesday",
+          "en": "How George Soros broke the pound on Black Wednesday"
+        }
+      },
+      {
+        "id": "bjkgsl7bvhi",
+        "type": "paragraph",
+        "text": {
+          "th": "ย้อนกลับไปปี 1992 ตอนนั้นอังกฤษผูกค่าเงินปอนด์ไว้ในระบบของยุโรปที่ชื่อ ERM แปลว่ารัฐบาลต้องคอยประคองไม่ให้ปอนด์อ่อนหลุดกรอบที่ตกลงกันไว้ ปัญหาคือเศรษฐกิจจริงตอนนั้นไม่ได้สวยอย่างที่ราคาบอก เงินเฟ้อสูงราวสามเท่าของเยอรมนี และดอกเบี้ยก็สูง การฝืนตรึงค่าเงินให้แข็งเกินพื้นฐาน มันเหมือนการเอามือกดลูกบอลไว้ใต้น้ำ ยิ่งกดแรง แรงที่ดันกลับก็ยิ่งมาก",
+          "en": "Back in 1992 the UK pegged the pound inside a European system called the ERM, which meant the government had to keep the pound from weakening past an agreed band. The problem was that the real economy was not as strong as the price suggested. Inflation ran about three times that of Germany and interest rates were high. Holding a currency artificially strong is like pushing a ball underwater. The harder you push, the harder it pushes back."
+        }
+      },
+      {
+        "id": "by4m02is0x6",
+        "type": "rebateSteps"
+      },
+      {
+        "id": "bo7m4s9l4jy",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage your trading costs with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "HandCoins",
+            "content": {
+              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
+            }
+          },
+          {
+            "icon": "Scale",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
+              "en": "Track your accumulated rebates in real time, in one app"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1785743480430",
+    "seo_path": "george-soros-black-wednesday-earnex-seo",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial-history",
+    "tags": [],
+    "owners": [
+      "marketing"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/george-soros-black-wednesday-pound.png",
+    "pubDate": "2026-07-28",
+    "views": 0,
+    "createdAt": "2026-08-03T07:51:20.430Z",
+    "updated": "2026-08-03T07:53:52.175Z",
+    "title": {
+      "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ ชายผู้ทำให้แบงก์ชาติอังกฤษถังแตก และบทเรียนเทรดที่รายย่อยใช้ได้จริง",
+      "en": "George Soros and Black Wednesday: The Man Who Broke the Bank of England and the Trading Lessons You Can Use"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bv95puz8wfl",
+        "type": "intro",
+        "text": {
+          "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ คือหนึ่งในเหตุการณ์ที่ถูกพูดถึงมากที่สุดในประวัติศาสตร์การเทรดค่าเงิน เพราะชายคนเดียวกับกองทุนของเขา เดิมพันสวนกับธนาคารกลางทั้งประเทศในวันเดียว แล้วทำกำไรกว่าพันล้านปอนด์ เรื่องนี้เกิดขึ้นจริงเมื่อปี 1992 และยังถูกบันทึกไว้ในตำราการเงินโลกมาจนถึงวันนี้ บทความนี้จะเล่าว่ามันเกิดขึ้นได้อย่างไร และมีบทเรียนอะไรที่เทรดเดอร์รายย่อยเอาไปใช้ได้จริง",
+          "en": "George Soros breaking the British pound is one of the most talked-about events in the history of currency trading, because one man and his fund bet against an entire central bank in a single day and walked away with more than a billion pounds. It happened in 1992 and is still written into financial textbooks today. This article explains how it happened and what lessons a retail trader can actually use."
+        }
+      },
+      {
+        "id": "bqifjzqyumy",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "หัวข้อใหม่",
+          "en": "How George Soros broke the pound on Black Wednesday"
+        }
+      },
+      {
+        "id": "bt93xi2f3fm",
+        "type": "paragraph",
+        "text": {
+          "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ เกิดอะไรขึ้นในวัน Black Wednesday",
+          "en": "Back in 1992 the UK pegged the pound inside a European system called the ERM, which meant the government had to keep the pound from weakening past an agreed band. The problem was that the real economy was not as strong as the price suggested. Inflation ran about three times that of Germany and interest rates were high. Holding a currency artificially strong is like pushing a ball underwater. The harder you push, the harder it pushes back."
+        }
+      }
+    ],
+    "syncedAt": "2026-08-03T07:53:52.170Z",
+    "backendId": "7e7ca6a6-cca0-484c-97c2-9e4c753ecf38"
+  },
+  {
+    "id": "1785746186435",
+    "seo_path": "earnex-seo-7-gold-facts",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial_history",
+    "tags": [],
+    "owners": [
+      "content-team",
+      "marketing"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/7-gold-facts-trading.png",
+    "pubDate": "2026-08-06",
+    "views": 0,
+    "createdAt": "2026-08-03T08:36:26.435Z",
+    "updated": "2026-08-03T08:47:46.755Z",
+    "title": {
+      "th": "7 ข้อเท็จจริงทองคำที่เราไม่เคยรู้ และข้อ 6 อาจทำให้เราเสียดายเงินที่ปล่อยหลุดมือไปทุกเดือน",
+      "en": "7 Gold Facts You Never Knew, and Number 6 May Make You Regret the Money Slipping Away Every Month"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bczv9ddkubl",
+        "type": "intro",
+        "text": {
+          "th": "ทองคำที่เราจ้องกราฟกันทุกวัน จริงๆ แล้วมันมาจากไหน บทความนี้รวม 7 ข้อเท็จจริงทองคำที่อ่านจบแล้วจะมองเจ้าโลหะสีเหลืองนี้เปลี่ยนไป แต่เตือนไว้ก่อนว่า ข้อ 6 คือข้อที่เกี่ยวกับเงินในพอร์ตเราตรงๆ หลายคนอ่านแล้วถึงกับกุมขมับ เพราะปล่อยให้เงินหลุดมือไปฟรีทุกเดือนโดยไม่รู้ตัว เลื่อนอ่านให้จบแล้วเซฟเก็บไว้ได้เลย",
+          "en": "The gold we stare at on the chart every day, where does it actually come from? This article gathers 7 gold facts that will change how you see this yellow metal. But a heads up, fact 6 is the one about the money in your portfolio directly. Many readers end up holding their head, because they let money slip away for free every month without realizing it. Read to the end and save it."
+        }
+      },
+      {
+        "id": "b6gkdw82reu",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "ข้อ 1 ทองคำไม่ได้เกิดบนโลกใบนี้",
+          "en": "The gold we stare at on the chart every day, where does it actually come from? This article gathers 7 gold facts that will change how you see this yellow metal. But a heads up, fact 6 is the one about the money in your portfolio directly. Many readers end up holding their head, because they let money slip away for free every month without realizing it. Read to the end and save it."
+        }
+      },
+      {
+        "id": "boxtpwzpwz2",
+        "type": "paragraph",
+        "text": {
+          "th": "เริ่มจากเรื่องที่ทึ่งที่สุดก่อน นักดาราศาสตร์ระบุว่าทองคำทุกกรัมบนโลกนี้ ไม่ได้เกิดบนโลก แต่มันเกิดจากการชนกันของดาวนิวตรอนในห้วงอวกาศ เมื่อหลายพันล้านปีก่อน และการชนแค่ครั้งเดียวสร้างธาตุหนักรวมถึงทองคำได้ในปริมาณมหาศาล\nแปลว่าแหวนทองที่นิ้วเรา หรือทองที่เราถืออยู่ในพอร์ต แท้จริงคือเศษซากการระเบิดของดวงดาว แล้วถ้ามันมาจากที่ไกลขนาดนั้น ทำไมบนโลกถึงมีน้อยจนต้องแย่งกัน คำตอบอยู่ข้อถัดไป",
+          "en": "Start with the most mind-blowing one. Astronomers say every gram of gold on Earth was not formed here, but came from collisions of neutron stars in deep space billions of years ago, and a single collision forged a massive amount of heavy elements including gold.\nThat means the gold ring on your finger, or the gold in your portfolio, is really the debris of exploding stars. And if it came from that far, why is there so little of it on Earth that people fight over it? The answer is in the next fact."
+        }
+      },
+      {
+        "id": "btyjtc7l47k",
+        "type": "rebateSteps"
+      },
+      {
+        "id": "bzgufr877to",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage your trading costs with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "HandCoins",
+            "content": {
+              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
+            }
+          },
+          {
+            "icon": "Calculator",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
+              "en": "Track your accumulated rebates in real time, in one app"
+            }
+          }
+        ]
+      }
+    ],
+    "syncedAt": "2026-08-03T08:47:46.750Z",
+    "backendId": "a6d373ab-a2ff-477e-855b-03901cb0cf06"
+  },
+  {
+    "id": "1785750612918",
+    "seo_path": "earnex-seo-gold-manipulator-spoofing",
+    "status": "draft",
+    "showNew": true,
+    "category": "cost_rebate",
+    "tags": [],
+    "owners": [
+      "marketing"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/gold-market-manipulator-jpmorgan.png",
+    "pubDate": "2026-08-04",
+    "views": 0,
+    "createdAt": "2026-08-03T09:50:12.918Z",
+    "updated": "2026-08-03T10:38:47.900Z",
+    "title": {
+      "th": "เจ้ามือทองคำมีจริงไหม หรือเราคิดไปเอง กับความจริงที่ธนาคารระดับโลกยอมจ่ายหลักหมื่นล้านเพื่อปิดคดี",
+      "en": "Is There a Gold Market Manipulator, or Are We Imagining It, and the Truth a Global Bank Paid Billions to Settle"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bwgszrbeq1h",
+        "type": "intro",
+        "text": {
+          "th": "เคยเป็นไหม ตั้ง Stop Loss หรือ SL ไว้ตรงไหน กราฟทองคำวิ่งมาเกี่ยวพอดี แล้วดีดกลับทันทีเหมือนมีตาทิพย์ จนเราอดอุทานไม่ได้ว่า เจ้ามือมันคุมกราฟหรือเปล่า คำว่า เจ้ามือทองคำ เป็นเรื่องที่รายย่อยคิดไปเอง หรือมีมูลกันแน่ บทความนี้จะพาไปดูอีกมุมหนึ่ง ผ่านคดีจริงที่ธนาคารระดับโลกยอมจ่ายค่าปรับหลักหมื่นล้านเพื่อปิดเรื่อง",
+          "en": "Have you ever set a Stop Loss, watched the gold chart run right to it, then bounce back instantly as if it had eyes? Until you blurt out, is a manipulator controlling this chart? Is a gold market manipulator something retail traders just imagine, or is there something to it? This article shows another side, through a real case where a global bank paid a fine of billions to settle."
+        }
+      },
+      {
+        "id": "bzadd5e5m4y",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "เจ้ามือทองคำมีจริงไหม หรือรายย่อยคิดไปเอง",
+          "en": "New heading"
+        }
+      },
+      {
+        "id": "bhqkfteiby1",
+        "type": "highlight",
+        "variant": "info",
+        "title": {
+          "th": "คำตอบ",
+          "en": "Tip"
+        },
+        "items": [
+          {
+            "text": {
+              "th": "ถ้าเจ้ามือหมายถึงมาเฟียที่นั่งคุมกราฟทุกเส้นเหมือนคุมบ่อน อันนั้นไม่มี แต่ถ้าหมายถึงธนาคารยักษ์ใหญ่ระดับโลกหรือ Big Banks ที่มีเงินหนาและมีอิทธิพลต่อสภาพคล่องในตลาด เรื่องนี้เคยเกิดขึ้นจริงและเคยโดนจับได้จริง",
+              "en": "Point 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ba1h8mxooyn",
+        "type": "rebateSteps"
+      },
+      {
+        "id": "b7i1xw0tvej",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage your trading costs with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "HandCoins",
+            "content": {
+              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
+            }
+          },
+          {
+            "icon": "TrendingUp",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
+              "en": "Track your accumulated rebates in real time, in one app"
+            }
+          }
+        ]
+      }
+    ],
+    "syncedAt": "2026-08-03T10:38:30.552Z",
+    "backendId": "e7d7c7db-1b1c-49d9-bad2-31213eca99bc"
   }
 ]

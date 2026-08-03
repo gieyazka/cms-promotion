@@ -99,7 +99,7 @@ export default function KnowledgeBaseList() {
         (a) =>
           a.title.th.toLowerCase().includes(q) ||
           a.title.en.toLowerCase().includes(q) ||
-          a.slug.toLowerCase().includes(q) ||
+          a.seo_path.toLowerCase().includes(q) ||
           a.tags.some((tag) => tag.toLowerCase().includes(q))
       );
     }
@@ -169,7 +169,7 @@ export default function KnowledgeBaseList() {
   async function duplicateArticle(article: Article) {
     const titleTh = `${article.title.th || 'Untitled'} (สำเนา)`;
     const titleEn = `${article.title.en || 'Untitled'} (copy)`;
-    const slug = slugify(`${article.slug || 'untitled'}-copy`);
+    const slug = slugify(`${article.seo_path || 'untitled'}-copy`);
     try {
       const res = await fetch('/api/articles', {
         method: 'POST',
@@ -236,11 +236,10 @@ export default function KnowledgeBaseList() {
                 setTab(id);
                 setSelected([]);
               }}
-              className={`relative px-4 py-2.5 text-sm whitespace-nowrap font-semibold transition-colors ${
-                tab === id
+              className={`relative px-4 py-2.5 text-sm whitespace-nowrap font-semibold transition-colors ${tab === id
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
+                }`}
             >
               {label} <span className="font-mono text-xs">({tabCounts[id]})</span>
               {tab === id && <span className="absolute left-2 right-2 -bottom-px h-0.5 rounded-full bg-blue-600" />}
@@ -438,11 +437,10 @@ export default function KnowledgeBaseList() {
                 {filtered.map((a) => (
                   <tr
                     key={a.id}
-                    className={`border-b border-gray-100 dark:border-gray-800 last:border-0 transition-colors ${
-                      selected.includes(a.id)
+                    className={`border-b border-gray-100 dark:border-gray-800 last:border-0 transition-colors ${selected.includes(a.id)
                         ? 'bg-blue-50/60 dark:bg-blue-900/10'
                         : 'hover:bg-gray-50 dark:hover:bg-gray-800/40'
-                    }`}
+                      }`}
                   >
                     <td className="px-4 py-3">
                       <input
@@ -628,9 +626,8 @@ export default function KnowledgeBaseList() {
 function Th({ children, align }: { children: React.ReactNode; align?: 'left' | 'right' }) {
   return (
     <th
-      className={`px-4 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 whitespace-nowrap ${
-        align === 'right' ? 'text-right' : 'text-left'
-      }`}
+      className={`px-4 py-3 text-xs font-bold text-gray-500 dark:text-gray-400 whitespace-nowrap ${align === 'right' ? 'text-right' : 'text-left'
+        }`}
     >
       {children}
     </th>
@@ -725,11 +722,10 @@ function MenuItem({
     <button
       type="button"
       onClick={onClick}
-      className={`w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-left transition-colors ${
-        danger
+      className={`w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-left transition-colors ${danger
           ? 'text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
           : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
-      }`}
+        }`}
     >
       {icon}
       {label}
