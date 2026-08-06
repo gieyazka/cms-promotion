@@ -41,7 +41,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(article, { status: 201 });
-  } catch {
+  } catch (e) {
+    console.log(e);
     return NextResponse.json({ error: 'Failed to create article' }, { status: 500 });
   }
 }

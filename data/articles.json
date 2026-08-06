@@ -919,70 +919,6 @@
     "backendId": "66c613a7-adf4-463a-b88e-7139237a5fa6"
   },
   {
-    "id": "1785240538726",
-    "slug": "",
-    "status": "trash",
-    "showNew": true,
-    "category": "",
-    "tags": [],
-    "owners": [],
-    "cover": "",
-    "pubDate": "",
-    "views": 0,
-    "createdAt": "2026-07-28T12:08:58.726Z",
-    "updated": "2026-08-03T07:51:01.631Z",
-    "title": {
-      "th": "",
-      "en": ""
-    },
-    "metaTitle": {
-      "th": "",
-      "en": ""
-    },
-    "metaDesc": {
-      "th": "",
-      "en": ""
-    },
-    "blocks": [
-      {
-        "id": "ba0a2id1zzp",
-        "type": "intro",
-        "text": {
-          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
-          "en": "Write an intro that sums up the article in one paragraph"
-        }
-      },
-      {
-        "id": "buht6nq99ye",
-        "type": "featureCardGrid",
-        "title": {
-          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
-          "en": "Manage your trading costs with Earnex"
-        },
-        "footnote": {
-          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
-          "en": "* Subject to each broker and account type."
-        },
-        "items": [
-          {
-            "icon": "HandCoins",
-            "content": {
-              "th": "รับ [Rebate](#) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
-              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
-            }
-          },
-          {
-            "icon": "BarChart3",
-            "content": {
-              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
-              "en": "Track your accumulated rebates in real time, in one app"
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "1785742825975",
     "slug": "george-soros-black-wednesday-earnex-seo",
     "status": "trash",
@@ -1400,5 +1336,604 @@
     ],
     "syncedAt": "2026-08-03T10:38:30.552Z",
     "backendId": "e7d7c7db-1b1c-49d9-bad2-31213eca99bc"
+  },
+  {
+    "id": "1785894726528",
+    "seo_path": "test",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial_history",
+    "tags": [],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/hunt-brothers-silver-price-1979-1980.png",
+    "pubDate": "2026-08-06",
+    "views": 0,
+    "createdAt": "2026-08-05T01:52:06.528Z",
+    "updated": "2026-08-05T01:57:17.141Z",
+    "title": {
+      "th": "test",
+      "en": "ttt"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bw2pczi6bwy",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "syncedAt": "2026-08-05T01:57:17.135Z",
+    "backendId": "b7a8f446-14be-4b04-bff7-5fe91d3346f7"
+  },
+  {
+    "id": "1785895142066",
+    "seo_path": "test",
+    "status": "draft",
+    "showNew": true,
+    "category": "cost_rebate",
+    "tags": [],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/gold-inside-smartphone-circuit.png",
+    "pubDate": "2026-08-06",
+    "views": 0,
+    "createdAt": "2026-08-05T01:59:02.066Z",
+    "updated": "2026-08-05T01:59:02.143Z",
+    "title": {
+      "th": "test",
+      "en": "gggg"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "baj6c9wpfn1",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "syncedAt": "2026-08-05T01:59:02.139Z",
+    "backendId": "446254c2-31d8-4999-891b-bf93b0c7b859"
+  },
+  {
+    "id": "1785896929144",
+    "seo_path": "",
+    "status": "trash",
+    "showNew": true,
+    "category": "",
+    "tags": [],
+    "owners": [],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/margin-call-hunt-brothers-silver-thursday.png",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-08-05T02:28:49.144Z",
+    "updated": "2026-08-05T02:32:28.428Z",
+    "title": {
+      "th": "",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bx1a1vmlkx3",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "1785897141022",
+    "seo_path": "sdf",
+    "status": "trash",
+    "showNew": true,
+    "category": "",
+    "tags": [],
+    "owners": [],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/pound-erm-peg-1992.png",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-08-05T02:32:21.022Z",
+    "updated": "2026-08-05T02:32:24.515Z",
+    "title": {
+      "th": "sdf",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "btuui4mdbkc",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "alt_banner_image": {
+      "th": "เเเ",
+      "en": "sdf"
+    }
+  },
+  {
+    "id": "1785897187814",
+    "seo_path": "test-path",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial_history",
+    "tags": [],
+    "owners": [
+      "content-team"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/edible-gold-leaf-on-food.png",
+    "pubDate": "2026-08-06",
+    "views": 0,
+    "createdAt": "2026-08-05T02:33:07.814Z",
+    "updated": "2026-08-05T02:51:08.487Z",
+    "title": {
+      "th": "ทำไมทองคำถึงเป็นสินทรัพย์ปลอดภัย ทั้งที่ผลตอบแทนไม่ได้สูงที่สุด",
+      "en": "Why Gold Is a Safe Haven Even Though Its Returns Are Not the Highest"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bz2ehyona1a",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "alt_banner_image": {
+      "th": "เค้ก",
+      "en": "cake"
+    },
+    "syncedAt": "2026-08-05T02:51:08.483Z",
+    "backendId": "22a36d3b-b3b6-415b-8c21-e9257a381f90",
+    "detail": {
+      "th": "ทำไมทุกครั้งที่โลกสั่นคลอน คนถึงแห่ถือทอง ย้อน 3 วิกฤตจริง ต้มยำกุ้ง 2008 และโควิด พร้อมราคาทองปี 2026 และวิธีมีทองไว้กับตัว",
+      "en": "Why people rush to gold every time the world shakes, revisiting 3 real crises plus 2026 prices and how to own gold yourself"
+    }
+  },
+  {
+    "id": "1785916278324",
+    "seo_path": "",
+    "status": "draft",
+    "showNew": true,
+    "category": "",
+    "tags": [],
+    "owners": [],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-08-05T07:51:18.324Z",
+    "updated": "2026-08-05T07:53:42.219Z",
+    "title": {
+      "th": "",
+      "en": ""
+    },
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "btzk2vp8jfu",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ  [ดกดห](https://google.com)",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      },
+      {
+        "id": "ba87w3smwzg",
+        "type": "paragraph",
+        "text": {
+          "th": "พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://) ได้",
+          "en": "Type here. **Bold**, *italic* and [links](https://) are supported."
+        }
+      },
+      {
+        "id": "bv77ki95npz",
+        "type": "sources",
+        "items": [
+          {
+            "url": "#",
+            "text": {
+              "th": "แหล่งอ้างอิง",
+              "en": "Source"
+            }
+          }
+        ]
+      }
+    ],
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "1785918187813",
+    "seo_path": "test-all-blogs",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial_history",
+    "tags": [
+      "oo",
+      "pp"
+    ],
+    "owners": [
+      "marketing"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/1785918260930-9851878_a10a61bf1def4d1a8aa64f7753eada69_jpeg_jpegac13c5064b0f74d18be7d11854da975e.jpeg",
+    "pubDate": "2026-08-06",
+    "views": 0,
+    "createdAt": "2026-08-05T08:23:07.813Z",
+    "updated": "2026-08-06T10:14:44.693Z",
+    "title": {
+      "th": "บทความแสดงทุกประเภท",
+      "en": "Test all blogs"
+    },
+    "detail": {
+      "th": "ทดสอบเต็มรูปแบบ",
+      "en": "full test knowledge base"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "b0yzxcekcy4",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ\n**ตัวหน้า**\n*ตัวเอียง*\n- 1.df\n- 2.df\n1. ข้อแรก\n2. ข้อสอง\nทดสอบบรรทัดเดียวกัน [ไปสำรวจเทคนิคไดเจ๊า](https://youtu.be/ayKCzl5xRh4?si=iR2IZ6dj0MbhGL8X&t=736) ไปเล้ย",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      },
+      {
+        "id": "bzlepuikyn8",
+        "type": "heading",
+        "level": 2,
+        "text": {
+          "th": "หัวข้อใหม่ 1",
+          "en": "New heading"
+        }
+      },
+      {
+        "id": "blbohjza7kd",
+        "type": "heading",
+        "level": 3,
+        "text": {
+          "th": "หัวข้อใหม่ 1 เล็ก",
+          "en": "New heading h3"
+        }
+      },
+      {
+        "id": "bw577zkqjds",
+        "type": "paragraph",
+        "text": {
+          "th": "พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://youtu.be/ayKCzl5xRh4?si=iR2IZ6dj0MbhGL8X&t=736) ได้",
+          "en": "Type here. **Bold**, *italic* and [links](https://) are supported."
+        }
+      },
+      {
+        "id": "bst0jpii7lh",
+        "type": "image",
+        "url": "http://127.0.0.1:8081/knowledge_base/image/1785919169289-rrq4ron3dck31-1.png",
+        "caption": {
+          "th": "พริบตาเดียว",
+          "en": "a second"
+        }
+      },
+      {
+        "id": "bmfr6bx7zq8",
+        "type": "highlight",
+        "variant": "info",
+        "title": {
+          "th": "คำแนะนำ",
+          "en": "Tip"
+        },
+        "items": [
+          {
+            "text": {
+              "th": "ประเด็นที่ 1",
+              "en": "Point 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bttwcwwhi0b",
+        "type": "highlight",
+        "variant": "warning",
+        "title": {
+          "th": "คำแนะนำ",
+          "en": "Tip"
+        },
+        "items": [
+          {
+            "text": {
+              "th": "ประเด็นที่ 1",
+              "en": "Point 1"
+            }
+          },
+          {
+            "text": {
+              "th": "ประเด็นที่ 2",
+              "en": "Point 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bb5jlhsznng",
+        "type": "highlight",
+        "variant": "answer",
+        "title": {
+          "th": "คำแนะนำ",
+          "en": "Tip"
+        },
+        "items": [
+          {
+            "text": {
+              "th": "ประเด็นที่ 1",
+              "en": "Point 1"
+            }
+          },
+          {
+            "text": {
+              "th": "ประเด็นที่ 2",
+              "en": "Point 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "btmw827d1sm",
+        "type": "featureCardGrid",
+        "title": {
+          "th": "บริหารต้นทุนอย่างมีระบบกับ Earnex",
+          "en": "Manage your trading costs with Earnex"
+        },
+        "footnote": {
+          "th": "* เป็นไปตามเงื่อนไขของแต่ละโบรกเกอร์และประเภทบัญชี",
+          "en": "* Subject to each broker and account type."
+        },
+        "items": [
+          {
+            "icon": "Coins",
+            "content": {
+              "th": "รับ [Rebate](https://earnex.ai/th/broker/exness) คืนสูงสุด **100%** ของค่าคอมมิชชันในทุกการเทรด",
+              "en": "Get up to **100%** of your commission back as [Rebate](#) on every trade"
+            }
+          },
+          {
+            "icon": "BarChart3",
+            "content": {
+              "th": "ติดตามยอด Rebate สะสมแบบเรียลไทม์ในแอปเดียว",
+              "en": "Track your accumulated rebates in real time, in one app"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bsw3ri2pemf",
+        "type": "comparisonTable",
+        "columns": [
+          {
+            "th": "คอลัมน์ 1",
+            "en": "Column 1"
+          },
+          {
+            "th": "คอลัมน์ 2",
+            "en": "Column 2"
+          },
+          {
+            "th": "คอลัมที่สาม",
+            "en": "col 3"
+          }
+        ],
+        "rows": [
+          [
+            {
+              "th": "RR 2:1",
+              "en": "RR: 2:1"
+            },
+            {
+              "th": "ไม่ X",
+              "en": "no x"
+            },
+            {
+              "th": "ทดสอบ",
+              "en": "test"
+            }
+          ],
+          [
+            {
+              "th": "RR 1:4",
+              "en": "RR: 1:4"
+            },
+            {
+              "th": "ใช่ /",
+              "en": "yes /"
+            },
+            {
+              "th": "ทดสอบ2",
+              "en": "test2"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bld77w3iczp",
+        "type": "rebateSteps"
+      },
+      {
+        "id": "bs7sdkn0g97",
+        "type": "cta",
+        "url": "https://earnex.ai/th/broker/hf-markets",
+        "variant": "sky",
+        "text": {
+          "th": "คลิกที่นี่",
+          "en": "Click here"
+        },
+        "caption": {
+          "th": "ไม่ใส่ก็ได้",
+          "en": "optional"
+        }
+      },
+      {
+        "id": "b1m9txh5vz0",
+        "type": "lineBanner",
+        "buttonUrl": "https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes",
+        "message": {
+          "th": "ติดต่อเราเพื่อสอบถามและรับสิทธิประโยชน์ต่างๆ คลิก",
+          "en": "Contact us for questions and member benefits"
+        },
+        "buttonLabel": {
+          "th": "ติดต่อเรา",
+          "en": "Contact us"
+        }
+      },
+      {
+        "id": "bsjoz8xp0sj",
+        "type": "faq",
+        "items": [
+          {
+            "q": {
+              "th": "คำถาม?",
+              "en": "Question?"
+            },
+            "a": {
+              "th": "คำตอบ\n**ตัวหนา**\n*ตัวเอียง*\n- ข้อแรก\n- ข้อสอง\n1. หนึ่ง\n2. สอง\n[ลิงค์](https://earnex.ai/th/aboutus)",
+              "en": "Answer"
+            }
+          },
+          {
+            "q": {
+              "th": "คำถามที่สอง",
+              "en": "question 2"
+            },
+            "a": {
+              "th": "คำตอบที่สอง",
+              "en": "ans 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bwl7a8dsfx1",
+        "type": "keyTakeaways",
+        "items": [
+          {
+            "text": {
+              "th": "ประเด็นสรุปข้อที่ 1\n**หนา**\n*เอียง*\n- ข้อแรก\n- ข้อสอง\n1. แรก\n2. สอง\n[ลิงค์](https://earnex.ai/th/aboutus)",
+              "en": "Takeaway 1"
+            }
+          },
+          {
+            "text": {
+              "th": "ประเด็นสรุปข้อที่ 2",
+              "en": "Takeaway 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bm6q2cgju2d",
+        "type": "sources",
+        "items": [
+          {
+            "url": "https://earnex.ai/th/aboutus",
+            "text": {
+              "th": "แหล่งอ้างอิงต้องใส่ได้แค่บางส่วนเหมือน text ทั่วไป",
+              "en": "Source"
+            }
+          },
+          {
+            "text": {
+              "th": "ได้แค่ใส่กับไม่ใส่เลย",
+              "en": "so2"
+            },
+            "url": ""
+          }
+        ]
+      },
+      {
+        "id": "bskxli2awjc",
+        "type": "related",
+        "mode": "auto",
+        "ids": []
+      }
+    ],
+    "alt_banner_image": {
+      "th": "ไดเจ๊า",
+      "en": "dinosaur"
+    },
+    "syncedAt": "2026-08-06T10:04:34.381Z",
+    "backendId": "76d04906-6b3e-4923-966b-82ba801e7da4"
   }
 ]

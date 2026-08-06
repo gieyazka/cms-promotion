@@ -34,7 +34,8 @@ export type BlockType =
   | 'related'
   | 'relatedPromos';
 
-export type HighlightVariant = 'info' | 'warning' | 'success' | 'danger';
+// export type HighlightVariant = 'info' | 'warning' | 'success' | 'danger';
+export type HighlightVariant = 'answer' | 'info' | 'warning';
 export type CtaVariant = 'sky' | 'navy' | 'green';
 export type ListStyle = 'bullet' | 'number';
 export type RelatedMode = 'auto' | 'manual';
@@ -89,6 +90,7 @@ export interface HighlightBlock extends BaseBlock {
   variant: HighlightVariant;
   title: LText;
   items: RichItem[];
+  // text: RichItem;
 }
 
 export interface KeyTakeawaysBlock extends BaseBlock {
@@ -296,8 +298,10 @@ export interface Article {
    */
   backendId?: string;
   title: LText;
+  detail: LText;
   metaTitle: LText;
   metaDesc: LText;
+  alt_banner_image: LText;
   blocks: ArticleBlock[];
 }
 

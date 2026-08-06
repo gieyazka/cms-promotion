@@ -190,6 +190,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
   const [justSaved, setJustSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [slugTouched, setSlugTouched] = useState(!!initial.seo_path && initial.seo_path !== slugify(initial.title.th));
+  const [altBannerText, setAltBannerText] = useState('');
   const [addBlockOpen, setAddBlockOpen] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const [dragIndex, setDragIndex] = useState<number | null>(null);
@@ -579,6 +580,20 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
     });
   };
 
+  const handleDetailChange = (value: string) => {
+    updateArticle((prev) => {
+      const nextDetail: LText = { ...prev.detail, [locale]: value };
+      return { detail: nextDetail };
+    });
+  };
+
+  const handleAltBannerTextChange = (value: string) => {
+    updateArticle((prev) => {
+      const nextAltBannerText: LText = { ...prev.alt_banner_image, [locale]: value };
+      return { alt_banner_image: nextAltBannerText };
+    });
+  };
+
   const dupSlug = false; // uniqueness is enforced server-side; no client-side article list available here
 
   const renderMetaPanel = () => (
@@ -593,6 +608,14 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             value={article.title[locale]}
             onChange={(e) => handleTitleChange(e.target.value)}
             placeholder={t('เช่น ทำไมทองคำถึงปลอดภัยที่สุด', 'e.g. Why gold is the safest asset')}
+            className={`${inputClass} h-12 text-base font-bold`}
+          />
+        </Field>
+        <Field label={t('รายละเอียดบทความ', 'Article detail')}>
+          <input
+            value={article.detail[locale]}
+            onChange={(e) => handleDetailChange(e.target.value)}
+            placeholder={t('เช่น รายละเอียดบทความ', 'e.g. Article detail')}
             className={`${inputClass} h-12 text-base font-bold`}
           />
         </Field>
@@ -719,8 +742,8 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
                     owners: active ? prev.owners.filter((o) => o !== owner.value) : [...prev.owners, owner.value],
                   }))}
                   className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${active
-                      ? 'border-blue-600 bg-blue-600 text-white'
-                      : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-blue-300'
+                    ? 'border-blue-600 bg-blue-600 text-white'
+                    : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-blue-300'
                     }`}
                 >
                   {owner.label[locale]}
@@ -734,6 +757,16 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             value={article.cover}
             onChange={(cover) => updateArticle({ cover })}
             previewClassName="h-32 w-full object-cover"
+          />
+        </Field>
+        <Field
+          label={'alt banner Image'}
+        >
+          <input
+            type="text"
+            value={article.alt_banner_image ? article.alt_banner_image[locale] : ""}
+            onChange={(e) => handleAltBannerTextChange(e.target.value)}
+            className="w-full h-11 px-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
         </Field>
         {article.cover && (
@@ -1037,8 +1070,8 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         onClick={() => setShowSpacing((s) => !s)}
         title={t('แสดงระยะห่างอัตโนมัติระหว่างบล็อก (ดูอย่างเดียว)', 'Show the automatic gap between blocks (read-only)')}
         className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition-colors ${showSpacing
-            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600'
-            : 'border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600'
+          : 'border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
           }`}
       >
         <Activity size={14} />

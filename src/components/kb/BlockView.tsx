@@ -226,10 +226,11 @@ const HIGHLIGHT_MAP: Record<
   HighlightVariant,
   { bg: string; bd: string; icon: typeof AlertCircle; color: string; title: string; defTitle: { th: string; en: string } }
 > = {
+  answer: { bg: PALETTE.card, bd: PALETTE.divider, icon: AlertCircle, color: PALETTE.primary, title: PALETTE.secondary, defTitle: { th: 'คำแนะนำ', en: 'Tip' } },
   info: { bg: PALETTE.card, bd: PALETTE.divider, icon: AlertCircle, color: PALETTE.primary, title: PALETTE.secondary, defTitle: { th: 'คำแนะนำ', en: 'Tip' } },
   warning: { bg: PALETTE.warningBg, bd: PALETTE.warningBorder, icon: AlertTriangle, color: PALETTE.warningText, title: PALETTE.warningText, defTitle: { th: 'ข้อควรระวัง', en: 'Warning' } },
-  success: { bg: PALETTE.successBg, bd: '#C8EBC8', icon: CheckCircle2, color: PALETTE.success, title: PALETTE.successText, defTitle: { th: 'จุดเด่น', en: 'Highlight' } },
-  danger: { bg: PALETTE.dangerBg, bd: PALETTE.dangerBorder, icon: AlertTriangle, color: PALETTE.dangerText, title: PALETTE.dangerText, defTitle: { th: 'คำเตือน', en: 'Caution' } },
+  // success: { bg: PALETTE.successBg, bd: '#C8EBC8', icon: CheckCircle2, color: PALETTE.success, title: PALETTE.successText, defTitle: { th: 'จุดเด่น', en: 'Highlight' } },
+  // danger: { bg: PALETTE.dangerBg, bd: PALETTE.dangerBorder, icon: AlertTriangle, color: PALETTE.dangerText, title: PALETTE.dangerText, defTitle: { th: 'คำเตือน', en: 'Caution' } },
 };
 
 function HighlightView({ block, locale, mobile }: { block: HighlightBlock; locale: Locale; mobile: boolean }) {
@@ -964,8 +965,8 @@ function RelatedPromosView({ block, locale, mobile }: { block: RelatedPromosBloc
     block.mode === 'manual'
       ? `${block.ids.length} ${locale === 'en' ? 'promotion(s) selected' : 'โปรโมชั่นที่เลือกไว้'}`
       : locale === 'en'
-      ? 'Auto-selected by matching broker'
-      : 'เลือกอัตโนมัติตามโบรกเกอร์เดียวกัน';
+        ? 'Auto-selected by matching broker'
+        : 'เลือกอัตโนมัติตามโบรกเกอร์เดียวกัน';
   return (
     <div style={{ margin: 0 }}>
       <h3 style={{ fontSize: mobile ? 18 : 22, fontWeight: 800, color: PALETTE.secondary, margin: '0 0 6px' }}>

@@ -52,9 +52,8 @@ function TextInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-gray-400 ${
-        mono ? 'font-mono' : ''
-      }`}
+      className={`w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-gray-400 ${mono ? 'font-mono' : ''
+        }`}
     />
   );
 }
@@ -97,13 +96,12 @@ function MiniBtn({
       type="button"
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
-      className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${
-        disabled
-          ? 'text-gray-300 dark:text-gray-700 cursor-default'
-          : danger
-            ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
-            : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-      }`}
+      className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${disabled
+        ? 'text-gray-300 dark:text-gray-700 cursor-default'
+        : danger
+          ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
+          : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+        }`}
     >
       <Icon size={15} />
     </button>
@@ -170,11 +168,10 @@ function SegmentedControl<T extends string | number>({
           key={String(opt.value)}
           type="button"
           onClick={() => onChange(opt.value)}
-          className={`flex-1 min-w-[90px] rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ${
-            value === opt.value
-              ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-600'
-              : 'border-gray-200 dark:border-gray-700 text-gray-500 hover:border-gray-300'
-          }`}
+          className={`flex-1 min-w-[90px] rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ${value === opt.value
+            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-600'
+            : 'border-gray-200 dark:border-gray-700 text-gray-500 hover:border-gray-300'
+            }`}
         >
           {opt.label}
         </button>
@@ -379,9 +376,9 @@ function RelatedIdPicker<T extends { id: string }>({
   const q = search.trim().toLowerCase();
   const visible = q
     ? items.filter((it) => {
-        const opt = toOption(it);
-        return opt.primary.toLowerCase().includes(q) || (opt.secondary ?? '').toLowerCase().includes(q);
-      })
+      const opt = toOption(it);
+      return opt.primary.toLowerCase().includes(q) || (opt.secondary ?? '').toLowerCase().includes(q);
+    })
     : items;
 
   const toggle = (id: string) => {
@@ -398,11 +395,10 @@ function RelatedIdPicker<T extends { id: string }>({
             return (
               <span
                 key={id}
-                className={`inline-flex items-center gap-1.5 max-w-full pl-2.5 pr-1.5 py-1 rounded-full text-xs font-semibold ${
-                  found
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600'
-                    : 'bg-red-50 dark:bg-red-900/20 text-red-500'
-                }`}
+                className={`inline-flex items-center gap-1.5 max-w-full pl-2.5 pr-1.5 py-1 rounded-full text-xs font-semibold ${found
+                  ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600'
+                  : 'bg-red-50 dark:bg-red-900/20 text-red-500'
+                  }`}
               >
                 <span className="truncate max-w-[160px]">{label}</span>
                 <button
@@ -441,11 +437,10 @@ function RelatedIdPicker<T extends { id: string }>({
                 return (
                   <label
                     key={it.id}
-                    className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg cursor-pointer border transition-colors ${
-                      checked
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }`}
+                    className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg cursor-pointer border transition-colors ${checked
+                      ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
+                      : 'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
+                      }`}
                   >
                     <input type="checkbox" checked={checked} onChange={() => toggle(it.id)} className="accent-blue-600" />
                     <span className="min-w-0 flex-1">
@@ -544,12 +539,14 @@ export default function BlockEditorForm({ block, locale, onChange }: BlockEditor
     case 'highlight':
       return (
         <div className="flex flex-col gap-3">
-          <SegmentedControl<'info' | 'warning' | 'success' | 'danger'>
+          {/* <SegmentedControl<'info' | 'warning' | 'success' | 'danger'> */}
+          <SegmentedControl<'answer' | 'warning' | 'info'>
             options={[
+              { value: 'answer', label: 'Answer' },
               { value: 'info', label: 'Info' },
               { value: 'warning', label: 'Warning' },
-              { value: 'success', label: 'Success' },
-              { value: 'danger', label: 'Danger' },
+              // { value: 'success', label: 'Success' },
+              // { value: 'danger', label: 'Danger' },
             ]}
             value={block.variant}
             onChange={(variant) => onChange({ ...block, variant })}

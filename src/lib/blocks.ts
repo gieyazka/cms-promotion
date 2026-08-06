@@ -168,9 +168,11 @@ export function newArticle(): Article {
     createdAt: now,
     updated: now,
     title: { th: '', en: '' },
+    detail: { th: '', en: '' },
     metaTitle: { th: '', en: '' },
     metaDesc: { th: '', en: '' },
     blocks: [newBlock('intro')],
+    alt_banner_image: { th: '', en: '' }
   };
 }
 
