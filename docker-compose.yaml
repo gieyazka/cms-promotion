@@ -2,5 +2,11 @@ services:
   earnex-web:
     image: sawanonapps/cms-promotion
     container_name: cms-promotion
+    environment:
+      - MINIO_ENDPOINT=61.47.10.156
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin123
+      - NEXT_PUBLIC_KB_API_BASE=http://61.47.10.155:8012
     ports:
       - 4051:3000

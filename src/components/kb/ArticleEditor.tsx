@@ -189,7 +189,8 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
   const [dirty, setDirty] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [slugTouched, setSlugTouched] = useState(!!initial.slug && initial.slug !== slugify(initial.title.th));
+  const [slugTouched, setSlugTouched] = useState(!!initial.seo_path && initial.seo_path !== slugify(initial.title.th));
+  const [altBannerText, setAltBannerText] = useState('');
   const [addBlockOpen, setAddBlockOpen] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const [dragIndex, setDragIndex] = useState<number | null>(null);
@@ -254,7 +255,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         headers: jsonWriteHeaders(),
         body: JSON.stringify(articleRef.current),
         keepalive: true,
-      }).catch(() => {});
+      }).catch(() => { });
     };
     const onVisibility = () => {
       if (document.visibilityState === 'hidden') flushSave();
@@ -471,10 +472,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
     const next: Article = article.status === 'published'
       ? { ...article, status: 'draft' as ArticleStatus }
       : {
-          ...article,
-          status: 'published',
-          pubDate: article.pubDate || new Date().toISOString().slice(0, 10),
-        };
+        ...article,
+        status: 'published',
+        pubDate: article.pubDate || new Date().toISOString().slice(0, 10),
+      };
     setArticle(next);
     setActionPending(true);
     try {
@@ -509,9 +510,8 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
               key={l}
               type="button"
               onClick={() => toggleLang(l)}
-              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-bold transition-colors ${
-                active ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-              }`}
+              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-bold transition-colors ${active ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                }`}
             >
               {l === 'th' ? 'ภาษาไทย' : 'English'}
               <span className={`h-1.5 w-1.5 rounded-full ${filled ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'}`} />
@@ -575,8 +575,22 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
     updateArticle((prev) => {
       const nextTitle: LText = { ...prev.title, [locale]: value };
       const patch: Partial<Article> = { title: nextTitle };
-      if (locale === 'th' && !slugTouched) patch.slug = slugify(value);
+      if (locale === 'th' && !slugTouched) patch.seo_path = slugify(value);
       return patch;
+    });
+  };
+
+  const handleDetailChange = (value: string) => {
+    updateArticle((prev) => {
+      const nextDetail: LText = { ...prev.detail, [locale]: value };
+      return { detail: nextDetail };
+    });
+  };
+
+  const handleAltBannerTextChange = (value: string) => {
+    updateArticle((prev) => {
+      const nextAltBannerText: LText = { ...prev.alt_banner_image, [locale]: value };
+      return { alt_banner_image: nextAltBannerText };
     });
   };
 
@@ -597,15 +611,23 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             className={`${inputClass} h-12 text-base font-bold`}
           />
         </Field>
+        <Field label={t('รายละเอียดบทความ', 'Article detail')}>
+          <input
+            value={article.detail[locale]}
+            onChange={(e) => handleDetailChange(e.target.value)}
+            placeholder={t('เช่น รายละเอียดบทความ', 'e.g. Article detail')}
+            className={`${inputClass} h-12 text-base font-bold`}
+          />
+        </Field>
         <Field
           label="Slug (URL)"
-          hint={dupSlug ? undefined : 'earnex.com/kb/' + (article.slug || '...')}
+          hint={dupSlug ? undefined : 'earnex.com/kb/' + (article.seo_path || '...')}
         >
           <input
-            value={article.slug}
+            value={article.seo_path}
             onChange={(e) => {
               setSlugTouched(true);
-              updateArticle({ slug: slugify(e.target.value) });
+              updateArticle({ seo_path: slugify(e.target.value) });
             }}
             placeholder="auto-generated"
             className={`${inputClass} font-mono`}
@@ -719,11 +741,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
                   onClick={() => updateArticle((prev) => ({
                     owners: active ? prev.owners.filter((o) => o !== owner.value) : [...prev.owners, owner.value],
                   }))}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    active
-                      ? 'border-blue-600 bg-blue-600 text-white'
-                      : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-blue-300'
-                  }`}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${active
+                    ? 'border-blue-600 bg-blue-600 text-white'
+                    : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-blue-300'
+                    }`}
                 >
                   {owner.label[locale]}
                 </button>
@@ -736,6 +757,16 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             value={article.cover}
             onChange={(cover) => updateArticle({ cover })}
             previewClassName="h-32 w-full object-cover"
+          />
+        </Field>
+        <Field
+          label={'alt banner Image'}
+        >
+          <input
+            type="text"
+            value={article.alt_banner_image ? article.alt_banner_image[locale] : ""}
+            onChange={(e) => handleAltBannerTextChange(e.target.value)}
+            className="w-full h-11 px-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
         </Field>
         {article.cover && (
@@ -767,18 +798,16 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
               <button
                 type="button"
                 onClick={() => updateArticle({ heroTitleColor: 'light' })}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  article.heroTitleColor !== 'dark' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
-                }`}
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${article.heroTitleColor !== 'dark' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
+                  }`}
               >
                 {t('ขาว', 'Light')}
               </button>
               <button
                 type="button"
                 onClick={() => updateArticle({ heroTitleColor: 'dark' })}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  article.heroTitleColor === 'dark' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
-                }`}
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${article.heroTitleColor === 'dark' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
+                  }`}
               >
                 {t('เข้ม', 'Dark')}
               </button>
@@ -845,7 +874,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             </Field>
             <div className="rounded-xl border border-gray-100 dark:border-gray-800 p-3 bg-white dark:bg-gray-900">
               <div className="text-[10px] uppercase tracking-wide text-gray-400 mb-2">{t('ตัวอย่างผลการค้นหา', 'Search preview')}</div>
-              <div className="text-[13px] text-gray-500 dark:text-gray-400 truncate">earnex.com › kb › {article.slug || 'untitled'}</div>
+              <div className="text-[13px] text-gray-500 dark:text-gray-400 truncate">earnex.com › kb › {article.seo_path || 'untitled'}</div>
               <div className="text-[#1a0dab] dark:text-[#8ab4f8] text-lg leading-snug truncate">
                 {metaTitle || article.title[locale] || t('ชื่อบทความ', 'Article title')}
               </div>
@@ -917,9 +946,8 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           setDragIndex(null);
           setOverIndex(null);
         }}
-        className={`mb-3 rounded-2xl border bg-white dark:bg-gray-900 transition-all ${
-          isOver ? 'border-blue-500 shadow-lg shadow-blue-500/10' : 'border-gray-100 dark:border-gray-800'
-        } ${isDragging ? 'opacity-40' : ''}`}
+        className={`mb-3 rounded-2xl border bg-white dark:bg-gray-900 transition-all ${isOver ? 'border-blue-500 shadow-lg shadow-blue-500/10' : 'border-gray-100 dark:border-gray-800'
+          } ${isDragging ? 'opacity-40' : ''}`}
       >
         <div className="flex items-center gap-2.5 border-b border-gray-50 dark:border-gray-800 px-3 py-2.5">
           <span className="cursor-grab text-gray-300 dark:text-gray-600 flex-none">
@@ -1041,11 +1069,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         type="button"
         onClick={() => setShowSpacing((s) => !s)}
         title={t('แสดงระยะห่างอัตโนมัติระหว่างบล็อก (ดูอย่างเดียว)', 'Show the automatic gap between blocks (read-only)')}
-        className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition-colors ${
-          showSpacing
-            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600'
-            : 'border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-        }`}
+        className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition-colors ${showSpacing
+          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600'
+          : 'border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+          }`}
       >
         <Activity size={14} />
         {t('ระยะห่างอัตโนมัติ', 'Auto spacing')}
@@ -1054,27 +1081,24 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         <button
           type="button"
           onClick={() => setDevice('desktop')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-            device === 'desktop' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
-          }`}
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${device === 'desktop' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
+            }`}
         >
           <Monitor size={14} /> {t('คอมพิวเตอร์', 'Desktop')}
         </button>
         <button
           type="button"
           onClick={() => setDevice('tablet')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-            device === 'tablet' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
-          }`}
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${device === 'tablet' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
+            }`}
         >
           <Tablet size={14} /> {t('แท็บเล็ต', 'Tablet')}
         </button>
         <button
           type="button"
           onClick={() => setDevice('mobile')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-            device === 'mobile' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
-          }`}
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${device === 'mobile' ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400'
+            }`}
         >
           <Smartphone size={14} /> {t('มือถือ', 'Mobile')}
         </button>
@@ -1130,18 +1154,16 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             <button
               type="button"
               onClick={() => setView('edit')}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-                view === 'edit' ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-              }`}
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${view === 'edit' ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                }`}
             >
               <Pencil size={13} /> {t('แก้ไข', 'Edit')}
             </button>
             <button
               type="button"
               onClick={() => setView('preview')}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-                view === 'preview' ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-              }`}
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${view === 'preview' ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                }`}
             >
               <Eye size={13} /> {t('ตัวอย่าง', 'Preview')}
             </button>
@@ -1211,9 +1233,8 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           <div
             // A definite height (not max-h) is what lets the inner scroller resolve
             // flex-1 against something real.
-            className={`hidden lg:flex flex-none flex-col lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] transition-[width] duration-200 ${
-              previewCollapsed ? 'lg:w-14' : 'lg:w-[500px] xl:w-[630px] 2xl:w-[770px]'
-            }`}
+            className={`hidden lg:flex flex-none flex-col lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] transition-[width] duration-200 ${previewCollapsed ? 'lg:w-14' : 'lg:w-[500px] xl:w-[630px] 2xl:w-[770px]'
+              }`}
           >
             {previewCollapsed ? (
               <button

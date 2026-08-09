@@ -34,7 +34,8 @@ export type BlockType =
   | 'related'
   | 'relatedPromos';
 
-export type HighlightVariant = 'info' | 'warning' | 'success' | 'danger';
+// export type HighlightVariant = 'info' | 'warning' | 'success' | 'danger';
+export type HighlightVariant = 'answer' | 'info' | 'warning';
 export type CtaVariant = 'sky' | 'navy' | 'green';
 export type ListStyle = 'bullet' | 'number';
 export type RelatedMode = 'auto' | 'manual';
@@ -89,6 +90,7 @@ export interface HighlightBlock extends BaseBlock {
   variant: HighlightVariant;
   title: LText;
   items: RichItem[];
+  // text: RichItem;
 }
 
 export interface KeyTakeawaysBlock extends BaseBlock {
@@ -230,7 +232,7 @@ export type ArticleBlock =
 
 export interface Article {
   id: string;
-  slug: string;
+  seo_path: string;
   status: ArticleStatus;
   /**
    * The green "NEW" pill shown on the article itself (independent of `status`).
@@ -296,15 +298,17 @@ export interface Article {
    */
   backendId?: string;
   title: LText;
+  detail: LText;
   metaTitle: LText;
   metaDesc: LText;
+  alt_banner_image: LText;
   blocks: ArticleBlock[];
 }
 
 export const CATEGORIES: { value: string; label: LText }[] = [
-  { value: 'trading-tips', label: { th: 'เคล็ดลับการเทรด', en: 'Trading Tips' } },
-  { value: 'financial-history', label: { th: 'ประวัติการเงิน', en: 'Financial History' } },
-  { value: 'cost-rebate', label: { th: 'ต้นทุนและรีเบท', en: 'Cost & Rebate' } },
+  { value: 'trading_tips', label: { th: 'เคล็ดลับการเทรด', en: 'Trading Tips' } },
+  { value: 'financial_history', label: { th: 'ประวัติการเงิน', en: 'Financial History' } },
+  { value: 'cost_rebate', label: { th: 'ต้นทุนและรีเบท', en: 'Cost & Rebate' } },
 ];
 
 export const OWNERS: { value: string; label: LText }[] = [
