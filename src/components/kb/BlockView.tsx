@@ -823,7 +823,19 @@ function SourcesView({ block, locale, mobile }: { block: SourcesBlock; locale: L
         {block.items.map((it, i) => {
           const href = isSafeHref(it.url) ? it.url : '#';
           return (
-            <li key={i} style={{ display: 'flex', gap: 10, fontSize: mobile ? 12.5 : 13.5 }}>
+            // Body typography, not footnote typography: a source is something a reader is meant
+            // to actually read, so it matches `paragraph` in size/colour and `intro` in weight
+            // and line height. It was 12.5/13.5 and near-invisible next to the text it backs up.
+            <li
+              key={i}
+              style={{
+                display: 'flex',
+                gap: 10,
+                fontSize: mobile ? 15 : 16.5,
+                lineHeight: 1.7,
+                fontWeight: 500,
+              }}
+            >
               <span style={{ fontWeight: 700, color: PALETTE.primary, flex: '0 0 auto' }}>[{i + 1}]</span>
               <a
                 href={href}

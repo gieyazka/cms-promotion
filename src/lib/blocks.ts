@@ -176,11 +176,16 @@ export function newArticle(): Article {
   };
 }
 
-/** Latin + Thai slug, matching the prototype's slugify. */
+/**
+ * Latin-only slug. Thai is stripped on purpose: the slug becomes a public URL, and a
+ * percent-encoded Thai path is unreadable everywhere it gets copied. A Thai title
+ * therefore auto-generates nothing — the author types the English slug by hand, which
+ * is already what every real article in `data/articles.json` does.
+ */
 export function slugify(input: string): string {
   return (input || '')
     .toLowerCase()
-    .replace(/[^a-z0-9฀-๿\s-]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .slice(0, 60);

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { readArticles, writeArticles } from '@/lib/articles-store';
+import { assertArticle, InvalidArticle, mutateArticles, readArticles } from '@/lib/articles-store';
 import { actorFrom, articleLabel, diffArticles, recordAudit } from '@/lib/audit-log';
+import { deactivateKnowledgeBase } from '@/lib/kb-api';
+import { Article } from '@/types/article';
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -25,70 +27,106 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
     const body = await req.json();
-    const articles = await readArticles();
 
-    const index = articles.findIndex((a) => a.id === id);
-    if (index === -1) {
+    const updated = await mutateArticles((articles) => {
+      const index = articles.findIndex((a) => a.id === id);
+      if (index === -1) return null;
+
+      const before = articles[index];
+      const after: Article = {
+        ...before,
+        ...body,
+        id,
+        createdAt: before.createdAt,
+        updated: new Date().toISOString(),
+      };
+
+      // Renaming into a slug someone else already owns is the same collision as creating one,
+      // so it is caught here too — `id` excludes the article from its own uniqueness check.
+      assertArticle(articles, after, id);
+
+      articles[index] = after;
+      return { before, after };
+    });
+
+    if (!updated) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
     }
 
-    const before = articles[index];
-    articles[index] = {
-      ...before,
-      ...body,
-      id,
-      createdAt: before.createdAt,
-      updated: new Date().toISOString(),
-    };
-
-    await writeArticles(articles);
-
     // A save that changed nothing (the Save button re-sending an unmodified article) leaves no
     // entry — the log is a record of edits, not of button presses.
-    const changes = diffArticles(before, articles[index]);
+    const changes = diffArticles(updated.before, updated.after);
     if (changes.length) {
       await recordAudit({
-        at: articles[index].updated,
+        at: updated.after.updated,
         actor: actorFrom(req),
         action: 'update',
         articleId: id,
-        title: articleLabel(articles[index]),
+        title: articleLabel(updated.after),
         changes,
       });
     }
 
-    return NextResponse.json(articles[index]);
-  } catch {
+    return NextResponse.json(updated.after);
+  } catch (error) {
+    if (error instanceof InvalidArticle) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return NextResponse.json({ error: 'Failed to update article' }, { status: 500 });
   }
 }
 
-/** Hard delete. Moving to trash is a status change and goes through PUT. */
+/**
+ * Hard delete. Moving to trash is a status change and goes through PUT.
+ *
+ * A synced article lives in two places, and removing it from `data/articles.json` alone left
+ * the backend record serving happily: gone from the CMS, still live in the app, and now
+ * unreachable — the local row that carried its `backendId` was the only handle on it.
+ */
 export async function DELETE(req: NextRequest, { params }: Ctx) {
+  const { id } = await params;
+
+  let deleted;
   try {
-    const { id } = await params;
-    const articles = await readArticles();
-    const deleted = articles.find((a) => a.id === id);
-    const remaining = articles.filter((a) => a.id !== id);
+    deleted = await mutateArticles(async (articles) => {
+      const index = articles.findIndex((a) => a.id === id);
+      if (index === -1) return null;
 
-    if (!deleted) {
-      return NextResponse.json({ error: 'Article not found' }, { status: 404 });
-    }
+      // Inside the mutation on purpose: a throw here skips the local write, so a backend that
+      // refuses leaves the article sitting in the trash — still deletable once it recovers —
+      // rather than making it vanish from the CMS while it is still being served.
+      const { backendId } = articles[index];
+      if (backendId) await deactivateKnowledgeBase(backendId);
 
-    await writeArticles(remaining);
-
-    // The article is gone from the store, so the log entry is the only surviving trace of it.
-    await recordAudit({
-      at: new Date().toISOString(),
-      actor: actorFrom(req),
-      action: 'delete',
-      articleId: id,
-      title: articleLabel(deleted),
-      changes: [{ field: 'article', note: `ลบถาวร (สถานะก่อนลบ: ${deleted.status})` }],
+      return articles.splice(index, 1)[0];
     });
-
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: 'Failed to delete article' }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Backend refused to deactivate the article: ${(error as Error).message}` },
+      { status: 502 },
+    );
   }
+
+  if (!deleted) {
+    return NextResponse.json({ error: 'Article not found' }, { status: 404 });
+  }
+
+  // The article is gone from the store, so the log entry is the only surviving trace of it.
+  await recordAudit({
+    at: new Date().toISOString(),
+    actor: actorFrom(req),
+    action: 'delete',
+    articleId: id,
+    title: articleLabel(deleted),
+    changes: [
+      {
+        field: 'article',
+        note: `ลบถาวร (สถานะก่อนลบ: ${deleted.status})${
+          deleted.backendId ? ` · ปิดการใช้งานบนเซิร์ฟเวอร์: ${deleted.backendId}` : ''
+        }`,
+      },
+    ],
+  });
+
+  return NextResponse.json({ success: true });
 }

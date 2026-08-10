@@ -65,13 +65,17 @@ export function toApiPayload(article: Article) {
     post_date: postDate(article),
     tags: article.tags,
     read_time: readTime(article),
-    show_new: article.showNew,
-    seo_path: article.seo_path,
+    show_new: article.showNew !== false,
+    // Required by the backend, but 13 of the articles on disk predate the field. `id` is
+    // the only value guaranteed non-empty — slugify() cannot help, it strips Thai titles
+    // to nothing. The editor overwrites it with a real slug on the next save.
+    seo_path: article.seo_path || article.id,
     category: article.category,
+    status: article.status,
     translations: LOCALES.map((locale) => ({
       locale,
       title: article.title[locale],
-      detail: article.detail[locale],
+      detail: article.detail?.[locale] ?? '',
       banner_image_url: article.cover || null,
       alt_banner_image: article.alt_banner_image ? article.alt_banner_image[locale] : null,
     })),

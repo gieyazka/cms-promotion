@@ -97,6 +97,34 @@ export async function updateKnowledgeBase(
 }
 
 /**
+ * The status a permanently-deleted article is filed under on the backend. It is the CMS's own
+ * status vocabulary — the same strings `toApiPayload` already sends as `status` on every
+ * create/update — so this introduces no new contract. One knob: change it here if the backend
+ * ever expects a different word for "not served any more".
+ */
+const DELETED_STATUS = 'trash';
+
+/**
+ * Takes a backend record out of circulation. There is no DELETE endpoint —
+ * `PATCH /knowledge_base/status` is the only way to stop a record being served, so a
+ * permanent delete in the CMS deactivates rather than removes.
+ *
+ * Called from the DELETE route handler (server side), not the browser, so the local store and
+ * the backend can be changed together or not at all. Throws on a non-2xx, same as `send`.
+ */
+export async function deactivateKnowledgeBase(backendId: string): Promise<void> {
+  const query = new URLSearchParams({ knowledge_base_id: backendId, status: DELETED_STATUS });
+  const res = await fetch(`${KB_API_BASE}/knowledge_base/status?${query}`, {
+    method: 'PATCH',
+    headers: KB_API_TOKEN ? { Authorization: `Bearer ${KB_API_TOKEN}` } : {},
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`${res.status} ${res.statusText}${detail ? ` — ${detail.slice(0, 300)}` : ''}`);
+  }
+}
+
+/**
  * The one entry point the editor should call: updates the article's backend record if it has
  * one, otherwise creates it. `created` tells the caller which happened, so the UI can say
  * "sent" versus "updated" without duplicating the branch.
