@@ -1627,7 +1627,7 @@
     "pubDate": "2026-08-06",
     "views": 0,
     "createdAt": "2026-08-05T08:23:07.813Z",
-    "updated": "2026-08-06T10:14:44.693Z",
+    "updated": "2026-08-07T10:43:53.522Z",
     "title": {
       "th": "บทความแสดงทุกประเภท",
       "en": "Test all blogs"
@@ -1675,7 +1675,7 @@
         "id": "bw577zkqjds",
         "type": "paragraph",
         "text": {
-          "th": "พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://youtu.be/ayKCzl5xRh4?si=iR2IZ6dj0MbhGL8X&t=736) ได้",
+          "th": "พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://youtu.be/ayKCzl5xRh4?si=iR2IZ6dj0MbhGL8X&t=736) ได้\n\n[ลิงค์](https://google.com)",
           "en": "Type here. **Bold**, *italic* and [links](https://) are supported."
         }
       },
@@ -1868,7 +1868,7 @@
               "en": "Question?"
             },
             "a": {
-              "th": "คำตอบ\n**ตัวหนา**\n*ตัวเอียง*\n- ข้อแรก\n- ข้อสอง\n1. หนึ่ง\n2. สอง\n[ลิงค์](https://earnex.ai/th/aboutus)",
+              "th": "คำตอบ\n**ตัวหนา**\n*ตัวเอียง*\n- ข้อแรก\n- ข้อสอง\n1. หนึ่ง\n2. สอง [ลิงค์](https://earnex.ai/th/aboutus)\n[ลิงค์](https://earnex.ai/th/aboutus)",
               "en": "Answer"
             }
           },
@@ -1933,7 +1933,55 @@
       "th": "ไดเจ๊า",
       "en": "dinosaur"
     },
-    "syncedAt": "2026-08-06T10:04:34.381Z",
+    "syncedAt": "2026-08-07T05:44:14.388Z",
     "backendId": "76d04906-6b3e-4923-966b-82ba801e7da4"
+  },
+  {
+    "id": "1786347382562",
+    "seo_path": "test5",
+    "status": "draft",
+    "showNew": true,
+    "category": "financial_history",
+    "tags": [],
+    "owners": [
+      "thanakorn"
+    ],
+    "cover": "http://127.0.0.1:8081/knowledge_base/image/1785918260930-9851878_a10a61bf1def4d1a8aa64f7753eada69_jpeg_jpegac13c5064b0f74d18be7d11854da975e.jpeg",
+    "pubDate": "2026-08-04",
+    "views": 0,
+    "createdAt": "2026-08-10T07:36:22.562Z",
+    "updated": "2026-08-10T07:37:44.685Z",
+    "title": {
+      "th": "test",
+      "en": "test2"
+    },
+    "detail": {
+      "th": "test2",
+      "en": "dfe"
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bkcngabhqbh",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    },
+    "syncedAt": "2026-08-10T07:37:44.676Z",
+    "backendId": "cbaf5ad5-fdc8-4f79-acb3-1c41bc02e28e"
   }
 ]
