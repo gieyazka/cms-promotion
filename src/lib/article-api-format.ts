@@ -41,12 +41,26 @@ function localize(value: unknown, locale: Locale): unknown {
   return value;
 }
 
-function blockToApi(block: ArticleBlock, index: number) {
+/**
+ * A `related` block's `ids` are LOCAL article ids (`data/articles.json`) — that is what the
+ * picker in `BlockEditorForm` writes, and the only id the CMS has for an article that has never
+ * been pushed. The backend addresses its own records by uuid, so the payload must carry
+ * `article.backendId` instead; `backendIdById` is that translation table, built by the caller.
+ *
+ * An id with no entry has no record on the backend to point at, so it is dropped rather than
+ * sent as a dangling local id. Without the map (server-side callers such as `/api/check-payload`)
+ * the ids pass through untranslated — that path only inspects the envelope, it does not push.
+ */
+function blockToApi(block: ArticleBlock, index: number, backendIdById?: Map<string, string>) {
   const { type, ...rest } = block;
+  const data =
+    block.type === 'related' && backendIdById
+      ? { ...rest, ids: block.ids.map((id) => backendIdById.get(id)).filter(Boolean) }
+      : rest;
   return {
     type,
     sort_order: index,
-    translations: LOCALES.map((locale) => ({ locale, data: localize(rest, locale) })),
+    translations: LOCALES.map((locale) => ({ locale, data: localize(data, locale) })),
   };
 }
 
@@ -60,7 +74,7 @@ function postDate(article: Article): string {
   return (article.pubDate || article.createdAt || article.updated || '').slice(0, 10);
 }
 
-export function toApiPayload(article: Article) {
+export function toApiPayload(article: Article, backendIdById?: Map<string, string>) {
   return {
     post_date: postDate(article),
     tags: article.tags,
@@ -79,6 +93,6 @@ export function toApiPayload(article: Article) {
       banner_image_url: article.cover || null,
       alt_banner_image: article.alt_banner_image ? article.alt_banner_image[locale] : null,
     })),
-    blocks: article.blocks.map(blockToApi),
+    blocks: article.blocks.map((block, i) => blockToApi(block, i, backendIdById)),
   };
 }

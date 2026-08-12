@@ -48,18 +48,89 @@ function extractBackendId(body: unknown): string | undefined {
 }
 
 /**
+ * `seo_path` → backend uuid, read from `GET /knowledge_base/list`. The fallback for a local
+ * article that has no `backendId`: it may still HAVE a backend record — pushed before the id was
+ * captured, or created by someone else — and `seo_path` is the only key both sides share, because
+ * `toApiPayload` sends `article.seo_path || article.id` and the list returns it back.
+ *
+ * The endpoint caps `limit` at 100, so this pages until it has seen `total` records rather than
+ * trusting one call to cover the whole table.
+ */
+async function backendIdsBySeoPath(): Promise<Map<string, string>> {
+  const LIMIT = 100;
+  const bySeoPath = new Map<string, string>();
+  for (let offset = 0, total = Infinity; offset < total; offset += LIMIT) {
+    const res = await fetch(
+      `${KB_API_BASE}/knowledge_base/list?locale=th&limit=${LIMIT}&offset=${offset}`,
+      { headers: KB_API_TOKEN ? { Authorization: `Bearer ${KB_API_TOKEN}` } : {} },
+    );
+    if (!res.ok) throw new Error(`could not list backend articles (${res.status})`);
+    const body = (await res.json()) as { total?: number; items?: { id?: string; seo_path?: string }[] };
+    const items = body.items ?? [];
+    for (const it of items) if (it.seo_path && it.id) bySeoPath.set(it.seo_path, it.id);
+    // A short page means the end of the table whatever `total` claims — without this, a `total`
+    // that never shrinks (or is missing) would loop forever.
+    if (items.length < LIMIT) break;
+    total = body.total ?? offset + items.length;
+  }
+  return bySeoPath;
+}
+
+/**
+ * Local article id → backend uuid, for the `related` block: the picker stores the ids from
+ * `data/articles.json`, but the backend only knows its own records. Skips every round trip when
+ * no `related` block names anyone.
+ *
+ * Two sources, cheapest first: `backendId` on the article being pointed AT (already known, no
+ * network), and only for the ones still missing, a lookup by `seo_path` against
+ * `/knowledge_base/list`. An id that neither source resolves has no record on the backend at all
+ * and is dropped from the payload by `toApiPayload` — a link cannot point at a row that does not
+ * exist. The resolved uuid is used for this push only; it is not written back to
+ * `data/articles.json`, so an article that needs the fallback needs it again next time.
+ *
+ * Browser-only, like the rest of the push path: the relative `/api/articles` URL has no
+ * server-side meaning.
+ */
+async function relatedBackendIds(article: Article): Promise<Map<string, string> | undefined> {
+  const wanted = new Set(article.blocks.flatMap((b) => (b.type === 'related' ? b.ids : [])));
+  if (wanted.size === 0) return undefined;
+
+  const res = await fetch('/api/articles');
+  if (!res.ok) throw new Error(`could not resolve related article ids (${res.status})`);
+  const list: Article[] = await res.json();
+
+  const byLocalId = new Map<string, string>();
+  const missing: Article[] = [];
+  for (const a of list) {
+    if (!wanted.has(a.id)) continue;
+    if (a.backendId) byLocalId.set(a.id, a.backendId);
+    else missing.push(a);
+  }
+
+  if (missing.length > 0) {
+    const bySeoPath = await backendIdsBySeoPath();
+    for (const a of missing) {
+      const found = bySeoPath.get(a.seo_path || a.id);
+      if (found) byLocalId.set(a.id, found);
+    }
+  }
+  return byLocalId;
+}
+
+/**
  * Sends the article payload and returns the parsed body. Throws on a network failure or a
  * non-2xx, with the status + body in the message so the caller can surface a 401/422 rather
  * than a generic "failed".
  */
 async function send(path: string, method: 'POST' | 'PATCH', article: Article): Promise<unknown> {
+  const payload = toApiPayload(article, await relatedBackendIds(article));
   const res = await fetch(`${KB_API_BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
       ...(KB_API_TOKEN ? { Authorization: `Bearer ${KB_API_TOKEN}` } : {}),
     },
-    body: JSON.stringify(toApiPayload(article)),
+    body: JSON.stringify(payload),
   });
   if (!res.ok) {
     const detail = await res.text().catch(() => '');

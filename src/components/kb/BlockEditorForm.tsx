@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Trash2, ChevronUp, ChevronDown, Lock, Search, X } from 'lucide-react';
-import { Article, ArticleBlock, CtaVariant, LText, Locale, RichItem, TextColor, emptyLText } from '@/types/article';
+import { Article, ArticleBlock, CtaVariant, ImageGroupItem, LText, Locale, RichItem, TextColor, emptyLText } from '@/types/article';
 import { Promotion } from '@/types/promotion';
 import { DEFAULT_ICON } from '@/lib/icons';
+import { uid } from '@/lib/blocks';
 import IconPicker from './IconPicker';
 import ImagePicker from './ImagePicker';
 import RichTextArea from './RichTextArea';
@@ -298,19 +299,26 @@ function IdListEditor({ ids, onChange }: { ids: string[]; onChange: (ids: string
   );
 }
 
-type FetchStatus = 'idle' | 'loading' | 'success' | 'error';
+/** No separate 'loading': the picker is only mounted once the fetch is wanted, so 'idle' already
+ *  means "in flight" to every caller — and setting a loading state from the effect body is exactly
+ *  the cascading-render the `react-hooks/set-state-in-effect` lint rule rejects. */
+type FetchStatus = 'idle' | 'success' | 'error';
 
-/** Fetches `url` once, lazily — only starts once `enabled` flips true — and never refetches for
- *  the lifetime of this component instance. */
+/** Fetches `url` lazily — nothing happens until `enabled` flips true — and again only if `url` or
+ *  `enabled` changes, which in practice means once per picker.
+ *
+ *  Each run owns its request and cancels only its own via `cancelled`. A `startedRef` guard used
+ *  to sit here to make it fetch once per component instance; it deadlocked the hook under React's
+ *  StrictMode double-invoke, which runs the effect, tears it down, and runs it again on the SAME
+ *  instance — so the ref was already true on the second run, no second request went out, and the
+ *  first one's response landed in a closure the teardown had marked cancelled. Status never left
+ *  'loading' and the picker sat on "Loading…" forever. Don't reintroduce a cross-run guard. */
 function useFetchList<T>(url: string, enabled: boolean): { status: FetchStatus; data: T[] } {
   const [status, setStatus] = useState<FetchStatus>('idle');
   const [data, setData] = useState<T[]>([]);
-  const startedRef = useRef(false);
 
   useEffect(() => {
-    if (!enabled || startedRef.current) return;
-    startedRef.current = true;
-    setStatus('loading');
+    if (!enabled) return;
     let cancelled = false;
     fetch(url)
       .then((res) => {
@@ -369,7 +377,7 @@ function RelatedIdPicker<T extends { id: string }>({
     );
   }
 
-  const loading = status === 'idle' || status === 'loading';
+  const loading = status === 'idle';
   const items = data.filter(filterItem);
   const byId = new Map(items.map((it) => [it.id, it]));
 
@@ -533,6 +541,58 @@ export default function BlockEditorForm({ block, locale, onChange }: BlockEditor
               placeholder="Image caption"
             />
           </Field>
+        </div>
+      );
+
+    case 'imageGroup':
+      return (
+        <div className="flex flex-col gap-2">
+          {block.items.map((item, idx) => (
+            <ItemRow
+              key={item.id}
+              canMoveUp={idx > 0}
+              canMoveDown={idx < block.items.length - 1}
+              canRemove={block.items.length > 1}
+              onMoveUp={() => onChange({ ...block, items: moveInArray(block.items, idx, idx - 1) })}
+              onMoveDown={() => onChange({ ...block, items: moveInArray(block.items, idx, idx + 1) })}
+              onRemove={() => onChange({ ...block, items: block.items.filter((_, j) => j !== idx) })}
+            >
+              {(() => {
+                // One updater for the row, so every field below reads the same way and none of
+                // them can accidentally rebuild the array with a different shape.
+                const patch = (fields: Partial<ImageGroupItem>) =>
+                  onChange({ ...block, items: block.items.map((it, j) => (j === idx ? { ...it, ...fields } : it)) });
+                return (
+                  <div className="flex flex-col gap-3">
+                    <ImageField url={item.url} onChange={(url) => patch({ url })} />
+                    <Field label="Heading">
+                      <TextInput
+                        value={item.title[locale]}
+                        onChange={(v) => patch({ title: { ...item.title, [locale]: v } })}
+                        placeholder="e.g. ข้อ 2 ต้องมี Imbalance"
+                      />
+                    </Field>
+                    <Field label="Text">
+                      <RichTextArea
+                        value={item.body[locale]}
+                        onChange={(v) => patch({ body: { ...item.body, [locale]: v } })}
+                        placeholder="Describe the image... **bold**, *italic*, [links](https://)"
+                        rows={3}
+                        color={item.color}
+                        onColorChange={(color) => patch({ color })}
+                      />
+                    </Field>
+                  </div>
+                );
+              })()}
+            </ItemRow>
+          ))}
+          <AddButton
+            label="Add image row"
+            onClick={() =>
+              onChange({ ...block, items: [...block.items, { id: uid('ig'), url: '', title: emptyLText(), body: emptyLText() }] })
+            }
+          />
         </div>
       );
 
