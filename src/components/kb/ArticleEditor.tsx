@@ -476,6 +476,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
   const handleSaveClick = async () => {
     setActionPending(true);
     try {
+      if (!article.category || article.category === "") {
+        showToast(t('กรุณาเลือกหมวดหมู่ก่อนเผยแพร่', 'Please select a category before publishing'), 'error');
+        return
+      }
       await saveArticle(articleRef.current, { push: true });
     } finally {
       setActionPending(false);
@@ -495,6 +499,10 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
 
   const handlePublishClick = async () => {
     // Unpublishing never needs a title; only going the other way does.
+    if (!article.category || article.category === "") {
+      showToast(t('กรุณาเลือกหมวดหมู่ก่อนเผยแพร่', 'Please select a category before publishing'), 'error');
+      return
+    }
     if (article.status !== 'published' && !article.title.th.trim() && !article.title.en.trim()) {
       showToast(t('กรุณาใส่ชื่อบทความก่อนเผยแพร่', 'Please add a title before publishing'), 'error');
       return;
@@ -654,7 +662,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             article.seo_path
               ? 'earnex.com/kb/' + article.seo_path
               : t('ต้องเป็น a-z 0-9 - เท่านั้น (ชื่อไทยสร้าง slug ไม่ได้ ให้กรอกเอง) และห้ามซ้ำ',
-                  'Latin a-z 0-9 - only (a Thai title makes no slug — type one) and must be unique')
+                'Latin a-z 0-9 - only (a Thai title makes no slug — type one) and must be unique')
           }
         >
           <input

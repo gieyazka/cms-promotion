@@ -208,3 +208,18 @@
 {"at":"2026-08-10T15:10:34.730Z","actor":"p","action":"create","articleId":"1786374634730","title":"ZZ-RE","changes":[{"field":"status","to":"published"}]}
 {"at":"2026-08-10T15:10:34.776Z","actor":"p","action":"delete","articleId":"1786374634719","title":"ZZ-RE","changes":[{"field":"article","note":"ลบถาวร (สถานะก่อนลบ: draft)"}]}
 {"at":"2026-08-10T15:10:34.782Z","actor":"p","action":"delete","articleId":"1786374634730","title":"ZZ-RE","changes":[{"field":"article","note":"ลบถาวร (สถานะก่อนลบ: published)"}]}
+{"at":"2026-08-14T07:10:14.016Z","actor":"unknown","action":"create","articleId":"1786691414016","title":"(ไม่มีชื่อ)","changes":[{"field":"status","to":"draft"}]}
+{"at":"2026-08-14T07:10:14.601Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"(ไม่มีชื่อ)","changes":[{"field":"syncedAt","to":"2026-08-14T07:10:14.117Z"},{"field":"backendId","to":"f2479e95-456c-4de7-a359-b14c7e4063ff"}]}
+{"at":"2026-08-14T07:10:25.754Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"seo_path","from":"","to":"asd"},{"field":"title","from":{"th":"","en":""},"to":{"th":"asd","en":""}}]}
+{"at":"2026-08-14T07:10:25.912Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"syncedAt","from":"2026-08-14T07:10:14.117Z","to":"2026-08-14T07:10:25.907Z"}]}
+{"at":"2026-08-14T07:10:29.102Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"title","from":{"th":"asd","en":""},"to":{"th":"asd","en":"fff"}}]}
+{"at":"2026-08-14T07:10:29.247Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"syncedAt","from":"2026-08-14T07:10:25.907Z","to":"2026-08-14T07:10:29.240Z"}]}
+{"at":"2026-08-14T07:10:31.772Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"syncedAt","from":"2026-08-14T07:10:29.240Z","to":"2026-08-14T07:10:31.767Z"}]}
+{"at":"2026-08-14T07:10:37.256Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"detail","from":{"th":"","en":""},"to":{"th":"asd","en":""}}]}
+{"at":"2026-08-14T07:10:37.461Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"asd","changes":[{"field":"syncedAt","from":"2026-08-14T07:10:31.767Z","to":"2026-08-14T07:10:37.456Z"}]}
+{"at":"2026-08-14T07:10:47.872Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"ffffffff","changes":[{"field":"seo_path","from":"asd","to":"ffffffff"},{"field":"title","from":{"th":"asd","en":"fff"},"to":{"th":"ffffffff","en":"fff"}}]}
+{"at":"2026-08-14T07:10:47.983Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"ffffffff","changes":[{"field":"syncedAt","from":"2026-08-14T07:10:37.456Z","to":"2026-08-14T07:10:47.979Z"}]}
+{"at":"2026-08-14T07:11:11.918Z","actor":"unknown","action":"update","articleId":"1786691414016","title":"ffffffff","changes":[{"field":"status","from":"draft","to":"trash"}]}
+{"at":"2026-08-14T07:11:29.725Z","actor":"unknown","action":"create","articleId":"1786691489725","title":"sffffffff","changes":[{"field":"status","to":"draft"}]}
+{"at":"2026-08-14T07:11:30.897Z","actor":"unknown","action":"update","articleId":"1786691489725","title":"sffffffff","changes":[{"field":"syncedAt","to":"2026-08-14T07:11:30.893Z"},{"field":"backendId","to":"a2cbf04c-cbe2-4bf5-a3cc-27cd44f2e59f"}]}
+{"at":"2026-08-14T07:24:34.832Z","actor":"unknown","action":"update","articleId":"1786691489725","title":"sffffffff","changes":[{"field":"pubDate","from":"","to":"2026-08-14"}]}
