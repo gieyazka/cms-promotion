@@ -99,7 +99,7 @@ export default function KnowledgeBaseList() {
         (a) =>
           a.title.th.toLowerCase().includes(q) ||
           a.title.en.toLowerCase().includes(q) ||
-          a.seo_path.toLowerCase().includes(q) ||
+          (a.seo_path ?? '').toLowerCase().includes(q) ||
           a.tags.some((tag) => tag.toLowerCase().includes(q))
       );
     }
@@ -155,12 +155,19 @@ export default function KnowledgeBaseList() {
       const results = await Promise.all(
         ids.map((id) => fetch(`/api/articles/${id}`, { method: 'DELETE', headers: actorHeaders() })),
       );
-      if (results.some((r) => !r.ok)) throw new Error('request failed');
+      // A delete can now fail on the backend rather than locally (the route deactivates the
+      // synced record first). Show that reason — "failed" alone gives no clue whether to
+      // retry, and the article is still in the trash either way.
+      const failed = results.find((r) => !r.ok);
+      if (failed) {
+        const body = await failed.json().catch(() => null);
+        throw new Error(body?.error || 'request failed');
+      }
       setArticles((prev) => prev.filter((a) => !ids.includes(a.id)));
       setSelected((prev) => prev.filter((id) => !ids.includes(id)));
       showToast('Deleted permanently', 'success');
-    } catch {
-      showToast('Failed to delete permanently', 'error');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Failed to delete permanently', 'error');
     } finally {
       setPurgeTarget(null);
     }
@@ -192,7 +199,13 @@ export default function KnowledgeBaseList() {
     }
   }
 
-  const filtersActive = search !== '' || category !== 'all' || tab !== 'all';
+  /**
+   * The status tab is its own control with its own counts, not a filter — "Clear filters"
+   * leaves it alone. `listNarrowed` is the wider question ("is anything hiding rows?"),
+   * which is what the empty state needs to know.
+   */
+  const filtersActive = search !== '' || category !== 'all';
+  const listNarrowed = filtersActive || tab !== 'all';
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
@@ -303,7 +316,6 @@ export default function KnowledgeBaseList() {
               onClick={() => {
                 setSearch('');
                 setCategory('all');
-                setTab('all');
               }}
               className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700"
             >
@@ -376,22 +388,23 @@ export default function KnowledgeBaseList() {
             title="Trash is empty"
             description="Deleted articles will show up here before they're permanently removed."
           />
-        ) : filtersActive ? (
+        ) : listNarrowed ? (
           <EmptyState
             icon={<Search className="text-gray-300 dark:text-gray-600" size={32} />}
             title="No articles match your filters"
             description="Try adjusting your search or clearing the filters."
             action={
-              <button
-                onClick={() => {
-                  setSearch('');
-                  setCategory('all');
-                  setTab('all');
-                }}
-                className="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
-                Clear filters
-              </button>
+              filtersActive ? (
+                <button
+                  onClick={() => {
+                    setSearch('');
+                    setCategory('all');
+                  }}
+                  className="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  Clear filters
+                </button>
+              ) : undefined
             }
           />
         ) : (
@@ -677,30 +690,59 @@ function RowMenu({
   trigger: React.ReactNode;
   children: (close: () => void) => React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
+  /**
+   * The menu is `position: fixed`, not `absolute`. The table sits inside
+   * `overflow-hidden` (rounded card) + `overflow-x-auto` (horizontal scroll), and CSS
+   * computes the other axis to `auto` whenever one axis is not `visible` — so an
+   * absolutely positioned menu is clipped by the card's bottom edge. Fixed positioning
+   * escapes both, at the cost of having to place it by hand from the button's rect.
+   */
+  const [pos, setPos] = useState<{ top?: number; bottom?: number; right: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!open) return;
+    if (!pos) return;
     const onClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setPos(null);
     };
+    // Fixed coords are frozen at open time, so the menu would drift away from its row.
+    const onScroll = () => setPos(null);
     document.addEventListener('mousedown', onClick);
-    return () => document.removeEventListener('mousedown', onClick);
-  }, [open]);
+    window.addEventListener('scroll', onScroll, true);
+    window.addEventListener('resize', onScroll);
+    return () => {
+      document.removeEventListener('mousedown', onClick);
+      window.removeEventListener('scroll', onScroll, true);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [pos]);
 
   return (
-    <div className="relative inline-block" ref={ref}>
+    <div className="inline-block" ref={ref}>
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={(e) => {
+          if (pos) return setPos(null);
+          const r = e.currentTarget.getBoundingClientRect();
+          const right = window.innerWidth - r.right;
+          // ponytail: 240px covers the tallest menu (6 items); measure-then-flip if the
+          // menu ever grows past that.
+          setPos(
+            window.innerHeight - r.bottom < 240
+              ? { bottom: window.innerHeight - r.top + 4, right }
+              : { top: r.bottom + 4, right }
+          );
+        }}
         className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200"
       >
         {trigger}
       </button>
-      {open && (
-        <div className="absolute right-0 top-full mt-1 z-20 min-w-[180px] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl shadow-lg py-1">
-          {children(() => setOpen(false))}
+      {pos && (
+        <div
+          style={pos}
+          className="fixed z-30 min-w-[180px] bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl shadow-lg py-1"
+        >
+          {children(() => setPos(null))}
         </div>
       )}
     </div>

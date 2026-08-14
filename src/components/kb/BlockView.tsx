@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   AlertCircle,
   AlertTriangle,
@@ -12,9 +13,11 @@ import {
   CreditCard,
   FileCheck,
   Image as ImageIcon,
+  Maximize2,
   Star,
   User,
   Wallet,
+  X,
 } from 'lucide-react';
 import {
   Article,
@@ -28,6 +31,8 @@ import {
   HighlightBlock,
   HighlightVariant,
   ImageBlock,
+  ImageGroupBlock,
+  ImageGroupItem,
   IntroBlock,
   KeyTakeawaysBlock,
   KeyValueBlock,
@@ -91,6 +96,8 @@ export default function BlockView({ block, article, locale, mobile }: BlockViewP
       return <ParagraphView block={block} locale={locale} mobile={mobile} />;
     case 'image':
       return <ImageView block={block} locale={locale} mobile={mobile} />;
+    case 'imageGroup':
+      return <ImageGroupView block={block} locale={locale} mobile={mobile} />;
     case 'highlight':
       return <HighlightView block={block} locale={locale} mobile={mobile} />;
     case 'keyTakeaways':
@@ -215,6 +222,179 @@ function ImageView({ block, locale, mobile }: { block: ImageBlock; locale: Local
         </figcaption>
       )}
     </figure>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// imageGroup
+//
+// Two layouts off one item list: desktop puts the image left of the text, mobile stacks them
+// inside a card and adds an "expand" button, because a chart that reads fine at 380px wide does
+// not read at all at 160px. The button is deliberately mobile-only — on desktop the image is
+// already large enough that a lightbox would just be a second click to see the same pixels.
+// ---------------------------------------------------------------------------
+
+/** Shared by both layouts so the empty state, the object-fit and the alt text can't drift apart. */
+function ImageGroupPicture({ item, locale, height }: { item: ImageGroupItem; locale: Locale; height: number }) {
+  return item.url ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={item.url} alt={item.title[locale] || ''} style={{ width: '100%', height, objectFit: 'cover', display: 'block' }} />
+  ) : (
+    <div
+      style={{
+        width: '100%',
+        height,
+        background: PALETTE.card,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        color: '#b6bcc8',
+      }}
+    >
+      <ImageIcon size={28} />
+      <span style={{ fontSize: 12 }}>{locale === 'en' ? 'Image' : 'รูปภาพประกอบ'}</span>
+    </div>
+  );
+}
+
+function ImageGroupText({ item, locale, mobile }: { item: ImageGroupItem; locale: Locale; mobile: boolean }) {
+  return (
+    <div style={{ minWidth: 0 }}>
+      <h3
+        style={{
+          margin: '0 0 10px',
+          paddingLeft: 12,
+          borderLeft: `4px solid ${PALETTE.primary}`,
+          fontSize: mobile ? 17 : 21,
+          fontWeight: 800,
+          color: PALETTE.secondary,
+          lineHeight: 1.35,
+        }}
+      >
+        {renderInline(item.title[locale])}
+      </h3>
+      <div style={{ fontSize: mobile ? 15 : 16.5, lineHeight: 1.75, color: '#3a3f4b', ...textColorStyle(item.color) }}>
+        {renderBlockText(item.body[locale])}
+      </div>
+    </div>
+  );
+}
+
+function ImageGroupView({ block, locale, mobile }: { block: ImageGroupBlock; locale: Locale; mobile: boolean }) {
+  // Which image is open full-screen, by item id. `null` closes it. Only ever set on mobile.
+  const [zoomed, setZoomed] = useState<string | null>(null);
+  const open = block.items.find((it) => it.id === zoomed);
+
+  if (!mobile) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+        {block.items.map((item) => (
+          <div key={item.id} style={{ display: 'grid', gridTemplateColumns: '38% 1fr', gap: 40, alignItems: 'center' }}>
+            <div style={{ borderRadius: 16, overflow: 'hidden', background: PALETTE.card }}>
+              <ImageGroupPicture item={item} locale={locale} height={210} />
+            </div>
+            <ImageGroupText item={item} locale={locale} mobile={false} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {block.items.map((item) => (
+        <div
+          key={item.id}
+          style={{
+            background: '#fff',
+            border: `1px solid ${PALETTE.divider}`,
+            borderRadius: 18,
+            padding: 14,
+            boxShadow: '0 6px 20px rgba(66,165,245,.10)',
+          }}
+        >
+          <div style={{ position: 'relative', borderRadius: 14, overflow: 'hidden', marginBottom: 14 }}>
+            <ImageGroupPicture item={item} locale={locale} height={200} />
+            {item.url && (
+              <button
+                type="button"
+                onClick={() => setZoomed(item.id)}
+                style={{
+                  position: 'absolute',
+                  right: 10,
+                  bottom: 10,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '7px 14px',
+                  borderRadius: 999,
+                  border: 'none',
+                  background: 'rgba(255,255,255,.94)',
+                  boxShadow: '0 4px 14px rgba(11,30,61,.18)',
+                  color: PALETTE.secondary,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                <Maximize2 size={14} />
+                {locale === 'en' ? 'Expand' : 'ขยาย'}
+              </button>
+            )}
+          </div>
+          <ImageGroupText item={item} locale={locale} mobile />
+        </div>
+      ))}
+
+      {open && createPortal(
+        // Portalled to <body> on purpose. `position: fixed` resolves against the nearest
+        // TRANSFORMED ancestor, and the mobile preview is a CSS-scaled frame — so an inline
+        // overlay sizes itself to the whole article (4000px tall) and centres the image a
+        // screenful above the viewport, invisible. Outside that frame, fixed means fixed.
+        <div
+          onClick={() => setZoomed(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 50,
+            background: 'rgba(6,14,30,.92)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+            cursor: 'zoom-out',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={open.url} alt={open.title[locale] || ''} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 10 }} />
+          <button
+            type="button"
+            onClick={() => setZoomed(null)}
+            aria-label={locale === 'en' ? 'Close' : 'ปิด'}
+            style={{
+              position: 'absolute',
+              top: 14,
+              right: 14,
+              width: 34,
+              height: 34,
+              borderRadius: 999,
+              border: 'none',
+              background: 'rgba(255,255,255,.16)',
+              color: '#fff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <X size={18} />
+          </button>
+        </div>,
+        document.body,
+      )}
+    </div>
   );
 }
 
@@ -823,7 +1003,19 @@ function SourcesView({ block, locale, mobile }: { block: SourcesBlock; locale: L
         {block.items.map((it, i) => {
           const href = isSafeHref(it.url) ? it.url : '#';
           return (
-            <li key={i} style={{ display: 'flex', gap: 10, fontSize: mobile ? 12.5 : 13.5 }}>
+            // Body typography, not footnote typography: a source is something a reader is meant
+            // to actually read, so it matches `paragraph` in size/colour and `intro` in weight
+            // and line height. It was 12.5/13.5 and near-invisible next to the text it backs up.
+            <li
+              key={i}
+              style={{
+                display: 'flex',
+                gap: 10,
+                fontSize: mobile ? 15 : 16.5,
+                lineHeight: 1.7,
+                fontWeight: 500,
+              }}
+            >
               <span style={{ fontWeight: 700, color: PALETTE.primary, flex: '0 0 auto' }}>[{i + 1}]</span>
               <a
                 href={href}
@@ -927,34 +1119,125 @@ function LineBannerView({ block, locale, mobile }: { block: LineBannerBlock; loc
 }
 
 // ---------------------------------------------------------------------------
-// related / relatedPromos — no data to resolve in the editor preview,
-// so these render a tasteful placeholder grid instead of nothing.
+// related / relatedPromos
+//
+// `related` in MANUAL mode is the one case the preview can resolve for real: the
+// ids name articles that live in this same CMS, so it reads them back from
+// `/api/articles` and draws the actual covers and titles. Everything else stays a
+// placeholder grid on purpose — `auto` is picked by the live site at request time,
+// and promotions are not modelled here.
 // ---------------------------------------------------------------------------
 
+/** The article list, fetched once per mount and only when a manual `related` block needs it.
+ *  `null` means "still loading", so the caller can keep showing skeletons rather than flashing
+ *  an empty grid. A failure resolves to `[]` — the preview falls back to placeholders, it never
+ *  blocks editing. Note the setState lives in the promise callback, not the effect body: the
+ *  `react-hooks/set-state-in-effect` rule rejects the synchronous form. */
+function useArticleList(enabled: boolean): Article[] | null {
+  const [list, setList] = useState<Article[] | null>(null);
+  useEffect(() => {
+    if (!enabled) return;
+    let cancelled = false;
+    fetch('/api/articles')
+      .then((res) => (res.ok ? res.json() : []))
+      .catch(() => [])
+      .then((json: Article[]) => {
+        if (!cancelled) setList(json);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled]);
+  return list;
+}
+
+/** One swipeable rail at every width — plain CSS overflow with scroll snapping, no carousel
+ *  library, no arrows, no JS: every platform already knows how to fling a scroll container.
+ *
+ *  Only the card width changes: one card at a time on a phone, three at a time on desktop and
+ *  tablet. Both stop just short of a whole number of cards so the next one peeks in and advertises
+ *  that there is more to the right. With three or fewer articles the rail simply does not overflow
+ *  and reads as the row it always was. */
+const relatedRailStyle = (): CSSProperties => ({
+  display: 'flex',
+  gap: 14,
+  overflowX: 'auto',
+  scrollSnapType: 'x mandatory',
+  paddingBottom: 6,
+});
+
+const relatedCardStyle = (mobile: boolean): CSSProperties => ({
+  background: '#fff',
+  borderRadius: 14,
+  overflow: 'hidden',
+  boxShadow: '0 4px 16px rgba(66,165,245,.08)',
+  flex: mobile ? '0 0 82%' : '0 0 31%',
+  scrollSnapAlign: 'start',
+});
+
+function RelatedCard({ item, locale, mobile }: { item: Article; locale: Locale; mobile: boolean }) {
+  return (
+    <div style={relatedCardStyle(mobile)}>
+      <div style={{ height: mobile ? 120 : 110, background: 'radial-gradient(120% 120% at 30% 0%, #24408a, #0B1E3D)', position: 'relative' }}>
+        {item.cover ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={item.cover} alt={item.title[locale] || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : (
+          <BookOpen size={22} color="rgba(255,255,255,.5)" style={{ position: 'absolute', left: 14, bottom: 12 }} />
+        )}
+      </div>
+      <div style={{ padding: 14 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: BRAND.gold, marginBottom: 6, textTransform: 'uppercase', letterSpacing: .3 }}>
+          {item.category || '—'}
+        </div>
+        <div style={{ fontSize: mobile ? 14 : 15, fontWeight: 700, color: PALETTE.secondary, lineHeight: 1.4 }}>
+          {item.title[locale] || item.title.th || item.title.en}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RelatedSkeletonCard({ mobile }: { mobile: boolean }) {
+  return (
+    <div style={relatedCardStyle(mobile)}>
+      <div style={{ height: mobile ? 120 : 110, background: 'radial-gradient(120% 120% at 30% 0%, #24408a, #0B1E3D)', position: 'relative' }}>
+        <BookOpen size={22} color="rgba(255,255,255,.5)" style={{ position: 'absolute', left: 14, bottom: 12 }} />
+      </div>
+      <div style={{ padding: 14 }}>
+        <div style={{ height: 10, width: '40%', background: PALETTE.divider, borderRadius: 4, marginBottom: 8 }} />
+        <div style={{ height: 12, width: '90%', background: '#eef1f5', borderRadius: 4, marginBottom: 6 }} />
+        <div style={{ height: 12, width: '65%', background: '#eef1f5', borderRadius: 4 }} />
+      </div>
+    </div>
+  );
+}
+
 function RelatedView({ block, article, locale, mobile }: { block: RelatedBlock; article: Article; locale: Locale; mobile: boolean }) {
+  const manual = block.mode === 'manual' && block.ids.length > 0;
+  const all = useArticleList(manual);
+  // Ordered by the ids as picked, not by the order they happen to sit in the store. An id with no
+  // article behind it (deleted since it was picked) simply drops out — same as it would on the site.
+  const picked = manual && all ? block.ids.map((id) => all.find((a) => a.id === id)).filter((a): a is Article => !!a) : [];
+
   const note =
     block.mode === 'manual'
       ? `${block.ids.length} ${locale === 'en' ? 'article(s) selected' : 'บทความที่เลือกไว้'}`
       : `${locale === 'en' ? 'Auto-selected from category' : 'เลือกอัตโนมัติจากหมวดหมู่'}: ${article.category || '—'}`;
+  // Only the unresolved cases are still a promise about the live site; resolved ones ARE the data.
+  const hint =
+    picked.length > 0 ? '' : ` · ${locale === 'en' ? 'resolved on the live site' : 'จะถูกดึงข้อมูลจริงบนหน้าเว็บ'}`;
+
   return (
     <div style={{ background: PALETTE.faint, padding: mobile ? '26px 18px' : '36px 40px', borderTop: `1px solid ${PALETTE.divider}` }}>
       <h3 style={{ fontSize: mobile ? 18 : 22, fontWeight: 800, color: PALETTE.secondary, margin: '0 0 6px' }}>
         {locale === 'en' ? 'Related articles' : 'บทความที่เกี่ยวข้อง'}
       </h3>
-      <div style={{ fontSize: 12, color: '#9aa0ad', marginBottom: 16 }}>{note} · {locale === 'en' ? 'resolved on the live site' : 'จะถูกดึงข้อมูลจริงบนหน้าเว็บ'}</div>
-      <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'repeat(3,1fr)', gap: 14 }}>
-        {[0, 1, 2].map((i) => (
-          <div key={i} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 4px 16px rgba(66,165,245,.08)' }}>
-            <div style={{ height: mobile ? 120 : 110, background: 'radial-gradient(120% 120% at 30% 0%, #24408a, #0B1E3D)', position: 'relative' }}>
-              <BookOpen size={22} color="rgba(255,255,255,.5)" style={{ position: 'absolute', left: 14, bottom: 12 }} />
-            </div>
-            <div style={{ padding: 14 }}>
-              <div style={{ height: 10, width: '40%', background: PALETTE.divider, borderRadius: 4, marginBottom: 8 }} />
-              <div style={{ height: 12, width: '90%', background: '#eef1f5', borderRadius: 4, marginBottom: 6 }} />
-              <div style={{ height: 12, width: '65%', background: '#eef1f5', borderRadius: 4 }} />
-            </div>
-          </div>
-        ))}
+      <div style={{ fontSize: 12, color: '#9aa0ad', marginBottom: 16 }}>{note}{hint}</div>
+      <div style={relatedRailStyle()}>
+        {picked.length > 0
+          ? picked.map((item) => <RelatedCard key={item.id} item={item} locale={locale} mobile={mobile} />)
+          : [0, 1, 2].map((i) => <RelatedSkeletonCard key={i} mobile={mobile} />)}
       </div>
     </div>
   );

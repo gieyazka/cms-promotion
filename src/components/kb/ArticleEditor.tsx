@@ -54,10 +54,29 @@ function miniBtnClass(disabled: boolean, danger?: boolean) {
   return 'flex h-7 w-7 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200 cursor-pointer transition-colors';
 }
 
-function Field({ label, hint, children }: { label: string; hint?: React.ReactNode; children: React.ReactNode }) {
+/**
+ * `required` marks a field the API refuses to publish without (see `assertArticle` in
+ * articles-store). It is deliberately not an HTML `required` attribute: a draft is allowed to be
+ * incomplete, and the blur autosave would be blocked by native form validation before it could
+ * save anything.
+ */
+function Field({
+  label,
+  hint,
+  required,
+  children,
+}: {
+  label: string;
+  hint?: React.ReactNode;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-tight">{label}</label>
+      <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-tight">
+        {label}
+        {required && <span className="ml-1 text-red-500">*</span>}
+      </label>
       {children}
       {hint && <span className="text-[11px] text-gray-400 dark:text-gray-500">{hint}</span>}
     </div>
@@ -291,6 +310,12 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
     savingRef.current = true;
     setSaving(true);
     try {
+      // A save can now be refused for a reason the author can act on — a duplicate or non-latin
+      // slug, or publishing without one. Carry the server's message through instead of the
+      // generic "try again", which would leave them re-pressing Save on a slug that can never win.
+      const reason = async (res: Response) =>
+        new Error((await res.json().catch(() => null))?.error || 'save failed');
+
       let saved: Article;
       if (!articleIdRef.current) {
         const res = await fetch('/api/articles', {
@@ -298,7 +323,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           headers: jsonWriteHeaders(),
           body: JSON.stringify(articleToSave),
         });
-        if (!res.ok) throw new Error('save failed');
+        if (!res.ok) throw await reason(res);
         saved = await res.json();
         setArticleId(saved.id);
         window.history.replaceState(null, '', '/knowledge-base/' + saved.id);
@@ -308,7 +333,7 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
           headers: jsonWriteHeaders(),
           body: JSON.stringify(articleToSave),
         });
-        if (!res.ok) throw new Error('save failed');
+        if (!res.ok) throw await reason(res);
         saved = await res.json();
       }
       setArticle(saved);
@@ -350,8 +375,13 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         }
       }
       return saved;
-    } catch {
-      showToast(t('บันทึกไม่สำเร็จ กรุณาลองใหม่', 'Failed to save, please try again'), 'error');
+    } catch (err) {
+      showToast(
+        err instanceof Error && err.message !== 'save failed'
+          ? err.message
+          : t('บันทึกไม่สำเร็จ กรุณาลองใหม่', 'Failed to save, please try again'),
+        'error'
+      );
       return null;
     } finally {
       savingRef.current = false;
@@ -594,8 +624,6 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
     });
   };
 
-  const dupSlug = false; // uniqueness is enforced server-side; no client-side article list available here
-
   const renderMetaPanel = () => (
     <div className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4 text-blue-600">
@@ -621,7 +649,13 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
         </Field>
         <Field
           label="Slug (URL)"
-          hint={dupSlug ? undefined : 'earnex.com/kb/' + (article.seo_path || '...')}
+          required
+          hint={
+            article.seo_path
+              ? 'earnex.com/kb/' + article.seo_path
+              : t('ต้องเป็น a-z 0-9 - เท่านั้น (ชื่อไทยสร้าง slug ไม่ได้ ให้กรอกเอง) และห้ามซ้ำ',
+                  'Latin a-z 0-9 - only (a Thai title makes no slug — type one) and must be unique')
+          }
         >
           <input
             value={article.seo_path}
@@ -633,7 +667,15 @@ export default function ArticleEditor({ initial, isNew }: { initial: Article; is
             className={`${inputClass} font-mono`}
           />
         </Field>
-        <Field label={t('หมวดหมู่', 'Category')}>
+        <Field
+          label={t('หมวดหมู่', 'Category')}
+          required
+          hint={
+            article.category
+              ? undefined
+              : t('ต้องเลือกก่อนเผยแพร่', 'Must be set before the article can be published')
+          }
+        >
           <select
             value={article.category}
             onChange={(e) => updateArticle({ category: e.target.value })}

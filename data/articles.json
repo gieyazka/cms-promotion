@@ -16,7 +16,7 @@
     "pubDate": "2026-07-11",
     "views": 2431,
     "createdAt": "2026-07-11T03:00:00.000Z",
-    "updated": "2026-07-11T12:00:00.000Z",
+    "updated": "2026-08-09T16:43:32.032Z",
     "title": {
       "th": "ทำไมทองคำถึงเป็นการลงทุนที่ปลอดภัยที่สุดในยุคนี้?",
       "en": "Why Is Gold the Safest Investment of This Era?"
@@ -363,7 +363,15 @@
         "ids": []
       }
     ],
-    "showNew": true
+    "showNew": true,
+    "detail": {
+      "th": "เจาะลึกเหตุผลที่ทองคำเป็นสินทรัพย์ปลอดภัยในทุกวิกฤต พร้อมวิธีเทรดรับ Rebate",
+      "en": "The reasons gold stays a safe haven through every crisis, plus how to trade it for rebates"
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1783500000002",
@@ -375,11 +383,11 @@
       "cashback"
     ],
     "owners": [],
-    "cover": "",
+    "cover": "http://61.47.10.155:8012/knowledge_base/image/1784819188044-Screenshot-2569-07-23-at-12.08.38.png",
     "pubDate": "2026-07-07",
     "views": 5210,
     "createdAt": "2026-07-07T03:00:00.000Z",
-    "updated": "2026-07-23T14:53:10.824Z",
+    "updated": "2026-08-09T16:43:32.013Z",
     "title": {
       "th": "5 ขั้นตอนรับเงินคืน (Rebate) ง่าย ๆ กับ Earnex",
       "en": "5 Easy Steps to Get Your Rebate (Cashback) with Earnex"
@@ -495,12 +503,20 @@
       }
     ],
     "syncedAt": "2026-07-23T14:53:10.819Z",
-    "backendId": "2a0c7b77-ed1f-4134-bced-d8c2f62c69e0"
+    "backendId": "2a0c7b77-ed1f-4134-bced-d8c2f62c69e0",
+    "detail": {
+      "th": "สอนวิธีรับเงินคืนจากการเทรดแบบละเอียด",
+      "en": "A detailed guide on how to get cashback from your trades"
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1783500000003",
     "slug": "compare-forex-brokers-2026",
-    "status": "draft",
+    "status": "published",
     "category": "financial-history",
     "tags": [
       "broker"
@@ -512,7 +528,7 @@
     "pubDate": "",
     "views": 0,
     "createdAt": "2026-07-13T11:00:00.000Z",
-    "updated": "2026-07-23T15:14:01.717Z",
+    "updated": "2026-08-09T16:43:32.026Z",
     "title": {
       "th": "เปรียบเทียบโบรกเกอร์ Forex ยอดนิยมปี 2026 ฉบับอัปเดตล่าสุด",
       "en": "Comparing Popular Forex Brokers in 2026: The Latest Update"
@@ -607,12 +623,20 @@
       }
     ],
     "syncedAt": "2026-07-23T15:14:01.711Z",
-    "backendId": "6102ea87-c682-4f27-ab8c-b74b200763c5"
+    "backendId": "6102ea87-c682-4f27-ab8c-b74b200763c5",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1783500000004",
     "slug": "candlestick-basic",
-    "status": "draft",
+    "status": "published",
     "category": "trading-tips",
     "tags": [
       "เทคนิค"
@@ -624,7 +648,7 @@
     "pubDate": "2026-07-23",
     "views": 0,
     "createdAt": "2026-07-13T00:00:00.000Z",
-    "updated": "2026-07-23T14:42:10.990Z",
+    "updated": "2026-08-09T16:43:31.869Z",
     "title": {
       "th": "(test) พื้นฐานการอ่านกราฟแท่งเทียน (Candlestick) สำหรับนักเทรดมือใหม่ที่เพิ่งเริ่มต้นในตลาด Forex",
       "en": "Candlestick Chart Basics for Forex Traders Who Are Just Getting Started"
@@ -637,12 +661,21 @@
       "th": "",
       "en": ""
     },
-    "blocks": []
+    "blocks": [],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    },
+    "seo_path": ""
   },
   {
     "id": "1783500000005",
     "slug": "tradingview-subscription",
-    "status": "published",
+    "status": "draft",
     "category": "trading-tips",
     "tags": [
       "tools"
@@ -654,7 +687,7 @@
     "pubDate": "2026-07-04",
     "views": 1897,
     "createdAt": "2026-07-04T03:00:00.000Z",
-    "updated": "2026-07-04T12:00:00.000Z",
+    "updated": "2026-08-10T14:44:48.456Z",
     "title": {
       "th": "TradingView Subscription คืออะไร ใช้ยังไงให้คุ้ม",
       "en": "What Is a TradingView Subscription, and How Do You Get the Most Out of It?"
@@ -685,12 +718,22 @@
           "en": "There are Essential, Plus, and Premium tiers — choose based on your usage."
         }
       }
-    ]
+    ],
+    "detail": {
+      "th": "รีวิวแพ็กเกจ",
+      "en": "A review of the subscription packages"
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    },
+    "syncedAt": "2026-08-09T16:43:49.027Z",
+    "backendId": "a7cf7057-a644-4ddd-bd00-4c917bcc0451"
   },
   {
     "id": "1783500000006",
     "slug": "gold-market-q1-2025",
-    "status": "archived",
+    "status": "published",
     "category": "financial-history",
     "tags": [
       "news",
@@ -703,7 +746,7 @@
     "pubDate": "2026-04-14",
     "views": 903,
     "createdAt": "2026-04-14T03:00:00.000Z",
-    "updated": "2026-04-24T12:00:00.000Z",
+    "updated": "2026-08-09T16:43:31.856Z",
     "title": {
       "th": "สรุปภาวะตลาดทองคำ ไตรมาส 1 ปี 2025",
       "en": "Gold Market Recap: Q1 2025"
@@ -725,12 +768,20 @@
           "en": "Gold prices rose in the first quarter amid uncertainty around monetary policy."
         }
       }
-    ]
+    ],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1783500000007",
     "slug": "open-pepperstone-account",
-    "status": "archived",
+    "status": "published",
     "category": "cost-rebate",
     "tags": [
       "broker",
@@ -743,7 +794,7 @@
     "pubDate": "2026-03-15",
     "views": 3402,
     "createdAt": "2026-03-15T03:00:00.000Z",
-    "updated": "2026-03-25T12:00:00.000Z",
+    "updated": "2026-08-09T16:43:31.890Z",
     "title": {
       "th": "วิธีเปิดบัญชีเทรดกับ Pepperstone แบบละเอียดทีละขั้นตอน",
       "en": "How to Open a Pepperstone Trading Account: A Step-by-Step Guide"
@@ -765,7 +816,15 @@
           "en": "Opening an account takes less than 10 minutes."
         }
       }
-    ]
+    ],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1783500000008",
@@ -780,7 +839,7 @@
     "pubDate": "",
     "views": 0,
     "createdAt": "2026-06-03T12:00:00.000Z",
-    "updated": "2026-06-03T12:00:00.000Z",
+    "updated": "2026-08-10T14:44:48.454Z",
     "title": {
       "th": "ทดสอบบทความ (ร่างเก่า ไม่ใช้แล้ว)",
       "en": "Test Article (Old Draft, No Longer Used)"
@@ -793,7 +852,15 @@
       "th": "",
       "en": ""
     },
-    "blocks": []
+    "blocks": [],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1783500000009",
@@ -810,7 +877,7 @@
     "pubDate": "2025-12-25",
     "views": 120,
     "createdAt": "2025-12-25T03:00:00.000Z",
-    "updated": "2026-02-13T12:00:00.000Z",
+    "updated": "2026-08-10T14:44:48.458Z",
     "title": {
       "th": "โปรโมชันเก่า Q4 2024 (หมดอายุ)",
       "en": "Old Q4 2024 Promotion (Expired)"
@@ -823,7 +890,15 @@
       "th": "",
       "en": ""
     },
-    "blocks": []
+    "blocks": [],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1784782751527",
@@ -837,7 +912,7 @@
     "pubDate": "",
     "views": 0,
     "createdAt": "2026-07-23T04:59:11.527Z",
-    "updated": "2026-07-23T05:14:23.625Z",
+    "updated": "2026-08-10T14:44:48.460Z",
     "title": {
       "th": "",
       "en": ""
@@ -861,7 +936,15 @@
       }
     ],
     "syncedAt": "2026-07-23T04:59:11.527Z",
-    "backendId": "cd24970a-3e32-4e75-b653-2f1c627dce64"
+    "backendId": "cd24970a-3e32-4e75-b653-2f1c627dce64",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785239407071",
@@ -875,7 +958,7 @@
     "pubDate": "2026-07-29",
     "views": 0,
     "createdAt": "2026-07-28T11:50:07.071Z",
-    "updated": "2026-07-28T11:52:40.585Z",
+    "updated": "2026-08-10T14:58:00.700Z",
     "title": {
       "th": "ทดสอบ",
       "en": "test"
@@ -916,7 +999,16 @@
     ],
     "coverOverlay": false,
     "syncedAt": "2026-07-28T11:51:29.609Z",
-    "backendId": "66c613a7-adf4-463a-b88e-7139237a5fa6"
+    "backendId": "66c613a7-adf4-463a-b88e-7139237a5fa6",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    },
+    "seo_path": "dssstest"
   },
   {
     "id": "1785742825975",
@@ -932,7 +1024,7 @@
     "pubDate": "2026-07-28",
     "views": 0,
     "createdAt": "2026-08-03T07:40:25.975Z",
-    "updated": "2026-08-03T07:50:56.156Z",
+    "updated": "2026-08-10T14:44:48.462Z",
     "title": {
       "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ ชายผู้ทำให้แบงก์ชาติอังกฤษถังแตก และบทเรียนเทรดที่รายย่อยใช้ได้จริง",
       "en": ""
@@ -1003,12 +1095,20 @@
           }
         ]
       }
-    ]
+    ],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785743096919",
     "slug": "george-soros-black-wednesday-earnex-seo",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "financial-history",
     "tags": [],
@@ -1019,7 +1119,7 @@
     "pubDate": "2026-07-28",
     "views": 0,
     "createdAt": "2026-08-03T07:44:56.919Z",
-    "updated": "2026-08-03T07:46:41.944Z",
+    "updated": "2026-08-09T16:43:32.001Z",
     "title": {
       "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ ชายผู้ทำให้แบงก์ชาติอังกฤษถังแตก และบทเรียนเทรดที่รายย่อยใช้ได้จริง",
       "en": "George Soros and Black Wednesday: The Man Who Broke the Bank of England and the Trading Lessons You Can Use"
@@ -1090,12 +1190,20 @@
           }
         ]
       }
-    ]
+    ],
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785743480430",
     "seo_path": "george-soros-black-wednesday-earnex-seo",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "financial-history",
     "tags": [],
@@ -1106,7 +1214,7 @@
     "pubDate": "2026-07-28",
     "views": 0,
     "createdAt": "2026-08-03T07:51:20.430Z",
-    "updated": "2026-08-03T07:53:52.175Z",
+    "updated": "2026-08-10T14:44:48.463Z",
     "title": {
       "th": "จอร์จ โซรอส ถล่มค่าเงินปอนด์ ชายผู้ทำให้แบงก์ชาติอังกฤษถังแตก และบทเรียนเทรดที่รายย่อยใช้ได้จริง",
       "en": "George Soros and Black Wednesday: The Man Who Broke the Bank of England and the Trading Lessons You Can Use"
@@ -1147,12 +1255,20 @@
       }
     ],
     "syncedAt": "2026-08-03T07:53:52.170Z",
-    "backendId": "7e7ca6a6-cca0-484c-97c2-9e4c753ecf38"
+    "backendId": "7e7ca6a6-cca0-484c-97c2-9e4c753ecf38",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785746186435",
     "seo_path": "earnex-seo-7-gold-facts",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "financial_history",
     "tags": [],
@@ -1164,7 +1280,7 @@
     "pubDate": "2026-08-06",
     "views": 0,
     "createdAt": "2026-08-03T08:36:26.435Z",
-    "updated": "2026-08-03T08:47:46.755Z",
+    "updated": "2026-08-09T16:43:31.963Z",
     "title": {
       "th": "7 ข้อเท็จจริงทองคำที่เราไม่เคยรู้ และข้อ 6 อาจทำให้เราเสียดายเงินที่ปล่อยหลุดมือไปทุกเดือน",
       "en": "7 Gold Facts You Never Knew, and Number 6 May Make You Regret the Money Slipping Away Every Month"
@@ -1237,12 +1353,20 @@
       }
     ],
     "syncedAt": "2026-08-03T08:47:46.750Z",
-    "backendId": "a6d373ab-a2ff-477e-855b-03901cb0cf06"
+    "backendId": "a6d373ab-a2ff-477e-855b-03901cb0cf06",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785750612918",
     "seo_path": "earnex-seo-gold-manipulator-spoofing",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "cost_rebate",
     "tags": [],
@@ -1253,7 +1377,7 @@
     "pubDate": "2026-08-04",
     "views": 0,
     "createdAt": "2026-08-03T09:50:12.918Z",
-    "updated": "2026-08-03T10:38:47.900Z",
+    "updated": "2026-08-09T16:43:31.958Z",
     "title": {
       "th": "เจ้ามือทองคำมีจริงไหม หรือเราคิดไปเอง กับความจริงที่ธนาคารระดับโลกยอมจ่ายหลักหมื่นล้านเพื่อปิดคดี",
       "en": "Is There a Gold Market Manipulator, or Are We Imagining It, and the Truth a Global Bank Paid Billions to Settle"
@@ -1335,12 +1459,20 @@
       }
     ],
     "syncedAt": "2026-08-03T10:38:30.552Z",
-    "backendId": "e7d7c7db-1b1c-49d9-bad2-31213eca99bc"
+    "backendId": "e7d7c7db-1b1c-49d9-bad2-31213eca99bc",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785894726528",
     "seo_path": "test",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "financial_history",
     "tags": [],
@@ -1351,7 +1483,7 @@
     "pubDate": "2026-08-06",
     "views": 0,
     "createdAt": "2026-08-05T01:52:06.528Z",
-    "updated": "2026-08-05T01:57:17.141Z",
+    "updated": "2026-08-09T16:43:31.951Z",
     "title": {
       "th": "test",
       "en": "ttt"
@@ -1375,12 +1507,20 @@
       }
     ],
     "syncedAt": "2026-08-05T01:57:17.135Z",
-    "backendId": "b7a8f446-14be-4b04-bff7-5fe91d3346f7"
+    "backendId": "b7a8f446-14be-4b04-bff7-5fe91d3346f7",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785895142066",
     "seo_path": "test",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "cost_rebate",
     "tags": [],
@@ -1391,7 +1531,7 @@
     "pubDate": "2026-08-06",
     "views": 0,
     "createdAt": "2026-08-05T01:59:02.066Z",
-    "updated": "2026-08-05T01:59:02.143Z",
+    "updated": "2026-08-09T16:43:31.902Z",
     "title": {
       "th": "test",
       "en": "gggg"
@@ -1415,7 +1555,15 @@
       }
     ],
     "syncedAt": "2026-08-05T01:59:02.139Z",
-    "backendId": "446254c2-31d8-4999-891b-bf93b0c7b859"
+    "backendId": "446254c2-31d8-4999-891b-bf93b0c7b859",
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    }
   },
   {
     "id": "1785896929144",
@@ -1453,6 +1601,10 @@
       }
     ],
     "alt_banner_image": {
+      "th": "",
+      "en": ""
+    },
+    "detail": {
       "th": "",
       "en": ""
     }
@@ -1495,12 +1647,16 @@
     "alt_banner_image": {
       "th": "เเเ",
       "en": "sdf"
+    },
+    "detail": {
+      "th": "",
+      "en": ""
     }
   },
   {
     "id": "1785897187814",
     "seo_path": "test-path",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "financial_history",
     "tags": [],
@@ -1511,7 +1667,7 @@
     "pubDate": "2026-08-06",
     "views": 0,
     "createdAt": "2026-08-05T02:33:07.814Z",
-    "updated": "2026-08-05T02:51:08.487Z",
+    "updated": "2026-08-09T16:43:31.937Z",
     "title": {
       "th": "ทำไมทองคำถึงเป็นสินทรัพย์ปลอดภัย ทั้งที่ผลตอบแทนไม่ได้สูงที่สุด",
       "en": "Why Gold Is a Safe Haven Even Though Its Returns Are Not the Highest"
@@ -1548,7 +1704,7 @@
   {
     "id": "1785916278324",
     "seo_path": "",
-    "status": "draft",
+    "status": "trash",
     "showNew": true,
     "category": "",
     "tags": [],
@@ -1557,7 +1713,7 @@
     "pubDate": "",
     "views": 0,
     "createdAt": "2026-08-05T07:51:18.324Z",
-    "updated": "2026-08-05T07:53:42.219Z",
+    "updated": "2026-08-09T15:29:49.526Z",
     "title": {
       "th": "",
       "en": ""
@@ -1613,7 +1769,7 @@
   {
     "id": "1785918187813",
     "seo_path": "test-all-blogs",
-    "status": "draft",
+    "status": "published",
     "showNew": true,
     "category": "financial_history",
     "tags": [
@@ -1627,7 +1783,7 @@
     "pubDate": "2026-08-06",
     "views": 0,
     "createdAt": "2026-08-05T08:23:07.813Z",
-    "updated": "2026-08-07T10:43:53.522Z",
+    "updated": "2026-08-09T16:43:31.917Z",
     "title": {
       "th": "บทความแสดงทุกประเภท",
       "en": "Test all blogs"
@@ -1937,27 +2093,25 @@
     "backendId": "76d04906-6b3e-4923-966b-82ba801e7da4"
   },
   {
-    "id": "1786347382562",
-    "seo_path": "test5",
-    "status": "draft",
+    "id": "1786289844844",
+    "seo_path": "test",
+    "status": "trash",
     "showNew": true,
-    "category": "financial_history",
+    "category": "",
     "tags": [],
-    "owners": [
-      "thanakorn"
-    ],
-    "cover": "http://127.0.0.1:8081/knowledge_base/image/1785918260930-9851878_a10a61bf1def4d1a8aa64f7753eada69_jpeg_jpegac13c5064b0f74d18be7d11854da975e.jpeg",
-    "pubDate": "2026-08-04",
+    "owners": [],
+    "cover": "",
+    "pubDate": "",
     "views": 0,
-    "createdAt": "2026-08-10T07:36:22.562Z",
-    "updated": "2026-08-10T07:37:44.685Z",
+    "createdAt": "2026-08-09T15:37:24.844Z",
+    "updated": "2026-08-09T15:47:32.413Z",
     "title": {
       "th": "test",
-      "en": "test2"
+      "en": ""
     },
     "detail": {
-      "th": "test2",
-      "en": "dfe"
+      "th": "",
+      "en": ""
     },
     "metaTitle": {
       "th": "",
@@ -1969,7 +2123,7 @@
     },
     "blocks": [
       {
-        "id": "bkcngabhqbh",
+        "id": "br3eosfzmbx",
         "type": "intro",
         "text": {
           "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
@@ -1981,7 +2135,53 @@
       "th": "",
       "en": ""
     },
-    "syncedAt": "2026-08-10T07:37:44.676Z",
-    "backendId": "cbaf5ad5-fdc8-4f79-acb3-1c41bc02e28e"
+    "syncedAt": "2026-08-09T15:47:08.566Z",
+    "backendId": "d9f0ceb8-9fcc-47a0-916c-16dfbc141dc3"
+  },
+  {
+    "id": "1786290472988",
+    "seo_path": "เทส",
+    "status": "trash",
+    "showNew": true,
+    "category": "",
+    "tags": [],
+    "owners": [],
+    "cover": "",
+    "pubDate": "",
+    "views": 0,
+    "createdAt": "2026-08-09T15:47:52.988Z",
+    "updated": "2026-08-09T16:06:29.249Z",
+    "title": {
+      "th": "เทส",
+      "en": ""
+    },
+    "detail": {
+      "th": "",
+      "en": ""
+    },
+    "metaTitle": {
+      "th": "",
+      "en": ""
+    },
+    "metaDesc": {
+      "th": "",
+      "en": ""
+    },
+    "blocks": [
+      {
+        "id": "bkal3tch25y",
+        "type": "intro",
+        "text": {
+          "th": "เขียนย่อหน้านำที่สรุปประเด็นสำคัญของบทความ",
+          "en": "Write an intro that sums up the article in one paragraph"
+        }
+      }
+    ],
+    "alt_banner_image": {
+      "th": "",
+      "en": ""
+    },
+    "syncedAt": "2026-08-09T15:47:53.125Z",
+    "backendId": "ddc1daaf-9775-4be4-aed4-dacf79a7ac63"
   }
 ]

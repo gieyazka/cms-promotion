@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { readArticles, writeArticles } from '@/lib/articles-store';
+import { assertArticle, InvalidArticle, mutateArticles, readArticles } from '@/lib/articles-store';
 import { actorFrom, articleLabel, recordAudit } from '@/lib/audit-log';
 import { Article } from '@/types/article';
 
@@ -16,7 +16,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const articles = await readArticles();
     const now = new Date().toISOString();
 
     const article: Article = {
@@ -28,8 +27,12 @@ export async function POST(req: NextRequest) {
       updated: now,
     };
 
-    articles.push(article);
-    await writeArticles(articles);
+    // Checked inside the mutation, not before it: a check made against a list read outside the
+    // write queue lets two creates racing on the same slug both see it as free.
+    await mutateArticles((articles) => {
+      assertArticle(articles, article);
+      articles.push(article);
+    });
 
     await recordAudit({
       at: now,
@@ -42,6 +45,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(article, { status: 201 });
   } catch (e) {
+    if (e instanceof InvalidArticle) {
+      return NextResponse.json({ error: e.message }, { status: 400 });
+    }
     console.log(e);
     return NextResponse.json({ error: 'Failed to create article' }, { status: 500 });
   }

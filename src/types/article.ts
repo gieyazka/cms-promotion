@@ -18,6 +18,7 @@ export type BlockType =
   | 'heading'
   | 'paragraph'
   | 'image'
+  | 'imageGroup'
   | 'highlight'
   | 'keyTakeaways'
   | 'list'
@@ -72,6 +73,34 @@ export interface ImageBlock extends BaseBlock {
   type: 'image';
   url: string;
   caption: LText;
+}
+
+/**
+ * One image paired with its own heading and body — the repeating unit of `imageGroup`.
+ * There is no `alt` field: the heading already describes the picture, so the renderer uses
+ * `title[locale]` as the alt text rather than asking the author for the same sentence twice.
+ */
+export interface ImageGroupItem {
+  id: string;
+  url: string;
+  title: LText;
+  body: LText;
+  /** Absent means 'default' — inherit the article's body colour. Colours the body, not the heading. */
+  color?: TextColor;
+}
+
+/**
+ * A run of image + heading + body rows: image left / text right on desktop, stacked cards on
+ * mobile where the image also gets an "expand" button that opens it full-screen.
+ *
+ * It is a group, not one row per block, because the rows are read as a numbered sequence
+ * ("ข้อ 1 / ข้อ 2 / ข้อ 3") — keeping them in one block means reordering the sequence is a drag
+ * inside the form, and the spacing between rows is the block's business rather than a gap the
+ * author has to keep consistent across separate blocks.
+ */
+export interface ImageGroupBlock extends BaseBlock {
+  type: 'imageGroup';
+  items: ImageGroupItem[];
 }
 
 /**
@@ -214,6 +243,7 @@ export type ArticleBlock =
   | HeadingBlock
   | ParagraphBlock
   | ImageBlock
+  | ImageGroupBlock
   | HighlightBlock
   | KeyTakeawaysBlock
   | ListBlock

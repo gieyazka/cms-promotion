@@ -16,6 +16,7 @@ export const BLOCK_META: Record<BlockType, { label: LText; icon: string }> = {
   heading: { label: t('หัวข้อ (H2/H3)', 'Heading (H2/H3)'), icon: 'Heading' },
   paragraph: { label: t('ย่อหน้า / Rich text', 'Paragraph / Rich text'), icon: 'AlignLeft' },
   image: { label: t('รูปภาพ + คำบรรยาย', 'Image + Caption'), icon: 'Image' },
+  imageGroup: { label: t('กลุ่มรูป + คำอธิบาย', 'Image Group'), icon: 'Layers' },
   highlight: { label: t('กล่องไฮไลต์', 'Highlight Box'), icon: 'AlertCircle' },
   keyTakeaways: { label: t('สรุปประเด็นสำคัญ', 'Key Takeaways'), icon: 'Lightbulb' },
   list: { label: t('รายการ (Bullet / ลำดับเลข)', 'List (Bullet / Numbered)'), icon: 'List' },
@@ -51,6 +52,7 @@ export const BLOCK_MENU: BlockType[] = [
   'intro',
   'paragraph',
   'image',
+  'imageGroup',
   'highlight',
   'featureCardGrid',
   'comparisonTable',
@@ -74,6 +76,10 @@ export function newBlock(type: BlockType): ArticleBlock {
       return { id, type, text: t('พิมพ์เนื้อหาที่นี่ ใช้ **ตัวหนา** *ตัวเอียง* และ [ลิงก์](https://) ได้', 'Type here. **Bold**, *italic* and [links](https://) are supported.') };
     case 'image':
       return { id, type, url: '', caption: t('', '') };
+    case 'imageGroup':
+      // One empty row to start: the form's "add row" button is the obvious next step, and an
+      // empty items array would render the block as nothing at all in the preview.
+      return { id, type, items: [{ id: uid('ig'), url: '', title: t('ข้อ 1', 'Point 1'), body: t('', '') }] };
     case 'highlight':
       return { id, type, variant: 'info', title: t('คำแนะนำ', 'Tip'), items: [{ text: t('ประเด็นที่ 1', 'Point 1') }, { text: t('ประเด็นที่ 2', 'Point 2') }] };
     case 'keyTakeaways':
@@ -176,11 +182,16 @@ export function newArticle(): Article {
   };
 }
 
-/** Latin + Thai slug, matching the prototype's slugify. */
+/**
+ * Latin-only slug. Thai is stripped on purpose: the slug becomes a public URL, and a
+ * percent-encoded Thai path is unreadable everywhere it gets copied. A Thai title
+ * therefore auto-generates nothing — the author types the English slug by hand, which
+ * is already what every real article in `data/articles.json` does.
+ */
 export function slugify(input: string): string {
   return (input || '')
     .toLowerCase()
-    .replace(/[^a-z0-9฀-๿\s-]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .slice(0, 60);
@@ -207,6 +218,9 @@ export function wordCount(article: Article, locale: 'th' | 'en' = 'th'): number 
         break;
       case 'faq':
         text += ' ' + b.items.map((i) => i.q[locale] + ' ' + i.a[locale]).join(' ');
+        break;
+      case 'imageGroup':
+        text += ' ' + b.items.map((i) => i.title[locale] + ' ' + i.body[locale]).join(' ');
         break;
       default:
         break;
