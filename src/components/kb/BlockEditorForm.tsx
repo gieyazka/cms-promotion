@@ -547,6 +547,13 @@ export default function BlockEditorForm({ block, locale, onChange }: BlockEditor
     case 'imageGroup':
       return (
         <div className="flex flex-col gap-2">
+          <Field label="Group title">
+            <TextInput
+              value={block.title?.[locale] ?? ''}
+              onChange={(v) => onChange({ ...block, title: { ...(block.title ?? emptyLText()), [locale]: v } })}
+              placeholder="e.g. 3 ข้อสังเกต Order Block (เว้นว่างได้)"
+            />
+          </Field>
           {block.items.map((item, idx) => (
             <ItemRow
               key={item.id}

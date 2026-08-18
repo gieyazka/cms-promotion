@@ -220,7 +220,7 @@ export function wordCount(article: Article, locale: 'th' | 'en' = 'th'): number 
         text += ' ' + b.items.map((i) => i.q[locale] + ' ' + i.a[locale]).join(' ');
         break;
       case 'imageGroup':
-        text += ' ' + b.items.map((i) => i.title[locale] + ' ' + i.body[locale]).join(' ');
+        text += ' ' + (b.title?.[locale] ?? '') + ' ' + b.items.map((i) => i.title[locale] + ' ' + i.body[locale]).join(' ');
         break;
       default:
         break;

@@ -228,22 +228,37 @@ function ImageView({ block, locale, mobile }: { block: ImageBlock; locale: Local
 // ---------------------------------------------------------------------------
 // imageGroup
 //
-// Two layouts off one item list: desktop puts the image left of the text, mobile stacks them
-// inside a card and adds an "expand" button, because a chart that reads fine at 380px wide does
-// not read at all at 160px. The button is deliberately mobile-only — on desktop the image is
-// already large enough that a lightbox would just be a second click to see the same pixels.
+// ONE layout, not a desktop/mobile pair, because the app has one: every number below is copied
+// from earnex_app's `image_group_block.dart`, which was measured off Figma node 17404-243446.
+// The preview's job is to show what the app will render, so a two-column desktop variant here
+// would be a design that ships nowhere.
+//
+//   card       #fff, radius 30, padding 16, gap 24 (image → text), 1px gradient border
+//              #42A5F5 → #fff, glow 0 0 20 #42A5F5 20%; cards 24 apart
+//   image      radius 24, full width at its OWN aspect ratio — these are charts, and cropping
+//              one to a fixed height can cut off the candle the paragraph is about
+//   expand     pill 24 radius, padding 8/16, white 20% over a 12px blur, same glow
+//   heading    2px left rule #42A5F5 + 12 padding, 20/w700 #42A5F5
+//   body       18 (20 on desktop) /w500, line-height 1.5, #2F2F2F
 // ---------------------------------------------------------------------------
 
-/** Shared by both layouts so the empty state, the object-fit and the alt text can't drift apart. */
-function ImageGroupPicture({ item, locale, height }: { item: ImageGroupItem; locale: Locale; height: number }) {
+/** Headings and body copy in the app's article mockup are near-black, not the CMS navy. */
+const IG_INK = '#2F2F2F';
+const IG_GLOW = '0 0 20px rgba(66,165,245,.2)';
+
+/** Shared by the picture and its empty state so the radius and the alt text can't drift apart. */
+function ImageGroupPicture({ item, locale }: { item: ImageGroupItem; locale: Locale }) {
   return item.url ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={item.url} alt={item.title[locale] || ''} style={{ width: '100%', height, objectFit: 'cover', display: 'block' }} />
+    <img src={item.url} alt={item.title[locale] || ''} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 24 }} />
   ) : (
     <div
       style={{
         width: '100%',
-        height,
+        // 3:2 is the ratio of the design's own asset, so an article still being written keeps
+        // the card the shape it will end up.
+        aspectRatio: '3 / 2',
+        borderRadius: 24,
         background: PALETTE.card,
         display: 'flex',
         flexDirection: 'column',
@@ -253,7 +268,7 @@ function ImageGroupPicture({ item, locale, height }: { item: ImageGroupItem; loc
         color: '#b6bcc8',
       }}
     >
-      <ImageIcon size={28} />
+      <ImageIcon size={34} />
       <span style={{ fontSize: 12 }}>{locale === 'en' ? 'Image' : 'รูปภาพประกอบ'}</span>
     </div>
   );
@@ -262,20 +277,22 @@ function ImageGroupPicture({ item, locale, height }: { item: ImageGroupItem; loc
 function ImageGroupText({ item, locale, mobile }: { item: ImageGroupItem; locale: Locale; mobile: boolean }) {
   return (
     <div style={{ minWidth: 0 }}>
-      <h3
-        style={{
-          margin: '0 0 10px',
-          paddingLeft: 12,
-          borderLeft: `4px solid ${PALETTE.primary}`,
-          fontSize: mobile ? 17 : 21,
-          fontWeight: 800,
-          color: PALETTE.secondary,
-          lineHeight: 1.35,
-        }}
-      >
-        {renderInline(item.title[locale])}
-      </h3>
-      <div style={{ fontSize: mobile ? 15 : 16.5, lineHeight: 1.75, color: '#3a3f4b', ...textColorStyle(item.color) }}>
+      {item.title[locale]?.trim() ? (
+        <h3
+          style={{
+            margin: '0 0 16px',
+            paddingLeft: 12,
+            borderLeft: `2px solid ${PALETTE.primary}`,
+            fontSize: 20,
+            fontWeight: 700,
+            color: PALETTE.primary,
+            lineHeight: 1.5,
+          }}
+        >
+          {renderInline(item.title[locale])}
+        </h3>
+      ) : null}
+      <div style={{ fontSize: mobile ? 18 : 20, fontWeight: 500, lineHeight: 1.5, color: IG_INK, ...textColorStyle(item.color) }}>
         {renderBlockText(item.body[locale])}
       </div>
     </div>
@@ -283,68 +300,66 @@ function ImageGroupText({ item, locale, mobile }: { item: ImageGroupItem; locale
 }
 
 function ImageGroupView({ block, locale, mobile }: { block: ImageGroupBlock; locale: Locale; mobile: boolean }) {
-  // Which image is open full-screen, by item id. `null` closes it. Only ever set on mobile.
+  // Which image is open full-screen, by item id. `null` closes it.
   const [zoomed, setZoomed] = useState<string | null>(null);
   const open = block.items.find((it) => it.id === zoomed);
 
-  if (!mobile) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-        {block.items.map((item) => (
-          <div key={item.id} style={{ display: 'grid', gridTemplateColumns: '38% 1fr', gap: 40, alignItems: 'center' }}>
-            <div style={{ borderRadius: 16, overflow: 'hidden', background: PALETTE.card }}>
-              <ImageGroupPicture item={item} locale={locale} height={210} />
-            </div>
-            <ImageGroupText item={item} locale={locale} mobile={false} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      {/* Optional group heading: plain text, no rule and no gold bar — the app draws it with its
+          own H2 token (20/25, w700, #2F2F2F) and this is a preview of the app, not of the CMS
+          chrome. Absent or empty renders nothing. */}
+      {block.title?.[locale]?.trim() ? (
+        <h2 style={{ fontSize: mobile ? 20 : 25, fontWeight: 700, color: IG_INK, margin: 0, lineHeight: 1.5 }}>
+          {renderInline(block.title[locale])}
+        </h2>
+      ) : null}
       {block.items.map((item) => (
+        // The 1px gradient edge is a gradient plate with a white one inset on top: CSS has no
+        // gradient border-color, and `border-image` loses the radius.
         <div
           key={item.id}
           style={{
-            background: '#fff',
-            border: `1px solid ${PALETTE.divider}`,
-            borderRadius: 18,
-            padding: 14,
-            boxShadow: '0 6px 20px rgba(66,165,245,.10)',
+            background: `linear-gradient(135deg, ${PALETTE.primary}, #fff)`,
+            borderRadius: 30,
+            padding: 1,
+            boxShadow: IG_GLOW,
           }}
         >
-          <div style={{ position: 'relative', borderRadius: 14, overflow: 'hidden', marginBottom: 14 }}>
-            <ImageGroupPicture item={item} locale={locale} height={200} />
-            {item.url && (
-              <button
-                type="button"
-                onClick={() => setZoomed(item.id)}
-                style={{
-                  position: 'absolute',
-                  right: 10,
-                  bottom: 10,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  padding: '7px 14px',
-                  borderRadius: 999,
-                  border: 'none',
-                  background: 'rgba(255,255,255,.94)',
-                  boxShadow: '0 4px 14px rgba(11,30,61,.18)',
-                  color: PALETTE.secondary,
-                  fontSize: 13,
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                <Maximize2 size={14} />
-                {locale === 'en' ? 'Expand' : 'ขยาย'}
-              </button>
-            )}
+          <div style={{ background: '#fff', borderRadius: 29, padding: 16 }}>
+            <div style={{ position: 'relative', marginBottom: 24 }}>
+              <ImageGroupPicture item={item} locale={locale} />
+              {item.url && (
+                <button
+                  type="button"
+                  onClick={() => setZoomed(item.id)}
+                  style={{
+                    position: 'absolute',
+                    right: 16,
+                    bottom: 16,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '8px 16px',
+                    borderRadius: 24,
+                    border: 'none',
+                    background: 'rgba(255,255,255,.2)',
+                    backdropFilter: 'blur(12px)',
+                    boxShadow: IG_GLOW,
+                    color: IG_INK,
+                    fontSize: 16,
+                    fontWeight: 600,
+                    lineHeight: 1.5,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Maximize2 size={24} />
+                  {locale === 'en' ? 'Expand' : 'ขยาย'}
+                </button>
+              )}
+            </div>
+            <ImageGroupText item={item} locale={locale} mobile={mobile} />
           </div>
-          <ImageGroupText item={item} locale={locale} mobile />
         </div>
       ))}
 

@@ -100,6 +100,12 @@ export interface ImageGroupItem {
  */
 export interface ImageGroupBlock extends BaseBlock {
   type: 'imageGroup';
+  /**
+   * Heading for the whole group, rendered as the H2 above the rows. Optional and separate from
+   * each item's own `title`: absent or empty means no group heading, which is what every
+   * imageGroup written before this field looked like.
+   */
+  title?: LText;
   items: ImageGroupItem[];
 }
 
